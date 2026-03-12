@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TUNL Marketing Intelligence — Tunas & Whales</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --yellow: #FBFCED;
+      --blue: #007BC4;
+      --lilac: #DCD5E8;
+      --coral: #ED6F6A;
+      --orange: #FFDFB8;
+      --mauve: #C5A3AA;
+      --dark: #1a1a2e;
+      --mid: #4a4a6a;
+      --light-border: #e8e8d8;
+      --white: #ffffff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Host Grotesk', sans-serif;
+      background: var(--yellow);
+      color: var(--dark);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--blue);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav-brand {
+      color: var(--yellow);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 20px 14px 0;
+      border-right: 1px solid rgba(255,255,255,0.2);
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .nav-links::-webkit-scrollbar { display: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 14px 16px;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+      border-radius: 0;
+    }
+    .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--blue);
+      padding: 64px 24px 56px;
+      text-align: center;
+    }
+    .hero-label {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: var(--yellow);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      color: var(--yellow);
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      line-height: 1.15;
+      max-width: 700px;
+      margin: 0 auto 16px;
+    }
+    .hero p {
+      color: rgba(251,252,237,0.8);
+      font-size: 17px;
+      max-width: 560px;
+      margin: 0 auto 32px;
+    }
+    .hero-meta {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .hero-meta span {
+      color: rgba(251,252,237,0.65);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .hero-meta span strong { color: var(--yellow); }
+
+    /* ─── SECTION WRAPPER ─── */
+    .section {
+      padding: 72px 24px;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .section-alt {
+      background: var(--white);
+      padding: 72px 24px;
+    }
+    .section-alt .section-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 48px;
+    }
+    .section-label {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 4px 4px 4px 0;
+      margin-bottom: 12px;
+    }
+    .section-label.coral { background: var(--coral); }
+    .section-label.lilac { background: var(--blue); }
+    .section-label.orange { background: var(--dark); }
+    .section-header h2 {
+      font-size: clamp(22px, 4vw, 34px);
+      font-weight: 700;
+      color: var(--blue);
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .section-header p {
+      color: var(--mid);
+      font-size: 16px;
+      max-width: 640px;
+    }
+
+    /* ─── SEGMENT TABS ─── */
+    .seg-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .seg-tab {
+      padding: 10px 24px;
+      border-radius: 8px 8px 0 8px;
+      border: 2px solid transparent;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: transparent;
+      border-color: var(--light-border);
+      color: var(--mid);
+    }
+    .seg-tab.active-whale {
+      background: var(--blue);
+      color: #fff;
+      border-color: var(--blue);
+    }
+    .seg-tab.active-tuna {
+      background: var(--coral);
+      color: #fff;
+      border-color: var(--coral);
+    }
+    .seg-tab:hover:not(.active-whale):not(.active-tuna) {
+      border-color: var(--blue);
+      color: var(--blue);
+    }
+
+    .seg-panel { display: none; }
+    .seg-panel.active { display: block; }
+
+    /* ─── GRID LAYOUTS ─── */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+
+    /* ─── CARDS ─── */
+    .card {
+      background: var(--yellow);
+      border: 1.5px solid var(--light-border);
+      border-radius: 12px 12px 12px 0;
+      padding: 24px;
+    }
+    .card-white {
+      background: #fff;
+      border: 1.5px solid var(--light-border);
+      border-radius: 12px 12px 12px 0;
+      padding: 24px;
+    }
+    .card-blue {
+      background: var(--blue);
+      border-radius: 12px 12px 12px 0;
+      padding: 24px;
+      color: #fff;
+    }
+    .card-lilac {
+      background: var(--lilac);
+      border-radius: 12px 12px 12px 0;
+      padding: 24px;
+    }
+    .card-coral {
+      background: #fdf0ef;
+      border: 1.5px solid #f5c9c7;
+      border-radius: 12px 12px 12px 0;
+      padding: 24px;
+    }
+    .card-orange {
+      background: #fffaf3;
+      border: 1.5px solid #ffe5c0;
+      border-radius: 12px 12px 12px 0;
+      padding: 24px;
+    }
+    .card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+    .card-blue h3 { color: var(--yellow); }
+    .card-lilac h3 { color: var(--blue); }
+    .card-coral h3 { color: var(--coral); }
+    .card-orange h3 { color: var(--dark); }
+    .card p { font-size: 14px; color: var(--mid); line-height: 1.6; }
+    .card-blue p { color: rgba(251,252,237,0.85); }
+    .card ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+    }
+    .card ul li {
+      font-size: 14px;
+      color: var(--mid);
+      padding: 5px 0 5px 18px;
+      position: relative;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      line-height: 1.5;
+    }
+    .card ul li:last-child { border-bottom: none; }
+    .card ul li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--blue);
+      font-weight: 700;
+      font-size: 12px;
+      top: 6px;
+    }
+    .card-blue ul li { color: rgba(251,252,237,0.85); border-color: rgba(255,255,255,0.1); }
+    .card-blue ul li::before { color: var(--yellow); }
+    .card-coral ul li::before { color: var(--coral); }
+
+    /* ─── QUOTE ─── */
+    .quote-block {
+      background: var(--blue);
+      border-radius: 12px 12px 12px 0;
+      padding: 28px 32px;
+      margin-bottom: 20px;
+    }
+    .quote-block blockquote {
+      color: var(--yellow);
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 1.45;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+    .quote-block cite {
+      color: rgba(251,252,237,0.6);
+      font-size: 13px;
+      font-style: normal;
+    }
+    .quote-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+
+    /* ─── MINDSET STATEMENT ─── */
+    .mindset-statement {
+      background: var(--yellow);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 20px;
+      margin-bottom: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .mindset-statement.tuna { border-color: var(--coral); }
+
+    /* ─── TRIGGER PILLS ─── */
+    .trigger-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .trigger-pill {
+      background: var(--yellow);
+      border: 1.5px solid var(--blue);
+      color: var(--blue);
+      padding: 8px 16px;
+      border-radius: 8px 8px 0 8px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .trigger-pill.tuna {
+      border-color: var(--coral);
+      color: var(--coral);
+    }
+
+    /* ─── TIER LIST ─── */
+    .tier-block {
+      border-radius: 12px 12px 12px 0;
+      overflow: hidden;
+      border: 1.5px solid var(--light-border);
+      margin-bottom: 20px;
+    }
+    .tier-header {
+      padding: 14px 20px;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .tier-1 .tier-header { background: var(--blue); color: #fff; }
+    .tier-2 .tier-header { background: var(--lilac); color: var(--dark); }
+    .tier-3 .tier-header { background: #f0f0f0; color: var(--mid); }
+    .tier-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.25);
+      border-radius: 100px;
+      font-size: 11px;
+      padding: 2px 10px;
+    }
+    .tier-2 .tier-badge { background: rgba(0,0,0,0.1); }
+    .tier-3 .tier-badge { background: rgba(0,0,0,0.08); }
+    .tier-items {
+      background: #fff;
+      padding: 0;
+    }
+    .tier-item {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--light-border);
+      font-size: 14px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .tier-item:last-child { border-bottom: none; }
+    .tier-item-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .tier-2 .tier-item-dot { background: var(--mid); }
+    .tier-3 .tier-item-dot { background: #ccc; }
+    .tier-item-content strong { display: block; font-weight: 600; color: var(--dark); }
+    .tier-item-content span { font-size: 13px; color: var(--mid); }
+
+    /* ─── TABLE ─── */
+    .table-wrap { overflow-x: auto; border-radius: 12px 12px 12px 0; border: 1.5px solid var(--light-border); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    thead th {
+      background: var(--blue);
+      color: #fff;
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    thead th:first-child { border-radius: 10px 0 0 0; }
+    thead th:last-child { border-radius: 0 10px 0 0; }
+    tbody tr:nth-child(even) { background: #fafaf4; }
+    tbody tr:hover { background: #f0f4ff; }
+    tbody td {
+      padding: 14px 18px;
+      color: var(--dark);
+      border-bottom: 1px solid var(--light-border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    tbody tr:last-child td { border-bottom: none; }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+    .tag-blue { background: #e3f2fd; color: var(--blue); }
+    .tag-coral { background: #fdecea; color: var(--coral); }
+    .tag-green { background: #e8f5e9; color: #2e7d32; }
+
+    /* ─── HOOK CARD ─── */
+    .hook-card {
+      background: #fff;
+      border: 1.5px solid var(--light-border);
+      border-radius: 12px 12px 12px 0;
+      padding: 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hook-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+    }
+    .hook-card.cost::before { background: var(--coral); }
+    .hook-card.ops::before { background: var(--blue); }
+    .hook-card.growth::before { background: #2e7d32; }
+    .hook-card.reliability::before { background: var(--mauve); }
+    .hook-card .hook-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hook-card.cost .hook-type { color: var(--coral); }
+    .hook-card.ops .hook-type { color: var(--blue); }
+    .hook-card.growth .hook-type { color: #2e7d32; }
+    .hook-card.reliability .hook-type { color: var(--mauve); }
+    .hook-card ul { list-style: none; padding: 0; }
+    .hook-card ul li {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--light-border);
+      line-height: 1.4;
+    }
+    .hook-card ul li:last-child { border-bottom: none; }
+
+    /* ─── SIGNAL CARD ─── */
+    .signal-card {
+      border-radius: 12px 12px 12px 0;
+      padding: 20px 24px;
+      border: 1.5px solid var(--light-border);
+      background: #fff;
+    }
+    .signal-card h4 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1.5px solid var(--light-border);
+    }
+    .signal-card ul { list-style: none; padding: 0; }
+    .signal-card ul li {
+      font-size: 14px;
+      color: var(--dark);
+      padding: 7px 0 7px 20px;
+      position: relative;
+      border-bottom: 1px solid #f5f5f5;
+      line-height: 1.5;
+    }
+    .signal-card ul li:last-child { border-bottom: none; }
+    .signal-card ul li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      font-size: 8px;
+      top: 10px;
+      color: var(--blue);
+    }
+
+    /* ─── CATEGORY BAR ─── */
+    .cat-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 20px;
+      background: #fff;
+      border-radius: 8px;
+      border: 1.5px solid var(--light-border);
+      margin-bottom: 10px;
+    }
+    .cat-rank {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--blue);
+      min-width: 32px;
+      opacity: 0.4;
+    }
+    .cat-info { flex: 1; }
+    .cat-name { font-weight: 700; font-size: 15px; color: var(--dark); }
+    .cat-examples { font-size: 13px; color: var(--mid); }
+    .cat-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    /* ─── MARKET VISUAL ─── */
+    .market-list { list-style: none; padding: 0; }
+    .market-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--light-border);
+    }
+    .market-list li:last-child { border-bottom: none; }
+    .market-flag { font-size: 24px; min-width: 36px; }
+    .market-name { font-weight: 700; font-size: 15px; color: var(--dark); min-width: 120px; }
+    .market-bar-wrap { flex: 1; height: 10px; background: var(--light-border); border-radius: 100px; overflow: hidden; }
+    .market-bar { height: 100%; border-radius: 100px; background: var(--blue); }
+    .market-note { font-size: 13px; color: var(--mid); min-width: 180px; text-align: right; }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 1.5px solid var(--light-border);
+      margin: 48px 0;
+    }
+    .divider-blue {
+      border: none;
+      border-top: 1.5px solid rgba(255,255,255,0.15);
+      margin: 32px 0;
+    }
+
+    /* ─── BADGE ─── */
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.05em;
+    }
+    .badge-whale { background: var(--blue); color: #fff; }
+    .badge-tuna { background: var(--coral); color: #fff; }
+    .badge-both { background: var(--lilac); color: var(--dark); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 48px 24px;
+      text-align: center;
+    }
+    footer p {
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.7); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 640px) {
+      .section { padding: 48px 16px; }
+      .section-alt { padding: 48px 16px; }
+      .nav-links a { padding: 14px 12px; font-size: 12px; }
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .hero { padding: 48px 16px 40px; }
+      .market-note { display: none; }
+      table { font-size: 13px; }
+      thead th, tbody td { padding: 10px 12px; }
+    }
+
+    @media print {
+      .nav { position: relative; }
+      .section { break-inside: avoid; }
+      .card, .hook-card, .signal-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-brand">TUNL</div>
+  <div class="nav-links">
+    <a href="#mindset">Mindset</a>
+    <a href="#problems">Problems</a>
+    <a href="#categories">Categories</a>
+    <a href="#signals">Signals</a>
+    <a href="#vp">Value Props</a>
+    <a href="#messaging">Messaging</a>
+    <a href="#hooks">Hooks</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-label">Marketing Intelligence</div>
+  <h1>Tunas & Whales: Who They Are, What They Need, How to Reach Them</h1>
+  <p>Synthesised from customer interviews, segmentation data, and sales narratives. Built for the marketing team.</p>
+  <div class="hero-meta">
+    <span><strong>19</strong> Whale accounts</span>
+    <span><strong>30+</strong> Tuna accounts</span>
+    <span><strong>12</strong> Customer interviews</span>
+    <span><strong>7</strong> Frameworks</span>
+  </div>
+</header>
+
+
+<!-- SECTION 1: MINDSET & TRIGGERS -->
+<section id="mindset" class="section">
+  <div class="section-header">
+    <div class="section-label">01</div>
+    <h2>Merchant Mindset & Triggers</h2>
+    <p>How these merchants think — and what event creates demand for a solution.</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="seg-tabs">
+    <button class="seg-tab active-whale" onclick="switchTab(this, 'mindset-whale', 'mindset-tuna', 'active-whale')">🐋 Whales</button>
+    <button class="seg-tab" onclick="switchTab(this, 'mindset-tuna', 'mindset-whale', 'active-tuna')">🐟 Tunas</button>
+  </div>
+
+  <!-- WHALE PANEL -->
+  <div id="mindset-whale" class="seg-panel active">
+    <div class="grid-2" style="margin-bottom:36px;">
+      <div>
+        <h3 style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:16px;">How Whales Think</h3>
+        <div class="mindset-statement">"We've outgrown courier chaos."</div>
+        <div class="mindset-statement">"We need a system, not a vendor."</div>
+        <div class="mindset-statement">"We're bleeding money on rebills and nobody can explain it."</div>
+        <div class="mindset-statement">"Our ops team is firefighting instead of scaling."</div>
+        <div class="mindset-statement">"DHL is expensive and when it goes wrong, no one owns it."</div>
+        <div class="mindset-statement">"International is central to our business. We can't afford errors."</div>
+        <div class="mindset-statement">"I need to protect the brand experience end-to-end."</div>
+      </div>
+      <div>
+        <h3 style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:16px;">What Triggers Demand</h3>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:14px;">One or more of these events creates urgency:</p>
+        <div class="trigger-grid">
+          <span class="trigger-pill">Rebilling chaos</span>
+          <span class="trigger-pill">DHL/FedEx pricing</span>
+          <span class="trigger-pill">Integration breakdown</span>
+          <span class="trigger-pill">Ops team overload</span>
+          <span class="trigger-pill">US/UK/EU expansion</span>
+          <span class="trigger-pill">Courier mistakes</span>
+          <span class="trigger-pill">Volume growth</span>
+          <span class="trigger-pill">Developer exits</span>
+          <span class="trigger-pill">Multi-storefront complexity</span>
+          <span class="trigger-pill">Distributor model shift</span>
+          <span class="trigger-pill">Customs holds increasing</span>
+          <span class="trigger-pill">Black Friday spikes</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:16px;">Real Trigger Moments from Interviews</h3>
+    <div class="quote-grid">
+      <div class="quote-block">
+        <blockquote>"R30,000+ a month in rebills on bulk orders. Minor dimension discrepancies — 1–2cm — detected by FedEx scanners. We can't quote clients accurately."</blockquote>
+        <cite>— Versus Socks (Whale, UK/EU bulk distributor model)</cite>
+      </div>
+      <div class="quote-block">
+        <blockquote>"R100,000 under-recovered in a single month. The original developers exited with no knowledge transfer. Nobody understood our rate calculation."</blockquote>
+        <cite>— Escape Gear (Whale-track, WooCommerce, 50+ orders/month)</cite>
+      </div>
+      <div class="quote-block">
+        <blockquote>"Things became calmer operationally. That was the real win."</blockquote>
+        <cite>— Operations lead, Old School (Apparel, multi-stakeholder team)</cite>
+      </div>
+      <div class="quote-block">
+        <blockquote>"We had FedEx and UPS accounts. The billing was excellent but the pricing was too expensive. TUNL gave us access to better rates without giving up the service."</blockquote>
+        <cite>— Singita (Luxury lodge curios, high-AOV)</cite>
+      </div>
+    </div>
+  </div>
+
+  <!-- TUNA PANEL -->
+  <div id="mindset-tuna" class="seg-panel">
+    <div class="grid-2" style="margin-bottom:36px;">
+      <div>
+        <h3 style="font-size:15px;font-weight:700;color:var(--coral);margin-bottom:16px;">How Tunas Think</h3>
+        <div class="mindset-statement tuna">"I just need international shipping to work."</div>
+        <div class="mindset-statement tuna">"Help me make this workable and repeatable."</div>
+        <div class="mindset-statement tuna">"Economy pricing is the unlock. I can't afford Express for everything."</div>
+        <div class="mindset-statement tuna">"I had no idea what DDP even meant."</div>
+        <div class="mindset-statement tuna">"I'm booking 30 shipments manually. It's killing me."</div>
+        <div class="mindset-statement tuna">"The Post Office was my only option. Then I found out about TUNL."</div>
+        <div class="mindset-statement tuna">"My Etsy orders are growing. I need something that scales."</div>
+      </div>
+      <div>
+        <h3 style="font-size:15px;font-weight:700;color:var(--coral);margin-bottom:16px;">What Triggers Demand</h3>
+        <p style="font-size:13px;color:var(--mid);margin-bottom:14px;">One or more of these events creates urgency:</p>
+        <div class="trigger-grid">
+          <span class="trigger-pill tuna">Manual process overwhelm</span>
+          <span class="trigger-pill tuna">DHL/Post Office pricing</span>
+          <span class="trigger-pill tuna">Viral/sudden order spike</span>
+          <span class="trigger-pill tuna">First international orders</span>
+          <span class="trigger-pill tuna">Etsy international growth</span>
+          <span class="trigger-pill tuna">Market expansion curiosity</span>
+          <span class="trigger-pill tuna">Tourist "ship it home"</span>
+          <span class="trigger-pill tuna">Payment/checkout friction</span>
+          <span class="trigger-pill tuna">Customs confusion</span>
+          <span class="trigger-pill tuna">Customer duties complaints</span>
+          <span class="trigger-pill tuna">US tariff pressure</span>
+          <span class="trigger-pill tuna">Economy option missing</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:15px;font-weight:700;color:var(--coral);margin-bottom:16px;">Real Trigger Moments from Interviews</h3>
+    <div class="quote-grid">
+      <div class="quote-block" style="background:var(--coral);">
+        <blockquote>"30+ shipments pending because of payment timeouts. I'm shipping to 30 different people and every payment is failing back-to-back."</blockquote>
+        <cite>— Bags by Uma (Solo founder, sudden viral growth, made-to-order bags)</cite>
+      </div>
+      <div class="quote-block" style="background:var(--coral);">
+        <blockquote>"I was using the Post Office. Then TUNL reached out and showed me economy rates that made international actually viable."</blockquote>
+        <cite>— AAfrica (African curios, Tuna, US market)</cite>
+      </div>
+      <div class="quote-block" style="background:var(--coral);">
+        <blockquote>"We were using Courier-IT before. A DJ collab created a wave of US orders and we needed to figure out international fast."</blockquote>
+        <cite>— Float Apparel (DTC apparel, Tuna, DJ collab trigger)</cite>
+      </div>
+      <div class="quote-block" style="background:var(--coral);">
+        <blockquote>"Our customers were getting surprise duty bills months later. That's a trust issue. We had to solve DDP."</blockquote>
+        <cite>— Africology (Skincare, growing Tuna, US/UK/AU)</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 2: PROBLEM LANDSCAPE -->
+<div id="problems" class="section-alt">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="section-label coral">02</div>
+    <h2>Problem Landscape</h2>
+    <p>What these merchants struggle with — broken into categories. Segment weighting shown.</p>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:24px;">
+
+    <div class="card-coral">
+      <h3>Cost Problems</h3>
+      <ul>
+        <li><strong>Rebilling:</strong> Inaccurate weights/dimensions → phantom carrier charges. Versus Socks: R30k+/month. Escape Gear: R100k/month unrecovered. <span class="badge badge-whale">Whale</span></li>
+        <li><strong>DHL/FedEx Express pricing:</strong> Too expensive for regular volume. "The billing was excellent but the pricing was too expensive." <span class="badge badge-both">Both</span></li>
+        <li><strong>No economy option:</strong> Critical gap. Tunas' primary unlock. Post Office was often the only alternative. <span class="badge badge-tuna">Tuna</span></li>
+        <li><strong>Margin disappearing internationally:</strong> No accurate landed cost at checkout → merchants under-recover on every order. <span class="badge badge-both">Both</span></li>
+        <li><strong>Volumetric weight surprises:</strong> Flyer bags flex on transit. Bulky goods under-measured. Automotive parts wildly different quoted vs billed. <span class="badge badge-whale">Whale</span></li>
+        <li><strong>US tariff pressure:</strong> Reciprocal tariffs (30%+) eroding international competitiveness. Reshaping market strategy for some. <span class="badge badge-both">Both</span></li>
+      </ul>
+    </div>
+
+    <div class="card-blue">
+      <h3>Operational Problems</h3>
+      <ul>
+        <li><strong>Manual booking/quoting:</strong> Kills conversion. Long quote turnarounds cause cart abandonment (Veldskoen: "customers dropping before checkout"). Solo operators booking 30+ shipments by hand.</li>
+        <li><strong>HS code gaps:</strong> Causes DDP failures, customs holds, rebills. Old School: hundreds of products missing HS codes. Curio merchants unsure how to classify goods.</li>
+        <li><strong>Integration breakdown:</strong> WooCommerce custom code with no documentation (Escape Gear). Shopify sync issues (Africology). Magento not compatible (Carrol Boyes).</li>
+        <li><strong>Document workflows:</strong> Vet certificates for animal products uploaded manually (Avoova). FDA Prior Notice for food/supplements. CITES permits for wildlife-derived goods.</li>
+        <li><strong>Multi-platform management:</strong> Two Shopify storefronts (Old School). Shopify + Papyrus inventory (Clarkes). WooCommerce + manual CSV workflows.</li>
+        <li><strong>Warehouse cognitive load:</strong> Old School's fulfilment team managing Black Friday spikes, packaging dimension compliance, and two storefronts simultaneously.</li>
+      </ul>
+    </div>
+
+    <div class="card-lilac">
+      <h3>Compliance Problems</h3>
+      <ul>
+        <li><strong>DAP/DDP confusion:</strong> Universal. Customers surprised by duties months later (Singita: artwork R500 duties invoice after months). Most merchants don't understand the difference until a customer complains. <span class="badge badge-both">Both</span></li>
+        <li><strong>FDA Prior Notice:</strong> Coffee, supplements, food products going to US. Truth Coffee experiencing random holds and inspections as US tariff environment shifts. <span class="badge badge-tuna">Tuna</span></li>
+        <li><strong>CITES permits:</strong> Animal-derived goods. Avoova ships kudu horns (top seller), ostrich-clad jewellery. Singita ships animal-material artefacts. Occasional unnecessary CITES requests create delays. <span class="badge badge-both">Both</span></li>
+        <li><strong>HS code classification:</strong> Especially complex for curios, cultural goods, textiles, wellness products with restricted ingredients (Africology: MSDS required). <span class="badge badge-tuna">Tuna</span></li>
+        <li><strong>Customs holds / random inspections:</strong> Increasing in US. Truth Coffee experiencing damaged goods on inspection. Unpredictable. <span class="badge badge-both">Both</span></li>
+      </ul>
+    </div>
+
+    <div class="card-orange">
+      <h3>Growth & Risk Problems</h3>
+      <ul>
+        <li><strong>Market entry complexity:</strong> UAE (Truth Coffee), US (most merchants), EU/UK (Versus Socks, Old School). No clear playbook for which markets to enter or how. <span class="badge badge-both">Both</span></li>
+        <li><strong>Pricing segmentation:</strong> No international market pricing control. Veldskoen: customers accessing SA-priced site internationally. Shopify Markets setup manual and time-consuming (2hrs per market — Float Apparel). <span class="badge badge-whale">Whale</span></li>
+        <li><strong>Tracking failures:</strong> Singita: shipments marked "delivered" with invalid tracking. Framed print with no updates for weeks. Premium brand + unclear tracking = reputational risk. <span class="badge badge-whale">Whale</span></li>
+        <li><strong>Scaling volume without breaking ops:</strong> Old School's Black Friday spikes expose every process gap simultaneously. No room for error at volume. <span class="badge badge-whale">Whale</span></li>
+        <li><strong>Carrier knowledge vacuum:</strong> When the developer who built the integration leaves, nobody understands the system (Escape Gear). Merchants left unable to debug or adapt. <span class="badge badge-tuna">Tuna</span></li>
+        <li><strong>Returns complexity:</strong> No clear reverse logistics. Especially painful for high-AOV items (Singita artefacts, Avoova jewellery). <span class="badge badge-both">Both</span></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="card" style="background:#f8f8f4;border-color:#ddd;">
+    <h3 style="margin-bottom:12px;">Universal Pain — Across Every Segment</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;">
+      <span class="trigger-pill">Unpredictable costs</span>
+      <span class="trigger-pill">Customs surprises for end customers</span>
+      <span class="trigger-pill">No single source of truth for shipping</span>
+      <span class="trigger-pill">Manual double-handling</span>
+      <span class="trigger-pill">Support disappears when things go wrong</span>
+      <span class="trigger-pill">Too much time spent on shipping admin</span>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<!-- SECTION 3: CATEGORIES & MARKETS -->
+<section id="categories" class="section">
+  <div class="section-header">
+    <div class="section-label">03</div>
+    <h2>Category & Market Patterns</h2>
+    <p>Which industries show up most, and where these merchants are trying to sell.</p>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--blue);margin-bottom:20px;">Categories by Frequency</h3>
+
+      <div class="cat-bar">
+        <span class="cat-rank">1</span>
+        <div class="cat-info">
+          <div class="cat-name">Apparel & Fashion</div>
+          <div class="cat-examples">Ciovita, Old School, Float Apparel, FOM, Versus Socks, Alex Zono, Chommies</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-blue">Whale dominant</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">2</span>
+        <div class="cat-info">
+          <div class="cat-name">African Curios & Cultural Goods</div>
+          <div class="cat-examples">AAfrica, Avoova, Singita, JNGcape, Big Brothers & Sisters, Africa Trader, Djomo's Art, Echoes of SA</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-coral">Tuna dominant</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">3</span>
+        <div class="cat-info">
+          <div class="cat-name">Books & Publishing</div>
+          <div class="cat-examples">Clarkes Bookshop, Rare Collections, The Book Cove, Spirit Revelations</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-coral">Tuna / Whale mix</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">4</span>
+        <div class="cat-info">
+          <div class="cat-name">Footwear</div>
+          <div class="cat-examples">Veldskoen, Jim Green</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-blue">Whale potential</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">5</span>
+        <div class="cat-info">
+          <div class="cat-name">Skincare & Beauty</div>
+          <div class="cat-examples">Africology, Stellenbosch Nanofiber Company</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-coral">Tuna</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">6</span>
+        <div class="cat-info">
+          <div class="cat-name">Coffee & Food/Bev</div>
+          <div class="cat-examples">Truth Coffee, Ollab (supplements)</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-coral">Tuna</span>
+          <span class="tag tag-blue">FDA-critical</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">7</span>
+        <div class="cat-info">
+          <div class="cat-name">Automotive Accessories</div>
+          <div class="cat-examples">Airflow, Escape Gear</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-blue">Whale-track</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">8</span>
+        <div class="cat-info">
+          <div class="cat-name">Home / Interior / Safari Gear</div>
+          <div class="cat-examples">Melville & Moon, Coral & Hive, Ark Paper, Sarza</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-coral">Tuna / niche</span>
+        </div>
+      </div>
+
+      <div class="cat-bar">
+        <span class="cat-rank">9</span>
+        <div class="cat-info">
+          <div class="cat-name">Other Niche Categories</div>
+          <div class="cat-examples">Ceramics (Cheval), Music (Fanner), Art (Lucie de Moyen), Pets (Chommies)</div>
+        </div>
+        <div class="cat-tags">
+          <span class="tag tag-coral">Tuna</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--blue);margin-bottom:20px;">Market Patterns</h3>
+      <ul class="market-list">
+        <li>
+          <span class="market-flag">🇺🇸</span>
+          <span class="market-name">United States</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:95%;"></div></div>
+          <span class="market-note">Dominant. Universal. FDA + tariff pressures.</span>
+        </li>
+        <li>
+          <span class="market-flag">🇬🇧</span>
+          <span class="market-name">United Kingdom</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:55%;"></div></div>
+          <span class="market-note">Strong second tier. VAT complexity.</span>
+        </li>
+        <li>
+          <span class="market-flag">🇪🇺</span>
+          <span class="market-name">Europe (EU)</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:50%;"></div></div>
+          <span class="market-note">Growing. Vs Socks, Ciovita, FOM.</span>
+        </li>
+        <li>
+          <span class="market-flag">🇦🇺</span>
+          <span class="market-name">Australia</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:40%;"></div></div>
+          <span class="market-note">Emerging. Lower friction than US.</span>
+        </li>
+        <li>
+          <span class="market-flag">🇳🇿</span>
+          <span class="market-name">New Zealand</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:20%;"></div></div>
+          <span class="market-note">Alongside AU. Veldskoen, Africa Trader.</span>
+        </li>
+        <li>
+          <span class="market-flag">🇨🇦</span>
+          <span class="market-name">Canada</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:18%;"></div></div>
+          <span class="market-note">Smaller. Avoova, Echoes of SA.</span>
+        </li>
+        <li>
+          <span class="market-flag">🇦🇪</span>
+          <span class="market-name">UAE</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:12%;"></div></div>
+          <span class="market-note">Strategic emerging. Truth Coffee pivot.</span>
+        </li>
+        <li>
+          <span class="market-flag">🇰🇷</span>
+          <span class="market-name">Korea / Asia</span>
+          <div class="market-bar-wrap"><div class="market-bar" style="width:8%;"></div></div>
+          <span class="market-note">Edge cases. Growing appetite.</span>
+        </li>
+      </ul>
+
+      <div class="card" style="margin-top:24px;background:#f8f4ff;border-color:var(--lilac);">
+        <h3 style="color:var(--dark);">Key Pattern Observations</h3>
+        <ul>
+          <li>US is the default first market — but <strong>US tariff pressure in 2025</strong> is reshaping some strategies (Truth Coffee shifting to UAE)</li>
+          <li><strong>Curios category is US-driven</strong> — African goods sell to US consumers most reliably, but animal products (kudu, ostrich) create CITES friction</li>
+          <li><strong>EU/UK bulk distributor model</strong> is common for apparel — Versus Socks, Ciovita, FOM all use this. Different shipping pattern to DTC.</li>
+          <li><strong>Australia/NZ is the easiest expansion</strong> — lower regulatory burden, English-speaking, strong SA brand affinity</li>
+          <li><strong>Tourism-to-export pipeline</strong> is a common entry point for curios — "ship it home" guest requests that become a shipping operation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 4: EARLY SIGNALS -->
+<div id="signals" class="section-alt">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="section-label lilac">04</div>
+    <h2>Early Signals Marketing Can Spot</h2>
+    <p>Targeting and ad audience signals — how to find these merchants before they come to us.</p>
+  </div>
+
+  <div class="grid-3">
+
+    <div class="signal-card">
+      <h4>Platform Signals</h4>
+      <ul>
+        <li>Shopify stores with international shipping rates configured but using DHL/FedEx directly</li>
+        <li>Shopify stores showing "calculated shipping" internationally with manual rates</li>
+        <li>Etsy stores from SA with international order history (reviews from US/UK/AU buyers)</li>
+        <li>WooCommerce stores with flat-rate international shipping (haven't solved it)</li>
+        <li>Brands using Shopify Markets but with manual pricing setup</li>
+        <li>SA stores with international currency switchers but no live duty display</li>
+        <li>Stores with "international shipping on request" or quote-based messaging</li>
+      </ul>
+    </div>
+
+    <div class="signal-card">
+      <h4>Social & Content Signals</h4>
+      <ul>
+        <li>SA brands posting about international orders, global customers, or first export success</li>
+        <li>Posts mentioning DHL or FedEx pricing frustrations</li>
+        <li>Posts about customs delays or customer complaints about duties</li>
+        <li>Brands celebrating "first US/UK/AU order" milestones</li>
+        <li>SA brands with international press features but no streamlined shipping</li>
+        <li>Etsy sellers posting "shipping internationally from South Africa" content</li>
+        <li>Instagram brands tagging US/UK customers or filming international orders</li>
+      </ul>
+    </div>
+
+    <div class="signal-card">
+      <h4>Business & Growth Signals</h4>
+      <ul>
+        <li>SA brands appearing on international stockist or press lists</li>
+        <li>Brands expanding from tourism-retail to online export (curios, homewear)</li>
+        <li>Apparel brands with international sizing guides or fit notes for US/UK markets</li>
+        <li>SA food/coffee brands talking about export compliance or FDA</li>
+        <li>Brands announcing expansion to new markets (especially US, UK, UAE)</li>
+        <li>LinkedIn posts from SA founders about international ecommerce growth</li>
+        <li>Etsy or Amazon sellers moving to their own Shopify store</li>
+      </ul>
+    </div>
+
+    <div class="signal-card">
+      <h4>Ad Audience Proxies</h4>
+      <ul>
+        <li>SA business owners interested in Shopify, WooCommerce, ecommerce tools</li>
+        <li>SA apparel, footwear, home goods, artisan brands on Instagram</li>
+        <li>Etsy sellers in SA with international buyer reviews</li>
+        <li>SA founders following international DTC brands or export resources</li>
+        <li>Interest overlap: Shopify + international shipping + South Africa</li>
+        <li>Job titles: Ecommerce Manager, Founder, Operations Lead at SA brands</li>
+        <li>Lookalike audiences from existing Whale/Tuna customer emails</li>
+      </ul>
+    </div>
+
+    <div class="signal-card">
+      <h4>Category-Specific Signals</h4>
+      <ul>
+        <li><strong>Curios:</strong> Tourist-facing stores with "ship worldwide" messaging; Etsy with handcrafted/African goods</li>
+        <li><strong>Apparel:</strong> SA brands with US/UK stockists; brands doing international collabs or pop-ups</li>
+        <li><strong>Coffee:</strong> SA specialty coffee brands with international wholesale interest</li>
+        <li><strong>Books:</strong> SA specialist bookshops with international library or collector customers</li>
+        <li><strong>Automotive:</strong> SA accessory brands listed on international forums or Amazon</li>
+        <li><strong>Skincare:</strong> SA wellness brands targeting US natural beauty market</li>
+      </ul>
+    </div>
+
+    <div class="signal-card">
+      <h4>Pain-State Signals</h4>
+      <ul>
+        <li>Brands posting about DHL/FedEx invoices or surprise charges</li>
+        <li>Merchants asking "how do I ship internationally from SA" in Facebook groups or Reddit</li>
+        <li>Customer complaints about customs charges visible in brand reviews</li>
+        <li>Brands with "international shipping unavailable" or "enquire for international rates" on their store</li>
+        <li>SA stores with abandoned cart rates spiking on international orders</li>
+        <li>Merchants in Cape Town / WC business networks discussing export</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+</div>
+
+
+<!-- SECTION 5: VALUE PROPOSITION HIERARCHY -->
+<section id="vp" class="section">
+  <div class="section-header">
+    <div class="section-label">05</div>
+    <h2>Value Proposition Hierarchy</h2>
+    <p>Which value props matter most, ranked by segment. Lead with Tier 1. Support with Tier 2 and 3.</p>
+  </div>
+
+  <div class="seg-tabs">
+    <button class="seg-tab active-whale" onclick="switchTab(this, 'vp-whale', 'vp-tuna', 'active-whale')">🐋 Whales</button>
+    <button class="seg-tab" onclick="switchTab(this, 'vp-tuna', 'vp-whale', 'active-tuna')">🐟 Tunas</button>
+  </div>
+
+  <div id="vp-whale" class="seg-panel active">
+    <div class="tier-block tier-1">
+      <div class="tier-header">
+        <span>Tier 1 — Primary Drivers</span>
+        <span class="tier-badge">Lead with these</span>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Operational simplification</strong>
+            <span>One system for all international shipping — not courier chaos, not patched integrations. "Things became calmer operationally." Whales are buying operational calm above everything.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Predictable costs — no rebill surprises</strong>
+            <span>Guaranteed checkout-to-billing accuracy. Whales are haemorrhaging on rebills (R30k–R100k/month). "No billing surprises" is a direct commercial relief, not a nice-to-have.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Reliable integration (native, not patched)</strong>
+            <span>Shopify and WooCommerce native. When developer knowledge walks out the door, the system still works. Escape Gear lost a developer and lost R100k in a month. Whales have been burned.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>SA-specific expertise</strong>
+            <span>Someone who knows your problems before you explain them. Understands curios, apparel, footwear, HS codes for SA exports, FedEx rebill disputes, US tariff implications. Not a generic logistics platform.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-block tier-2" style="margin-top:16px;">
+      <div class="tier-header">
+        <span>Tier 2 — Secondary Value</span>
+        <span class="tier-badge">Reinforce after Tier 1 lands</span>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Cost reduction vs DHL/FedEx</strong>
+            <span>Meaningful savings at volume, especially with economy options and negotiated express rates. Strong proof point when compared directly.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>DDP/duties clarity at checkout</strong>
+            <span>Protect the end-customer experience. No surprise duty bills. Whales care about brand reputation as much as cost.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Dedicated account management</strong>
+            <span>Real humans who know your account. "When something goes wrong internationally, someone picks up the phone." High-touch support is a differentiator vs courier self-service.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-block tier-3" style="margin-top:16px;">
+      <div class="tier-header">
+        <span>Tier 3 — Supporting Features</span>
+        <span class="tier-badge">Proof points, not lead messages</span>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Multi-carrier flexibility</strong>
+            <span>FedEx, UPS, economy consol. Not locked to one carrier's pricing whims.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Bulk/CSV automation</strong>
+            <span>Batch bookings, order sync, CSV upload for non-ecommerce workflows.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content">
+            <strong>Postpaid terms (30-day)</strong>
+            <span>Cash flow alignment for established businesses. Not a lead message — a closing point.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="vp-tuna" class="seg-panel">
+    <div class="tier-block" style="border-color:var(--coral);">
+      <div class="tier-header" style="background:var(--coral);color:#fff;">
+        <span>Tier 1 — Primary Drivers</span>
+        <span class="tier-badge">Lead with these</span>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-dot" style="background:var(--coral);"></div>
+          <div class="tier-item-content">
+            <strong>Economy pricing — affordable international shipping</strong>
+            <span>The unlock. Express was the only option before TUNL. Economy rates made international viable. "The Post Office was my only option." Price is the Tuna's first question.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot" style="background:var(--coral);"></div>
+          <div class="tier-item-content">
+            <strong>Make it workable and repeatable</strong>
+            <span>Etsy + Shopify integrated. No manual booking for every shipment. Tunas are doing this by hand — and it's breaking them at any kind of volume.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot" style="background:var(--coral);"></div>
+          <div class="tier-item-content">
+            <strong>Simplicity — clear process, no confusion</strong>
+            <span>Tunas are often first-timers or small teams. They don't know what DDP means. They need guidance, not jargon. "I just need it to work."</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-block tier-2" style="margin-top:16px;border-color:var(--mauve);">
+      <div class="tier-header" style="background:var(--mauve);color:var(--dark);">
+        <span>Tier 2 — Secondary Value</span>
+        <span class="tier-badge">Reinforce after Tier 1 lands</span>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-dot" style="background:var(--mauve);"></div>
+          <div class="tier-item-content">
+            <strong>Remove customs confusion</strong>
+            <span>DDP so customers aren't surprised by duty bills. "Our customers were getting surprise charges months later — that's a trust issue."</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot" style="background:var(--mauve);"></div>
+          <div class="tier-item-content">
+            <strong>Growth enablement</strong>
+            <span>Ship to more markets without more complexity. A Tuna growing into a Whale needs a platform that scales with them.</span>
+          </div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot" style="background:var(--mauve);"></div>
+          <div class="tier-item-content">
+            <strong>Human support</strong>
+            <span>Someone to ask when it doesn't make sense. Tunas need hand-holding at critical moments — first US shipment, first customs hold, first rebill.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier-block tier-3" style="margin-top:16px;">
+      <div class="tier-header">
+        <span>Tier 3 — Supporting Features</span>
+        <span class="tier-badge">Proof points, not lead messages</span>
+      </div>
+      <div class="tier-items">
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content"><strong>Market expansion guidance</strong><span>Which markets to enter, what to expect, how to price.</span></div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content"><strong>Compliance support</strong><span>HS codes, vet certs, FDA Prior Notice — handled, not left to the merchant.</span></div>
+        </div>
+        <div class="tier-item">
+          <div class="tier-item-dot"></div>
+          <div class="tier-item-content"><strong>Insurance options</strong><span>Peace of mind for high-AOV or fragile goods.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SECTION 6: MESSAGING FRAMEWORK -->
+<div id="messaging" class="section-alt">
+<div class="section-inner">
+  <div class="section-header">
+    <div class="section-label orange">06</div>
+    <h2>Messaging Framework</h2>
+    <p>Problem → Message → Proof. Use this to build ads, landing pages, email copy, and sales outreach.</p>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:16px;">🐋 Whale Messaging Matrix</h3>
+  <div class="table-wrap" style="margin-bottom:36px;">
+    <table>
+      <thead>
+        <tr>
+          <th>Merchant Problem</th>
+          <th>Core Message</th>
+          <th>Proof / Evidence</th>
+          <th>Channel Fit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Rebilling eating margin</strong><br><span style="font-size:12px;color:var(--mid);">R30k–R100k/month unrecovered</span></td>
+          <td>No billing surprises. What you quote is what you pay.</td>
+          <td>Versus Socks dispute resolution; automated weight/dim guardrails; Old School weight audit</td>
+          <td><span class="tag tag-blue">Outbound email</span><span class="tag tag-blue">LinkedIn</span></td>
+        </tr>
+        <tr>
+          <td><strong>DHL/FedEx too expensive</strong><br><span style="font-size:12px;color:var(--mid);">No leverage on rates</span></td>
+          <td>Cut your international shipping costs without cutting corners.</td>
+          <td>Veldskoen economy switch; Ciovita price vs FedEx; R150m shipped in 2025</td>
+          <td><span class="tag tag-blue">Paid search</span><span class="tag tag-blue">Meta ads</span></td>
+        </tr>
+        <tr>
+          <td><strong>Courier chaos / no ownership</strong><br><span style="font-size:12px;color:var(--mid);">When it goes wrong, no one answers</span></td>
+          <td>One system. One team. Full ownership of what happens internationally.</td>
+          <td>"Things became calmer operationally" — Old School ops lead; WhatsApp 1hr SLA</td>
+          <td><span class="tag tag-blue">Landing page</span><span class="tag tag-blue">Sales decks</span></td>
+        </tr>
+        <tr>
+          <td><strong>Integration broken or manual</strong><br><span style="font-size:12px;color:var(--mid);">Custom code with no documentation</span></td>
+          <td>Connect your store. Ship in minutes. No developer needed.</td>
+          <td>Escape Gear WooCommerce integration; 50+ Shopify stores live; no-code setup</td>
+          <td><span class="tag tag-blue">Search ads</span><span class="tag tag-blue">SEO content</span></td>
+        </tr>
+        <tr>
+          <td><strong>Customs confusion for end customers</strong><br><span style="font-size:12px;color:var(--mid);">Duties arriving months later</span></td>
+          <td>Your customers pay at checkout. No duty surprises later.</td>
+          <td>DDP/DAP live checkout; Singita duties education; Africology DDP setup</td>
+          <td><span class="tag tag-blue">Landing page</span><span class="tag tag-blue">Email nurture</span></td>
+        </tr>
+        <tr>
+          <td><strong>FDA / compliance anxiety</strong><br><span style="font-size:12px;color:var(--mid);">US customs getting stricter</span></td>
+          <td>We handle the compliance. You handle the brand.</td>
+          <td>Truth Coffee FDA Prior Notice handling; proactive exception management</td>
+          <td><span class="tag tag-blue">Food/Bev vertical</span><span class="tag tag-blue">Content</span></td>
+        </tr>
+        <tr>
+          <td><strong>Volume scaling breaking ops</strong><br><span style="font-size:12px;color:var(--mid);">Black Friday exposes every gap</span></td>
+          <td>Built for volume. When shipments spike, the system holds.</td>
+          <td>Old School Black Friday handling; bulk CSV; multi-box support</td>
+          <td><span class="tag tag-blue">Seasonal campaigns</span><span class="tag tag-blue">Retargeting</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:15px;font-weight:700;color:var(--coral);margin-bottom:16px;">🐟 Tuna Messaging Matrix</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Merchant Problem</th>
+          <th>Core Message</th>
+          <th>Proof / Evidence</th>
+          <th>Channel Fit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>DHL/Post Office too expensive</strong><br><span style="font-size:12px;color:var(--mid);">No affordable international option</span></td>
+          <td>Affordable international shipping. Finally.</td>
+          <td>Economy rates vs Post Office; Fanner (music instruments) case; AAfrica (curios)</td>
+          <td><span class="tag tag-coral">Meta ads</span><span class="tag tag-coral">Etsy outreach</span></td>
+        </tr>
+        <tr>
+          <td><strong>Manual booking overload</strong><br><span style="font-size:12px;color:var(--mid);">30+ shipments by hand, payments failing</span></td>
+          <td>Book in bulk. Track everything. Stop doing it by hand.</td>
+          <td>Bags by Uma bulk booking support; Clarkes bulk library workflow</td>
+          <td><span class="tag tag-coral">Email</span><span class="tag tag-coral">Instagram</span></td>
+        </tr>
+        <tr>
+          <td><strong>Customs confusion</strong><br><span style="font-size:12px;color:var(--mid);">"I had no idea what DDP meant"</span></td>
+          <td>We explain the jargon and handle the paperwork.</td>
+          <td>Onboarding support; DDP/DAP explainers; Africa Trader compliance help</td>
+          <td><span class="tag tag-coral">Content</span><span class="tag tag-coral">Email nurture</span></td>
+        </tr>
+        <tr>
+          <td><strong>Etsy-to-Shopify transition</strong><br><span style="font-size:12px;color:var(--mid);">Growing beyond marketplace</span></td>
+          <td>Move from Etsy to your own store. We'll handle the international shipping.</td>
+          <td>Multiple Etsy-to-Shopify merchant journeys; JNGcape, Africa Trader</td>
+          <td><span class="tag tag-coral">Etsy outreach</span><span class="tag tag-coral">Meta</span></td>
+        </tr>
+        <tr>
+          <td><strong>First market expansion</strong><br><span style="font-size:12px;color:var(--mid);">"I want to sell to the US but don't know where to start"</span></td>
+          <td>Your first international shipment, done right.</td>
+          <td>Onboarding process; market guides; 155 countries; SA specialist team</td>
+          <td><span class="tag tag-coral">SEO</span><span class="tag tag-coral">Content</span></td>
+        </tr>
+        <tr>
+          <td><strong>Sudden growth spike</strong><br><span style="font-size:12px;color:var(--mid);">Viral moment, no shipping infrastructure</span></td>
+          <td>Orders coming in fast? We can scale with you.</td>
+          <td>Bags by Uma viral moment; payment + booking support at scale</td>
+          <td><span class="tag tag-coral">Retargeting</span><span class="tag tag-coral">WhatsApp</span></td>
+        </tr>
+        <tr>
+          <td><strong>No economy option for curios/crafts</strong><br><span style="font-size:12px;color:var(--mid);">Fragile, irregular, one-of-a-kind items</span></td>
+          <td>Ship what you make. Not just what fits in a standard box.</td>
+          <td>Avoova (kudu, jewellery), Singita, Djomo's (art), Fanner (instruments)</td>
+          <td><span class="tag tag-coral">Instagram</span><span class="tag tag-coral">Etsy outreach</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+<!-- SECTION 7: CONTENT & CREATIVE HOOKS -->
+<section id="hooks" class="section">
+  <div class="section-header">
+    <div class="section-label">07</div>
+    <h2>Content & Creative Hooks</h2>
+    <p>Content themes that will attract each segment, and ad/copy hooks ready to use.</p>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:40px;">
+    <div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:16px;">Content Themes</h3>
+
+      <div class="card" style="margin-bottom:14px;">
+        <h3>Operational Themes</h3>
+        <ul>
+          <li>"How SA brands ship globally without the chaos"</li>
+          <li>"Reducing international shipping costs from South Africa"</li>
+          <li>"What happens when your WooCommerce shipping integration breaks"</li>
+          <li>"One system for all your international shipping"</li>
+          <li>"Why your Shopify live rates don't match your FedEx invoice"</li>
+          <li>"How to stop international rebilling eating your margin"</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-bottom:14px;">
+        <h3>Educational Themes</h3>
+        <ul>
+          <li>"DDP vs DAP: What every SA exporter needs to know"</li>
+          <li>"US customs in 2025: What SA merchants are getting wrong"</li>
+          <li>"HS codes explained: The hidden cause of rebilling"</li>
+          <li>"FDA Prior Notice for SA food and coffee exporters"</li>
+          <li>"How to price international shipping at checkout"</li>
+          <li>"CITES permits: What SA curio sellers need to know"</li>
+          <li>"What the 2025 US tariffs mean for SA exporters"</li>
+        </ul>
+      </div>
+
+      <div class="card" style="margin-bottom:14px;">
+        <h3>Growth Themes</h3>
+        <ul>
+          <li>"Scaling international ecommerce from South Africa"</li>
+          <li>"Expanding to the US: What SA brands need to know"</li>
+          <li>"From Etsy to your own Shopify store"</li>
+          <li>"Building a global brand from South Africa"</li>
+          <li>"Why Australia is SA's easiest international expansion"</li>
+          <li>"How to sell in the UK without an EU headache"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <h3 style="font-size:15px;font-weight:700;color:var(--blue);margin-bottom:16px;">Segment-Specific Angles</h3>
+
+      <div class="card-coral" style="margin-bottom:14px;">
+        <h3>For Curios & African Goods</h3>
+        <ul>
+          <li>"Ship your handcrafted goods to the US. Without the paperwork headache."</li>
+          <li>"SA artisans now shipping to 155 countries."</li>
+          <li>"From your workshop to a home in New York."</li>
+          <li>"Animal products, kudu horns, ceramics — we've shipped it all."</li>
+          <li>"Tourism sells it. TUNL ships it home."</li>
+        </ul>
+      </div>
+
+      <div class="card-lilac" style="margin-bottom:14px;">
+        <h3>For Apparel Brands</h3>
+        <ul>
+          <li>"SA-made. UK-delivered. No surprises."</li>
+          <li>"Your international sizing guide deserves international shipping."</li>
+          <li>"Flyer bag rebills are optional. Here's how to stop them."</li>
+          <li>"Black Friday in South Africa. Fulfilled globally."</li>
+          <li>"DTC apparel from SA to US. Fully landed cost at checkout."</li>
+        </ul>
+      </div>
+
+      <div class="card-orange" style="margin-bottom:14px;">
+        <h3>For Etsy / Solo Founders</h3>
+        <ul>
+          <li>"Went viral overnight. TUNL helped me ship 30 orders by morning."</li>
+          <li>"From 5 Etsy orders a week to 50. Same effort."</li>
+          <li>"Affordable international shipping for SA makers."</li>
+          <li>"Stop spending 2 hours booking shipments manually."</li>
+          <li>"Your craft deserves to cross borders."</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--blue);margin-bottom:20px;">Ad & Copy Hooks</h3>
+  <div class="grid-4">
+
+    <div class="hook-card cost">
+      <div class="hook-type">Cost Hooks</div>
+      <ul>
+        <li>"Stop overpaying for international shipping."</li>
+        <li>"You're losing money on every international order."</li>
+        <li>"DHL charged you R7,000. It should have been R1,800."</li>
+        <li>"R30k a month in rebills. Not anymore."</li>
+        <li>"Save up to 91% on international shipping costs."</li>
+        <li>"Economy international shipping from South Africa. Finally."</li>
+      </ul>
+    </div>
+
+    <div class="hook-card ops">
+      <div class="hook-type">Operational Hooks</div>
+      <ul>
+        <li>"One system for global shipping."</li>
+        <li>"Your courier is eating your margin. There's a better way."</li>
+        <li>"International shipping that just works."</li>
+        <li>"Stop firefighting. Start shipping."</li>
+        <li>"Connect your store. Ship in minutes."</li>
+        <li>"Everything international. One platform."</li>
+      </ul>
+    </div>
+
+    <div class="hook-card growth">
+      <div class="hook-type">Growth Hooks</div>
+      <ul>
+        <li>"Turn your SA brand into a global brand."</li>
+        <li>"Your next market is waiting."</li>
+        <li>"SA-made. Shipped worldwide."</li>
+        <li>"From Cape Town to the world."</li>
+        <li>"Go from Etsy to global DTC."</li>
+        <li>"155 countries. Your product. Our system."</li>
+      </ul>
+    </div>
+
+    <div class="hook-card reliability">
+      <div class="hook-type">Reliability Hooks</div>
+      <ul>
+        <li>"Built for South African exporters."</li>
+        <li>"We've shipped R150m in goods. Yours is next."</li>
+        <li>"When something goes wrong internationally, someone picks up the phone."</li>
+        <li>"International shipping is already complex. It doesn't need to be unpredictable."</li>
+        <li>"Trusted by established SA exporters."</li>
+        <li>"The SA logistics team that actually knows customs."</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <hr class="divider" />
+
+  <div class="grid-2">
+    <div class="card-blue">
+      <h3>Whale Ad Framework</h3>
+      <p style="margin-bottom:16px;">Lead with operational pain or cost bleed. Proof via scale + outcomes.</p>
+      <ul>
+        <li><strong>Hook:</strong> Call out the specific problem (rebills, broken integration, courier chaos)</li>
+        <li><strong>Promise:</strong> Operational calm + predictable costs</li>
+        <li><strong>Proof:</strong> R150m shipped, named case study outcomes, "calmer operationally"</li>
+        <li><strong>CTA:</strong> "Talk to our team" — high-intent, consultative</li>
+      </ul>
+    </div>
+    <div class="card-coral">
+      <h3>Tuna Ad Framework</h3>
+      <p style="margin-bottom:16px;">Lead with economy pricing or manual overload. Proof via simplicity + access.</p>
+      <ul>
+        <li><strong>Hook:</strong> Call out the cost or manual burden ("book 30 orders manually")</li>
+        <li><strong>Promise:</strong> Affordable, automated, clear</li>
+        <li><strong>Proof:</strong> Economy rates, Etsy integration, SA-specific support</li>
+        <li><strong>CTA:</strong> "Start for free" or "Get your first rate" — low friction, self-serve</li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>TUNL Marketing Intelligence</strong> — Synthesised from customer interviews, segmentation data, and brand guidelines.</p>
+  <p style="margin-top:8px;">Internal use only. Last updated March 2026.</p>
+</footer>
+
+<script>
+  function switchTab(clickedBtn, showId, hideId, activeClass) {
+    // Update buttons
+    const allBtns = clickedBtn.parentElement.querySelectorAll('.seg-tab');
+    allBtns.forEach(btn => {
+      btn.classList.remove('active-whale', 'active-tuna');
+    });
+    clickedBtn.classList.add(activeClass);
+
+    // Update panels — find in same section
+    const section = clickedBtn.closest('section') || clickedBtn.closest('.section-alt');
+    const showPanel = section ? section.querySelector('#' + showId) : document.getElementById(showId);
+    const hidePanel = section ? section.querySelector('#' + hideId) : document.getElementById(hideId);
+
+    if (showPanel) showPanel.classList.add('active');
+    if (hidePanel) hidePanel.classList.remove('active');
+  }
+</script>
+
+</body>
+</html>
