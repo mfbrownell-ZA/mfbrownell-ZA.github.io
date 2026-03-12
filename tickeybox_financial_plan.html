@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TickeyBox — FY2026 Financial Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --coral: #FF6E61;
+    --yellow: #FFEE6B;
+    --mint: #B3E6C9;
+    --navy: #08113F;
+    --cream: #FFFAF0;
+    --coral-light: rgba(255,110,97,0.12);
+    --yellow-light: rgba(255,238,107,0.18);
+    --mint-light: rgba(179,230,201,0.18);
+    --navy-light: rgba(8,17,63,0.06);
+    --red: #E84545;
+    --red-light: rgba(232,69,69,0.1);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--navy); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: var(--cream); border-bottom: 2px solid var(--coral-light);
+    padding: 0 24px; height: 56px; display: flex; align-items: center;
+  }
+  .nav-inner { max-width: 1200px; margin: 0 auto; width: 100%; display: flex; align-items: center; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-logo { font-family: 'Bungee', sans-serif; font-size: 15px; color: var(--coral); letter-spacing: 0.5px; margin-right: 20px; white-space: nowrap; flex-shrink: 0; }
+  nav a {
+    font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 500;
+    color: var(--navy); text-decoration: none; padding: 6px 12px; border-radius: 20px;
+    white-space: nowrap; transition: all 0.2s; flex-shrink: 0;
+  }
+  nav a:hover { background: var(--coral-light); color: var(--coral); }
+  nav a.active { background: var(--coral); color: white; }
+
+  /* LAYOUT */
+  main { padding-top: 56px; }
+  .section { padding: 64px 24px; max-width: 1200px; margin: 0 auto; }
+  .section-wide { padding: 64px 0; }
+  .section-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+  /* WAVE DIVIDER */
+  .wave { width: 100%; line-height: 0; overflow: hidden; }
+  .wave svg { display: block; width: 100%; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy); padding: 80px 24px 0;
+    position: relative; overflow: hidden;
+  }
+  .hero-blob {
+    position: absolute; border-radius: 50%; filter: blur(60px); pointer-events: none;
+  }
+  .hero-blob-1 { width: 400px; height: 400px; background: var(--coral); opacity: 0.12; top: -80px; right: -80px; }
+  .hero-blob-2 { width: 300px; height: 300px; background: var(--yellow); opacity: 0.10; bottom: 40px; left: -60px; }
+  .hero-inner { max-width: 1200px; margin: 0 auto; position: relative; z-index: 1; }
+  .hero-badge {
+    display: inline-block; background: var(--coral); color: white;
+    font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; padding: 4px 14px; border-radius: 20px; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Bungee', sans-serif; font-size: clamp(36px, 6vw, 64px);
+    color: white; line-height: 1.05; margin-bottom: 16px;
+  }
+  .hero h1 span { color: var(--coral); }
+  .hero-sub {
+    font-family: 'Poppins', sans-serif; font-size: 16px; color: rgba(255,255,255,0.65);
+    margin-bottom: 36px; max-width: 560px;
+  }
+  .hero-meta { display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 60px; }
+  .hero-meta-item { font-family: 'Poppins', sans-serif; font-size: 13px; color: rgba(255,255,255,0.5); }
+  .hero-meta-item strong { color: rgba(255,255,255,0.85); font-weight: 600; margin-right: 4px; }
+  .hero-warning {
+    background: rgba(255,238,107,0.12); border: 1px solid rgba(255,238,107,0.3);
+    border-radius: 16px; padding: 14px 20px; display: flex; align-items: flex-start; gap: 12px;
+    max-width: 680px; margin-bottom: 0;
+  }
+  .hero-warning-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .hero-warning-text { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .hero-warning-text strong { color: var(--yellow); }
+
+  /* SECTION TITLES */
+  .section-title {
+    font-family: 'Bungee', sans-serif; font-size: clamp(22px, 4vw, 32px);
+    color: var(--navy); margin-bottom: 8px; letter-spacing: 0.3px;
+  }
+  .section-title span { color: var(--coral); }
+  .section-subtitle { font-size: 14px; color: rgba(8,17,63,0.55); margin-bottom: 36px; font-family: 'Poppins', sans-serif; }
+
+  /* KPI CARDS */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+  .kpi-card {
+    background: white; border-radius: 24px; padding: 24px 20px;
+    border: 1.5px solid rgba(8,17,63,0.07); position: relative; overflow: hidden;
+  }
+  .kpi-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: var(--coral); border-radius: 24px 24px 0 0;
+  }
+  .kpi-card.mint::before { background: var(--mint); }
+  .kpi-card.yellow::before { background: var(--yellow); }
+  .kpi-card.navy::before { background: var(--navy); }
+  .kpi-label { font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(8,17,63,0.45); margin-bottom: 8px; }
+  .kpi-value { font-family: 'Bungee', sans-serif; font-size: clamp(22px, 3vw, 28px); color: var(--navy); line-height: 1.1; }
+  .kpi-note { font-size: 12px; color: rgba(8,17,63,0.45); margin-top: 6px; font-family: 'Inter', sans-serif; }
+  .kpi-note.positive { color: #2D9B6F; }
+  .kpi-note.warning { color: #C97B00; }
+  .kpi-note.negative { color: var(--red); }
+
+  /* CHARTS */
+  .chart-card {
+    background: white; border-radius: 24px; padding: 28px 24px;
+    border: 1.5px solid rgba(8,17,63,0.07); margin-bottom: 24px;
+  }
+  .chart-title { font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+  .chart-desc { font-size: 13px; color: rgba(8,17,63,0.45); margin-bottom: 20px; }
+  .chart-wrap { position: relative; height: 280px; }
+  .chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  /* WATERFALL */
+  .waterfall { display: flex; flex-direction: column; gap: 0; }
+  .wf-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+    border-bottom: 1px solid rgba(8,17,63,0.05);
+  }
+  .wf-row:last-child { border-bottom: none; }
+  .wf-label { font-family: 'Poppins', sans-serif; font-size: 13px; color: var(--navy); flex: 1; }
+  .wf-label.total { font-weight: 700; }
+  .wf-bar-wrap { flex: 2; position: relative; height: 22px; background: rgba(8,17,63,0.04); border-radius: 6px; overflow: hidden; }
+  .wf-bar { height: 100%; border-radius: 6px; transition: width 0.6s ease; }
+  .wf-bar.positive { background: var(--coral); }
+  .wf-bar.deduct { background: rgba(8,17,63,0.18); }
+  .wf-bar.total-bar { background: var(--navy); }
+  .wf-amount { font-family: 'Poppins', sans-serif; font-size: 13px; font-weight: 600; color: var(--navy); min-width: 64px; text-align: right; }
+  .wf-amount.deduct { color: rgba(8,17,63,0.5); }
+  .wf-sign { font-size: 13px; color: rgba(8,17,63,0.35); min-width: 14px; }
+
+  /* ASSUMPTIONS */
+  .assumptions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .assumption-item {
+    background: white; border-radius: 16px; padding: 16px 18px;
+    border: 1.5px solid rgba(8,17,63,0.07);
+    display: flex; align-items: flex-start; gap: 12px;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.5px; text-transform: uppercase; padding: 3px 10px;
+    border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 1px;
+  }
+  .badge.confirmed { background: rgba(179,230,201,0.4); color: #1A7A4F; }
+  .badge.assumed { background: rgba(255,238,107,0.35); color: #8C6B00; }
+  .badge.unresolved { background: rgba(255,110,97,0.15); color: #C0301E; }
+  .assumption-text { font-size: 13px; line-height: 1.5; color: var(--navy); }
+  .assumption-text strong { display: block; font-family: 'Poppins', sans-serif; font-weight: 600; margin-bottom: 2px; }
+
+  /* OPEN ITEMS */
+  .open-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .open-item-card {
+    background: white; border-radius: 20px; padding: 20px;
+    border: 1.5px solid rgba(8,17,63,0.07);
+    position: relative; overflow: hidden;
+  }
+  .open-item-card.critical { border-left: 4px solid var(--red); }
+  .open-item-card.strategic { border-left: 4px solid var(--yellow); }
+  .open-item-card.confirmed-card { border-left: 4px solid var(--mint); }
+  .open-item-priority {
+    font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+  }
+  .open-item-priority.critical { color: var(--red); }
+  .open-item-priority.strategic { color: #8C6B00; }
+  .open-item-priority.confirmed { color: #1A7A4F; }
+  .open-item-title { font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; }
+  .open-item-desc { font-size: 13px; color: rgba(8,17,63,0.65); line-height: 1.55; }
+  .open-item-impact {
+    margin-top: 10px; padding: 8px 12px; border-radius: 10px;
+    font-size: 12px; font-family: 'Poppins', sans-serif; font-weight: 500;
+  }
+  .open-item-impact.model { background: var(--red-light); color: #C0301E; }
+  .open-item-impact.info { background: var(--navy-light); color: var(--navy); }
+  .open-item-impact.good { background: rgba(179,230,201,0.3); color: #1A7A4F; }
+
+  /* SENSITIVITY TABLE */
+  .sensitivity-wrap { overflow-x: auto; border-radius: 20px; border: 1.5px solid rgba(8,17,63,0.07); }
+  table { width: 100%; border-collapse: collapse; background: white; border-radius: 20px; overflow: hidden; }
+  thead tr { background: var(--navy); }
+  thead th { font-family: 'Poppins', sans-serif; font-size: 12px; font-weight: 600; color: white; padding: 14px 18px; text-align: left; }
+  tbody tr { border-bottom: 1px solid rgba(8,17,63,0.06); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr.base { background: rgba(255,110,97,0.05); }
+  tbody td { font-family: 'Inter', sans-serif; font-size: 13px; color: var(--navy); padding: 13px 18px; }
+  tbody td.label { font-family: 'Poppins', sans-serif; font-weight: 600; }
+  tbody td.positive { color: #1A7A4F; font-weight: 500; }
+  tbody td.negative { color: var(--red); font-weight: 500; }
+  tbody td.neutral { color: var(--navy); }
+  .base-tag { display: inline-block; background: var(--coral); color: white; font-size: 9px; font-weight: 700; text-transform: uppercase; padding: 2px 7px; border-radius: 8px; margin-left: 6px; vertical-align: middle; }
+
+  /* HIGHLIGHTED CALLOUT */
+  .callout {
+    background: var(--navy); color: white; border-radius: 20px; padding: 24px 28px;
+    margin-top: 28px; display: flex; align-items: flex-start; gap: 16px;
+  }
+  .callout-icon { font-size: 24px; flex-shrink: 0; }
+  .callout-text { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.8); }
+  .callout-text strong { color: white; display: block; font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+
+  /* SECTION BG VARIANTS */
+  .bg-navy-section { background: var(--navy); }
+  .bg-cream-section { background: var(--cream); }
+  .bg-light-section { background: rgba(179,230,201,0.1); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .chart-grid-2 { grid-template-columns: 1fr; }
+    .assumptions-grid { grid-template-columns: 1fr; }
+    .open-items-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .hero h1 { font-size: 32px; }
+    .section { padding: 48px 20px; }
+    nav { padding: 0 16px; }
+  }
+  @media (max-width: 480px) {
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  /* BLOB BG */
+  .blob-bg { position: relative; }
+  .blob-bg::before {
+    content: ''; position: absolute; width: 500px; height: 500px;
+    background: var(--coral); opacity: 0.06; border-radius: 50%; filter: blur(80px);
+    top: -100px; right: -150px; pointer-events: none; z-index: 0;
+  }
+  .blob-bg > * { position: relative; z-index: 1; }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); color: rgba(255,255,255,0.4);
+    text-align: center; padding: 32px 24px;
+    font-size: 12px; font-family: 'Poppins', sans-serif;
+  }
+  footer strong { color: rgba(255,255,255,0.7); }
+
+  .divider-label {
+    font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px; color: rgba(8,17,63,0.3);
+    text-align: center; margin: 8px 0 28px; display: flex; align-items: center; gap: 12px;
+  }
+  .divider-label::before, .divider-label::after {
+    content: ''; flex: 1; height: 1px; background: rgba(8,17,63,0.08);
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav>
+  <div class="nav-inner">
+    <span class="nav-logo">TICKEYBOX</span>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#growth">Growth</a>
+    <a href="#revenue">Revenue</a>
+    <a href="#pl">P&amp;L</a>
+    <a href="#cashflow">Cash Flow</a>
+    <a href="#unit-econ">Unit Econ</a>
+    <a href="#assumptions">Assumptions</a>
+    <a href="#snaptel">SnapTel</a>
+    <a href="#sensitivity">Sensitivity</a>
+  </div>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Base Case Model · v1.0</div>
+    <h1>FY2026 <span>Financial</span><br>Plan</h1>
+    <p class="hero-sub">TickeyBox Year 1 operating plan — July 2025 through June 2026. 2,000 devices. Mandatory subscription. South Africa.</p>
+    <div class="hero-meta">
+      <span class="hero-meta-item"><strong>Period:</strong> Jul 2025 – Jun 2026</span>
+      <span class="hero-meta-item"><strong>Target Units:</strong> 2,000</span>
+      <span class="hero-meta-item"><strong>Market:</strong> South Africa</span>
+      <span class="hero-meta-item"><strong>Stage:</strong> Pre-pilot → Scale</span>
+      <span class="hero-meta-item"><strong>Updated:</strong> March 2026</span>
+    </div>
+    <div class="hero-warning">
+      <span class="hero-warning-icon">⚠️</span>
+      <p class="hero-warning-text"><strong>Model contains unconfirmed assumptions.</strong> PBX rate card, per-minute tariffs, minimum platform spend, and SLA cost structure are all pending formal confirmation from SnapTel. See Open Items section for full breakdown. Figures should not be treated as final until these are resolved.</p>
+    </div>
+  </div>
+  <div class="wave" style="margin-top: 48px;">
+    <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#FFFAF0"/>
+    </svg>
+  </div>
+</section>
+
+<!-- DASHBOARD -->
+<section class="section" id="dashboard">
+  <h2 class="section-title">Year 1 <span>Dashboard</span></h2>
+  <p class="section-subtitle">FY2026 Base Case KPIs — all figures in South African Rand, ex VAT</p>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">Total Revenue</div>
+      <div class="kpi-value">R4.83m</div>
+      <div class="kpi-note">HW + Sub + Minutes</div>
+    </div>
+    <div class="kpi-card mint">
+      <div class="kpi-label">Operating Surplus</div>
+      <div class="kpi-value">R1.44m</div>
+      <div class="kpi-note positive">29.3% operating margin</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Gross Margin</div>
+      <div class="kpi-value">R2.21m</div>
+      <div class="kpi-note">45.2% gross margin %</div>
+    </div>
+    <div class="kpi-card navy">
+      <div class="kpi-label">Ending Cash</div>
+      <div class="kpi-value" style="color: var(--coral);">R1.08m</div>
+      <div class="kpi-note">After full Year 1</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Units Sold</div>
+      <div class="kpi-value">2,000</div>
+      <div class="kpi-note">Full year target</div>
+    </div>
+    <div class="kpi-card yellow">
+      <div class="kpi-label">Active Subs (M12)</div>
+      <div class="kpi-value">1,880</div>
+      <div class="kpi-note warning">15% churn assumed</div>
+    </div>
+  </div>
+  <div class="callout" style="margin-top: 24px;">
+    <span class="callout-icon">📌</span>
+    <div class="callout-text">
+      <strong>Peak Cash Requirement: (R809k) in Month 1</strong>
+      Plan assumes R500k own capital + R500k convertible loan (2–3 investors). With 300 preorders paid upfront, peak requirement reduces to ~R600k–R700k. Inventory reorders in M1, M7, and M11 each cost ~R680k — cash management across these is the single biggest operational risk.
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background: rgba(179,230,201,0.1);">
+  <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,20 C480,40 960,0 1440,20 L1440,40 L0,40 Z" fill="rgba(179,230,201,0.1)"/>
+  </svg>
+</div>
+
+<!-- GROWTH TRAJECTORY -->
+<section class="bg-light-section" id="growth">
+  <div class="section">
+    <h2 class="section-title">Growth <span>Trajectory</span></h2>
+    <p class="section-subtitle">Monthly units sold (bars) vs cumulative units shipped (line) — ramp to 2,000 devices</p>
+    <div class="chart-card">
+      <div class="chart-title">Unit Sales Ramp</div>
+      <div class="chart-desc">Months 1–2: 100/month · Months 3–6: 120–180/month · Months 7–12: 180–240/month</div>
+      <div class="chart-wrap">
+        <canvas id="growthChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-grid-2">
+      <div class="chart-card">
+        <div class="chart-title">Monthly Active Subscribers</div>
+        <div class="chart-desc">Cumulative growth accounting for 15% annual churn</div>
+        <div class="chart-wrap" style="height: 220px;">
+          <canvas id="subsChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Sub Attach Rate vs Units Sold</div>
+        <div class="chart-desc">Active subs as % of cumulative units — churn impact</div>
+        <div class="chart-wrap" style="height: 220px;">
+          <canvas id="attachChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wave" style="background: var(--cream);">
+  <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,20 C360,0 1080,40 1440,20 L1440,40 L0,40 Z" fill="#FFFAF0"/>
+  </svg>
+</div>
+
+<!-- REVENUE BUILD -->
+<section class="section" id="revenue">
+  <h2 class="section-title">Revenue <span>Build</span></h2>
+  <p class="section-subtitle">Monthly revenue by stream — hardware, subscriptions, and minutes margin stacked</p>
+  <div class="chart-card">
+    <div class="chart-title">Monthly Revenue Composition</div>
+    <div class="chart-desc">Hardware (one-time) dominates early; subscription recurring grows through year</div>
+    <div class="chart-wrap" style="height: 300px;">
+      <canvas id="revenueChart"></canvas>
+    </div>
+  </div>
+  <div class="chart-grid-2" style="margin-top: 0;">
+    <div class="chart-card">
+      <div class="chart-title">Revenue Mix (Full Year)</div>
+      <div class="chart-desc">Hardware 72% · Sub 24% · Minutes 4%</div>
+      <div class="chart-wrap" style="height: 220px;">
+        <canvas id="revMixChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Monthly Subscription Revenue Growth</div>
+      <div class="chart-desc">Pure recurring ARR building month-on-month</div>
+      <div class="chart-wrap" style="height: 220px;">
+        <canvas id="subRevChart"></canvas>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- P&L TREND -->
+<div class="wave" style="background: rgba(8,17,63,0.04);">
+  <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,0 C480,40 960,0 1440,40 L1440,40 L0,40 Z" fill="rgba(8,17,63,0.03)"/>
+  </svg>
+</div>
+<section style="background: rgba(8,17,63,0.03);" id="pl">
+  <div class="section">
+    <h2 class="section-title">P&amp;L <span>Trend</span></h2>
+    <p class="section-subtitle">Monthly operating surplus/deficit — M1 absorbs all fixed setup costs, then profitable from M2</p>
+    <div class="chart-card">
+      <div class="chart-title">Monthly Operating Surplus/Deficit</div>
+      <div class="chart-desc">Red = deficit · Green = surplus · Line = cumulative operating position</div>
+      <div class="chart-wrap" style="height: 300px;">
+        <canvas id="plChart"></canvas>
+      </div>
+    </div>
+    <div class="callout" style="margin-top: 0; background: rgba(8,17,63,0.06); border: 1.5px solid rgba(8,17,63,0.1);">
+      <span class="callout-icon" style="font-size: 20px;">📊</span>
+      <div class="callout-text" style="color: var(--navy);">
+        <strong style="color: var(--navy);">M1 deficit of R213k is structural, not operational</strong>
+        Month 1 absorbs R150k dev contingency + R100k NRE (one-off) on top of the first inventory purchase. These costs do not recur. From M2 onwards the business is operationally profitable, with the deficit only driven by inventory reorder cash outflows in M7 and M11.
+      </div>
+    </div>
+  </div>
+</section>
+<div class="wave" style="background: var(--cream);">
+  <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,40 C360,0 1080,40 1440,0 L1440,40 L0,40 Z" fill="#FFFAF0"/>
+  </svg>
+</div>
+
+<!-- CASH FLOW -->
+<section class="section" id="cashflow">
+  <h2 class="section-title">Cash <span>Flow</span></h2>
+  <p class="section-subtitle">Monthly closing cash balance — inventory reorders create sharp dips in M1, M7, M11</p>
+  <div class="chart-card">
+    <div class="chart-title">Monthly Closing Cash Balance</div>
+    <div class="chart-desc">Inventory reorders (R680k each) in Jul (M1), Jan (M7), May (M11) drive cash troughs — requires committed liquidity facility</div>
+    <div class="chart-wrap" style="height: 320px;">
+      <canvas id="cashChart"></canvas>
+    </div>
+  </div>
+  <div class="assumptions-grid" style="margin-top: 16px;">
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>Starting cash: R1m</strong>R500k own + R500k convertible loan. Preorders could reduce requirement to R600k–R700k if 300 units prepaid before M1.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge unresolved">Watch</span>
+      <div class="assumption-text"><strong>Minimum platform spend</strong>If SnapTel has a minimum monthly fee during the 50-household pilot phase, pilot economics worsen materially. Not yet confirmed.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge confirmed">Confirmed</span>
+      <div class="assumption-text"><strong>Inventory: 3 batches of ~680 units</strong>First batch July, second January, third May. Each batch priced at R680k based on R680/unit hardware COGS + 3PL.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>Payment failure: 5% recurring leakage</strong>SA payment failure rate is high. Modelled at 5% recurring leakage. Actual rate could be higher — this is a key sensitivity.</div>
+    </div>
+  </div>
+</section>
+
+<!-- UNIT ECONOMICS -->
+<div class="wave" style="background: var(--navy);">
+  <svg viewBox="0 0 1440 50" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,25 C480,0 960,50 1440,25 L1440,50 L0,50 Z" fill="#08113F"/>
+  </svg>
+</div>
+<section class="bg-navy-section" id="unit-econ">
+  <div class="section">
+    <h2 class="section-title" style="color: white;">Unit <span>Economics</span></h2>
+    <p class="section-subtitle" style="color: rgba(255,255,255,0.5);">Per-unit hardware contribution and monthly recurring margin per active household</p>
+    <div class="chart-grid-2">
+      <div class="chart-card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+        <div class="chart-title" style="color: white;">Hardware Contribution Per Unit</div>
+        <div class="chart-desc" style="color: rgba(255,255,255,0.45);">One-time revenue waterfall — R1,699 price to R608 net contribution</div>
+        <div class="waterfall" style="margin-top: 8px;">
+          <div class="wf-row">
+            <span class="wf-label" style="color:white;">Selling Price</span>
+            <div class="wf-bar-wrap"><div class="wf-bar positive" style="width:100%; background: var(--coral);"></div></div>
+            <span class="wf-amount" style="color:white;">R1,699</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">Hardware COGS</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:40%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R680</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">3PL / Fulfilment</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:8.8%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R150</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">Paid Media / CAC</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:5.9%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R100</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">SFC Commission</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:5%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R85</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">Payment Processing</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:2.9%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R49</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">Returns Reserve</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:1.6%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R27</span>
+          </div>
+          <div class="wf-row" style="border-top: 1px solid rgba(255,255,255,0.15); margin-top: 4px; padding-top: 14px;">
+            <span class="wf-label total" style="color:white;">Net Contribution</span>
+            <div class="wf-bar-wrap"><div class="wf-bar total-bar" style="width:35.8%; background:var(--mint);"></div></div>
+            <span class="wf-amount" style="color:var(--mint); font-weight:700;">R608</span>
+          </div>
+        </div>
+      </div>
+      <div class="chart-card" style="background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1);">
+        <div class="chart-title" style="color: white;">Recurring Margin Per Device/Month</div>
+        <div class="chart-desc" style="color: rgba(255,255,255,0.45);">Monthly gross margin per active household — subscription + minutes, net of PBX cost</div>
+        <div class="waterfall" style="margin-top: 8px;">
+          <div class="wf-row">
+            <span class="wf-label" style="color:white;">Subscription Revenue</span>
+            <div class="wf-bar-wrap"><div class="wf-bar positive" style="width:100%; background: var(--coral);"></div></div>
+            <span class="wf-amount" style="color:white;">R119</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">PBX + DID + Line Rental</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:33.6%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R40</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">Payment Leakage (5%)</span>
+            <div class="wf-bar-wrap"><div class="wf-bar deduct" style="width:3.3%; background:rgba(255,255,255,0.2);"></div></div>
+            <span class="wf-amount deduct" style="color:rgba(255,255,255,0.5);">−R4</span>
+          </div>
+          <div class="wf-row">
+            <span class="wf-label" style="color:rgba(255,255,255,0.65);">Minutes Revenue (net)</span>
+            <div class="wf-bar-wrap"><div class="wf-bar positive" style="width:16.1%; background: var(--mint); opacity: 0.8;"></div></div>
+            <span class="wf-amount" style="color:var(--mint);">+R19</span>
+          </div>
+          <div class="wf-row" style="border-top: 1px solid rgba(255,255,255,0.15); margin-top: 4px; padding-top: 14px;">
+            <span class="wf-label total" style="color:white;">Net Recurring Margin</span>
+            <div class="wf-bar-wrap"><div class="wf-bar total-bar" style="width:79.2%; background:var(--yellow);"></div></div>
+            <span class="wf-amount" style="color:var(--yellow); font-weight:700;">R94</span>
+          </div>
+        </div>
+        <div style="margin-top: 20px; padding: 14px; background: rgba(255,238,107,0.1); border-radius: 12px; border: 1px solid rgba(255,238,107,0.2);">
+          <p style="font-size: 12px; color: rgba(255,255,255,0.6); font-family: 'Poppins', sans-serif;">
+            <strong style="color: var(--yellow);">If PBX = R20 (not R40)</strong><br>
+            Recurring margin improves to <strong style="color: white;">~R114/month</strong> — an uplift of R240/household/year. At 2,000 devices, this is ~R480k additional annual gross contribution. Pending formal rate card from SnapTel.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="wave" style="background: var(--cream);">
+  <svg viewBox="0 0 1440 50" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,25 C360,50 1080,0 1440,25 L1440,50 L0,50 Z" fill="#FFFAF0"/>
+  </svg>
+</div>
+
+<!-- ASSUMPTIONS -->
+<section class="section blob-bg" id="assumptions">
+  <h2 class="section-title">Model <span>Assumptions</span></h2>
+  <p class="section-subtitle">All inputs to the base case — confirmed figures vs estimates pending validation</p>
+
+  <div class="divider-label">Pricing &amp; Revenue</div>
+  <div class="assumptions-grid">
+    <div class="assumption-item">
+      <span class="badge confirmed">Confirmed</span>
+      <div class="assumption-text"><strong>Hardware price: R1,699 ex VAT</strong>Set. Retail price established for pilot and Year 1.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge confirmed">Confirmed</span>
+      <div class="assumption-text"><strong>Subscription: R119/month ex VAT</strong>Mandatory attach. No free tier. 100% subscription attach rate assumed.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>Minutes: R0.20 net margin/minute</strong>Landline and mobile per-minute rates not yet confirmed by SnapTel. Model uses R0.20 margin estimate.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge confirmed">Confirmed</span>
+      <div class="assumption-text"><strong>TickeyBox-to-TickeyBox: free</strong>Rated R0, no PSTN cost. Agreed with SnapTel — confirmed in post-meeting brief.</div>
+    </div>
+  </div>
+
+  <div class="divider-label" style="margin-top: 28px;">Cost Structure</div>
+  <div class="assumptions-grid">
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>PBX + DID + line rental: R40/household/month</strong>Based on SnapTel conversation. Formal rate card not yet received. R20 scenario is plausible if that's all-in.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge confirmed">Confirmed</span>
+      <div class="assumption-text"><strong>Hardware COGS: ~R680/unit</strong>Grandstream GHP611W unit cost. Locked from supplier quotes.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge confirmed">Confirmed</span>
+      <div class="assumption-text"><strong>SFC commission: 10% Year 1 hardware only</strong>5% Year 2+ if renewed. No attribution tracking. Quarterly payment.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>SLA cost: not modelled</strong>SnapTel SLA structure deferred to March meeting. Separate SLA pricing not included in current model.</div>
+    </div>
+  </div>
+
+  <div class="divider-label" style="margin-top: 28px;">Operations &amp; Fixed Costs</div>
+  <div class="assumptions-grid">
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>Fixed costs: R678k total (excl. one-offs)</strong>Salaries R396k · Hosting R96k · Tooling R36k. Plus R150k dev contingency + R100k NRE in M1 only.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>Churn: 15% annually (~1.25%/month)</strong>Benchmark from subscription hardware analogues. No SA-specific data yet — real pilot churn could differ significantly.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>Payment failure: 5% recurring leakage</strong>SA debit order failure rates can run 8–12% in consumer segments. 5% may be optimistic.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>3PL fulfilment: R150/unit</strong>Pick, pack, ship, and returns handling. Based on informal quotes — not yet contracted.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>CAC: R100/device (paid media)</strong>Blended paid CAC target. Organic/referral share assumed at 40%+ — unvalidated pre-pilot.</div>
+    </div>
+    <div class="assumption-item">
+      <span class="badge assumed">Assumed</span>
+      <div class="assumption-text"><strong>Returns reserve: 4% / R27 per unit</strong>Based on standard consumer hardware return rates. Pre-pilot data will refine this.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SNAPTEL OPEN ITEMS -->
+<div class="wave" style="background: rgba(255,110,97,0.05);">
+  <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,20 C720,40 1440,0 1440,20 L1440,40 L0,40 Z" fill="rgba(255,110,97,0.05)"/>
+  </svg>
+</div>
+<section style="background: rgba(255,110,97,0.04);" id="snaptel">
+  <div class="section">
+    <h2 class="section-title">Open Items: <span>SnapTel</span></h2>
+    <p class="section-subtitle">Items pending resolution from post-meeting brief — critical items directly affect model reliability</p>
+
+    <div class="divider-label">Model-Impacting (Critical)</div>
+    <div class="open-items-grid">
+      <div class="open-item-card critical">
+        <div class="open-item-priority critical">Critical · Model Impact</div>
+        <div class="open-item-title">PBX Rate Card</div>
+        <div class="open-item-desc">R20/household was floated verbally vs R40 assumed in the model. Formal rate card not yet received. Difference is meaningful at scale.</div>
+        <div class="open-item-impact model">If R20 all-in: +R480k gross contribution at 2,000 units. Model needs rerunning once confirmed.</div>
+      </div>
+      <div class="open-item-card critical">
+        <div class="open-item-priority critical">Critical · Model Impact</div>
+        <div class="open-item-title">Per-Minute Rates</div>
+        <div class="open-item-desc">Landline, mobile, and emergency per-minute rates not stated. Model assumes R0.20 net margin per minute used. Unconfirmed.</div>
+        <div class="open-item-impact model">Minutes revenue line is fully speculative until rate card received. Could be higher or lower.</div>
+      </div>
+      <div class="open-item-card critical">
+        <div class="open-item-priority critical">Critical · Model Impact</div>
+        <div class="open-item-title">Minimum Platform Spend</div>
+        <div class="open-item-desc">Unknown whether SnapTel charges a minimum monthly fee regardless of active households. If yes, pilot economics worsen materially — 50 households cannot absorb a platform minimum.</div>
+        <div class="open-item-impact model">If minimum &gt; R2,000/month, the 50-household pilot runs at higher cost than modelled. Needs clarification before pilot launch.</div>
+      </div>
+      <div class="open-item-card critical">
+        <div class="open-item-priority critical">Critical · Model Impact</div>
+        <div class="open-item-title">SLA Structure + Cost</div>
+        <div class="open-item-desc">Deferred to March 23 meeting. Separate SLA pricing not included in current model. Uptime guarantees and remediation terms also undefined.</div>
+        <div class="open-item-impact model">If SLA carries additional monthly cost, fixed cost base increases. Model will need revision.</div>
+      </div>
+      <div class="open-item-card strategic" style="grid-column: span 1;">
+        <div class="open-item-priority strategic">Watch · Operational</div>
+        <div class="open-item-title">WiFi Provisioning</div>
+        <div class="open-item-desc">Open — Hannes checking with Boston (technical) team. Critical for consumer setup flow. Without WiFi provisioning over-the-air, device setup requires LAN cable — which is not acceptable for a consumer product.</div>
+        <div class="open-item-impact info">Does not affect commercial model, but could block consumer-ready self-onboarding. April pilot depends on resolution.</div>
+      </div>
+    </div>
+
+    <div class="divider-label" style="margin-top: 36px;">Strategic / Commercial Risk</div>
+    <div class="open-items-grid">
+      <div class="open-item-card strategic">
+        <div class="open-item-priority strategic">Strategic Risk</div>
+        <div class="open-item-title">IP Ownership</div>
+        <div class="open-item-desc">SnapTel built the app. IP terms are unresolved before go-live. This creates meaningful leverage risk — if IP is not assigned or licensed appropriately, TickeyBox has limited negotiating position at scale.</div>
+        <div class="open-item-impact model">Must be resolved before pilot. Not a model risk — it is a company risk. Legal review required.</div>
+      </div>
+      <div class="open-item-card strategic">
+        <div class="open-item-priority strategic">Strategic Risk</div>
+        <div class="open-item-title">Equity Arrangement</div>
+        <div class="open-item-desc">Hannes floated an equity arrangement. No terms defined. Risk of drifting into an informal partnership without governance, vesting, or exit provisions. Informal founder equity arrangements have a poor track record.</div>
+        <div class="open-item-impact model">Define terms or formally decline. Do not allow this to drift. If equity is granted, it needs a vesting schedule and IP assignment as a condition.</div>
+      </div>
+    </div>
+
+    <div class="divider-label" style="margin-top: 36px;">Confirmed from Meeting</div>
+    <div class="open-items-grid">
+      <div class="open-item-card confirmed-card">
+        <div class="open-item-priority confirmed">Confirmed</div>
+        <div class="open-item-title">PBX Architecture Scales</div>
+        <div class="open-item-desc">Virtual segmentation (not separate hardware) confirmed to scale to 2,000+ households. Multi-tenant architecture viable.</div>
+        <div class="open-item-impact good">No architectural rebuild required at scale. This was the key infrastructure risk.</div>
+      </div>
+      <div class="open-item-card confirmed-card">
+        <div class="open-item-priority confirmed">Confirmed</div>
+        <div class="open-item-title">Full API + Webhooks — No Lock-In</div>
+        <div class="open-item-desc">SnapTel API is complete and includes webhooks. Integration does not create provider lock-in at the integration layer.</div>
+        <div class="open-item-impact good">Backend abstraction layer can be built cleanly. Switching PBX providers later is technically feasible.</div>
+      </div>
+      <div class="open-item-card confirmed-card">
+        <div class="open-item-priority confirmed">Confirmed</div>
+        <div class="open-item-title">No International Calling</div>
+        <div class="open-item-desc">International calls blocked at network layer for fraud prevention. Agreed and aligned. Consistent with TickeyBox safety posture.</div>
+        <div class="open-item-impact good">Removes international fraud risk. Consistent with parent trust and child-safe positioning.</div>
+      </div>
+      <div class="open-item-card confirmed-card">
+        <div class="open-item-priority confirmed">Confirmed</div>
+        <div class="open-item-title">Prepaid Billing Model Aligned</div>
+        <div class="open-item-desc">Prepaid minutes model confirmed workable. No post-paid credit risk on minutes. Consistent with TickeyBox billing architecture.</div>
+        <div class="open-item-impact good">Eliminates minutes credit risk. Parents top up — no debt exposure.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="wave" style="background: var(--cream);">
+  <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,0 C480,40 960,0 1440,40 L1440,40 L0,40 Z" fill="#FFFAF0"/>
+  </svg>
+</div>
+
+<!-- SCENARIO SENSITIVITY -->
+<section class="section" id="sensitivity">
+  <h2 class="section-title">Scenario <span>Sensitivity</span></h2>
+  <p class="section-subtitle">How the model changes under different PBX cost and churn assumptions — base case highlighted</p>
+
+  <div class="sensitivity-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>PBX Cost</th>
+          <th>Annual Churn</th>
+          <th>M12 Active Subs</th>
+          <th>Full Year Sub Revenue</th>
+          <th>Recurring Margin/Device</th>
+          <th>Operating Surplus</th>
+          <th>vs Base Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="label">Optimistic PBX + Low Churn</td>
+          <td>R20</td>
+          <td>10%</td>
+          <td>~1,960</td>
+          <td>~R1.27m</td>
+          <td>R114/mo</td>
+          <td class="positive">~R2.05m</td>
+          <td class="positive">+R610k</td>
+        </tr>
+        <tr>
+          <td class="label">Optimistic PBX + Base Churn</td>
+          <td>R20</td>
+          <td>15%</td>
+          <td>~1,880</td>
+          <td>~R1.18m</td>
+          <td>R114/mo</td>
+          <td class="positive">~R1.92m</td>
+          <td class="positive">+R480k</td>
+        </tr>
+        <tr class="base">
+          <td class="label">Base Case <span class="base-tag">BASE</span></td>
+          <td>R40</td>
+          <td>15%</td>
+          <td>1,880</td>
+          <td>R1.09m</td>
+          <td>R94/mo</td>
+          <td class="neutral">R1.44m</td>
+          <td class="neutral">—</td>
+        </tr>
+        <tr>
+          <td class="label">Base PBX + High Churn</td>
+          <td>R40</td>
+          <td>20%</td>
+          <td>~1,750</td>
+          <td>~R980k</td>
+          <td>R94/mo</td>
+          <td class="negative">~R1.28m</td>
+          <td class="negative">−R160k</td>
+        </tr>
+        <tr>
+          <td class="label">Pessimistic PBX + High Churn</td>
+          <td>R50</td>
+          <td>20%</td>
+          <td>~1,750</td>
+          <td>~R980k</td>
+          <td>R84/mo</td>
+          <td class="negative">~R1.10m</td>
+          <td class="negative">−R340k</td>
+        </tr>
+        <tr>
+          <td class="label">Worst Case</td>
+          <td>R50</td>
+          <td>25%</td>
+          <td>~1,580</td>
+          <td>~R870k</td>
+          <td>R84/mo</td>
+          <td class="negative">~R880k</td>
+          <td class="negative">−R560k</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout" style="margin-top: 28px;">
+    <span class="callout-icon">🎯</span>
+    <div class="callout-text">
+      <strong>Model is robust to churn. More sensitive to PBX cost.</strong>
+      Even at 25% churn the business remains profitable — the fixed cost base is low enough. The bigger swing is PBX cost: R20 vs R40 is a R480k annual delta at 2,000 units. Getting the formal rate card before the April pilot is the highest-priority open item for model reliability. Churn is validatable post-pilot; PBX cost must be resolved before committing capital.
+    </div>
+  </div>
+
+  <div style="margin-top: 28px; padding: 24px; background: white; border-radius: 24px; border: 1.5px solid rgba(8,17,63,0.07);">
+    <div style="font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 16px;">Key Sensitivities Ranked by Impact</div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--red); flex-shrink: 0;"></div>
+        <div style="font-size: 13px; color: var(--navy);"><strong style="font-family: 'Poppins', sans-serif;">PBX rate card</strong> — R20 vs R40 is the single biggest model swing. Get this confirmed first.</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); flex-shrink: 0;"></div>
+        <div style="font-size: 13px; color: var(--navy);"><strong style="font-family: 'Poppins', sans-serif;">Payment failure rate</strong> — 5% assumed; SA consumer reality may be 8–12%. Each 1% = ~R25k/year at scale.</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--yellow); flex-shrink: 0;"></div>
+        <div style="font-size: 13px; color: var(--navy);"><strong style="font-family: 'Poppins', sans-serif;">Churn rate</strong> — 15% assumed. Pilot will give real data. Low sensitivity at current fixed cost base.</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--mint); flex-shrink: 0;"></div>
+        <div style="font-size: 13px; color: var(--navy);"><strong style="font-family: 'Poppins', sans-serif;">CAC</strong> — R100 target. If organic/referral underperforms, blended CAC rises. Partially offset by SFC channel.</div>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--mint); flex-shrink: 0;"></div>
+        <div style="font-size: 13px; color: var(--navy);"><strong style="font-family: 'Poppins', sans-serif;">Minutes revenue</strong> — Upside if usage is higher than modelled. Downside is low (floor is R0).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom: 8px;"><strong>TICKEYBOX — FY2026 Financial Plan</strong></p>
+  <p>Base case model · Version 1.0 · March 2026 · For internal use only</p>
+  <p style="margin-top: 8px;">All figures in South African Rand (ZAR), ex VAT · Subject to revision pending SnapTel rate card confirmation</p>
+</footer>
+
+</main>
+
+<script>
+  // Chart defaults
+  Chart.defaults.font.family = "'Inter', sans-serif";
+  Chart.defaults.color = 'rgba(8,17,63,0.55)';
+
+  const MONTHS = ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'];
+  const CORAL = '#FF6E61';
+  const NAVY = '#08113F';
+  const MINT = '#B3E6C9';
+  const YELLOW = '#FFEE6B';
+  const CORAL_PALE = 'rgba(255,110,97,0.12)';
+  const MINT_PALE = 'rgba(179,230,201,0.3)';
+  const RED = '#E84545';
+
+  const units = [100, 100, 120, 140, 160, 180, 180, 180, 200, 200, 200, 240];
+  const subs = [100, 199, 316, 452, 606, 778, 947, 1114, 1299, 1482, 1662, 1880];
+  const hwRev = [169900, 169900, 203880, 237860, 271840, 305820, 305820, 305820, 339800, 339800, 339800, 407760];
+  const subRev = [11900, 23640, 37602, 53756, 72073, 92523, 112699, 132603, 154619, 176339, 197767, 223667];
+  const minMarg = [1920, 3814, 6067, 8673, 11629, 14928, 18183, 21395, 24947, 28451, 31909, 36087];
+  const opSurplus = [-213017, 46084, 69059, 93733, 120084, 148089, 141729, 157159, 186378, 203216, 219827, 264208];
+  const closingCash = [-808875, -678649, -508620, -297087, -42376, 257169, -129645, 178970, 533632, 905132, 613243, 1079391];
+
+  // Cumulative units
+  const cumUnits = units.reduce((acc, v, i) => { acc.push((acc[i-1] || 0) + v); return acc; }, []);
+  // Cumulative surplus
+  const cumSurplus = opSurplus.reduce((acc, v, i) => { acc.push((acc[i-1] || 0) + v); return acc; }, []);
+
+  const chartOpts = (extra = {}) => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, font: { size: 12 } } },
+      tooltip: { padding: 10, cornerRadius: 10, boxPadding: 4 }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { grid: { color: 'rgba(8,17,63,0.06)' }, ticks: { font: { size: 11 } } }
+    },
+    ...extra
+  });
+
+  // Format large numbers
+  function fmtR(v) {
+    if (Math.abs(v) >= 1000000) return 'R' + (v/1000000).toFixed(1) + 'm';
+    if (Math.abs(v) >= 1000) return 'R' + (v/1000).toFixed(0) + 'k';
+    return 'R' + v;
+  }
+
+  // 1. Growth Chart
+  new Chart(document.getElementById('growthChart'), {
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { type: 'bar', label: 'Units Sold (Monthly)', data: units, backgroundColor: CORAL_PALE, borderColor: CORAL, borderWidth: 2, borderRadius: 6, yAxisID: 'y' },
+        { type: 'line', label: 'Cumulative Units', data: cumUnits, borderColor: NAVY, borderWidth: 2.5, pointBackgroundColor: NAVY, pointRadius: 4, tension: 0.35, fill: false, yAxisID: 'y2' }
+      ]
+    },
+    options: {
+      ...chartOpts(),
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { position: 'left', grid: { color: 'rgba(8,17,63,0.06)' }, ticks: { font: { size: 11 }, callback: v => v }, title: { display: true, text: 'Monthly Units', font: { size: 11 } } },
+        y2: { position: 'right', grid: { drawOnChartArea: false }, ticks: { font: { size: 11 } }, title: { display: true, text: 'Cumulative', font: { size: 11 } } }
+      }
+    }
+  });
+
+  // 2. Subs Chart
+  new Chart(document.getElementById('subsChart'), {
+    type: 'line',
+    data: {
+      labels: MONTHS,
+      datasets: [{ label: 'Active Subscribers', data: subs, borderColor: CORAL, borderWidth: 2.5, backgroundColor: 'rgba(255,110,97,0.08)', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: CORAL }]
+    },
+    options: { ...chartOpts(), plugins: { legend: { display: false } } }
+  });
+
+  // 3. Attach Chart
+  const attachRate = subs.map((s, i) => Math.round((s / cumUnits[i]) * 100));
+  new Chart(document.getElementById('attachChart'), {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: [{ label: 'Attach Rate %', data: attachRate, backgroundColor: subs.map((s,i) => attachRate[i] > 90 ? 'rgba(179,230,201,0.5)' : 'rgba(255,238,107,0.5)'), borderColor: subs.map((s,i) => attachRate[i] > 90 ? '#2D9B6F' : '#C97B00'), borderWidth: 1.5, borderRadius: 6 }]
+    },
+    options: {
+      ...chartOpts(),
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { min: 70, max: 100, grid: { color: 'rgba(8,17,63,0.06)' }, ticks: { callback: v => v + '%', font: { size: 11 } } }
+      }
+    }
+  });
+
+  // 4. Revenue Stacked Bar
+  new Chart(document.getElementById('revenueChart'), {
+    type: 'bar',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { label: 'Hardware Revenue', data: hwRev, backgroundColor: 'rgba(255,110,97,0.75)', borderRadius: 0 },
+        { label: 'Subscription Revenue', data: subRev, backgroundColor: 'rgba(8,17,63,0.55)', borderRadius: 0 },
+        { label: 'Minutes Margin', data: minMarg, backgroundColor: 'rgba(179,230,201,0.8)', borderRadius: 6 }
+      ]
+    },
+    options: {
+      ...chartOpts(),
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { stacked: true, grid: { color: 'rgba(8,17,63,0.06)' }, ticks: { callback: v => fmtR(v), font: { size: 11 } } }
+      }
+    }
+  });
+
+  // 5. Revenue Mix Doughnut
+  const totalHW = hwRev.reduce((a,b) => a+b, 0);
+  const totalSub = subRev.reduce((a,b) => a+b, 0);
+  const totalMin = minMarg.reduce((a,b) => a+b, 0);
+  new Chart(document.getElementById('revMixChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Hardware', 'Subscriptions', 'Minutes'],
+      datasets: [{ data: [totalHW, totalSub, totalMin], backgroundColor: [CORAL, NAVY, MINT], borderWidth: 0, hoverOffset: 8 }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 12, padding: 14, font: { size: 12 } } },
+        tooltip: { callbacks: { label: ctx => ' ' + fmtR(ctx.raw) + ' (' + Math.round(ctx.raw / (totalHW+totalSub+totalMin) * 100) + '%)' } }
+      },
+      cutout: '62%'
+    }
+  });
+
+  // 6. Sub Revenue Growth Line
+  new Chart(document.getElementById('subRevChart'), {
+    type: 'line',
+    data: {
+      labels: MONTHS,
+      datasets: [{ label: 'Monthly Sub Revenue', data: subRev, borderColor: NAVY, borderWidth: 2.5, backgroundColor: 'rgba(8,17,63,0.06)', fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: NAVY }]
+    },
+    options: {
+      ...chartOpts(),
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: 'rgba(8,17,63,0.06)' }, ticks: { callback: v => fmtR(v), font: { size: 11 } } }
+      }
+    }
+  });
+
+  // 7. P&L Chart
+  new Chart(document.getElementById('plChart'), {
+    data: {
+      labels: MONTHS,
+      datasets: [
+        {
+          type: 'bar', label: 'Monthly Surplus/Deficit',
+          data: opSurplus,
+          backgroundColor: opSurplus.map(v => v >= 0 ? 'rgba(179,230,201,0.6)' : 'rgba(232,69,69,0.5)'),
+          borderColor: opSurplus.map(v => v >= 0 ? '#2D9B6F' : RED),
+          borderWidth: 1.5, borderRadius: 6, yAxisID: 'y'
+        },
+        {
+          type: 'line', label: 'Cumulative Operating Position',
+          data: cumSurplus,
+          borderColor: NAVY, borderWidth: 2.5, pointBackgroundColor: NAVY, pointRadius: 4,
+          tension: 0.35, fill: false, yAxisID: 'y'
+        }
+      ]
+    },
+    options: {
+      ...chartOpts(),
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: {
+          grid: { color: 'rgba(8,17,63,0.06)' },
+          ticks: { callback: v => fmtR(v), font: { size: 11 } },
+          afterDataLimits: scale => { scale.min = Math.min(scale.min, -250000); }
+        }
+      }
+    }
+  });
+
+  // 8. Cash Flow Chart
+  const cashPlugin = {
+    id: 'cashAnnotations',
+    afterDraw(chart) {
+      const { ctx, chartArea, scales } = chart;
+      const annotations = [
+        { month: 0, label: '📦 M1 Reorder', color: CORAL },
+        { month: 6, label: '📦 M7 Reorder', color: CORAL },
+        { month: 10, label: '📦 M11 Reorder', color: CORAL }
+      ];
+      annotations.forEach(a => {
+        const x = scales.x.getPixelForValue(a.month);
+        ctx.save();
+        ctx.setLineDash([4, 4]);
+        ctx.strokeStyle = 'rgba(255,110,97,0.5)';
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(x, chartArea.top);
+        ctx.lineTo(x, chartArea.bottom);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.restore();
+      });
+    }
+  };
+  new Chart(document.getElementById('cashChart'), {
+    type: 'line',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        {
+          label: 'Closing Cash Balance',
+          data: closingCash,
+          borderColor: CORAL, borderWidth: 3,
+          backgroundColor: ctx => {
+            const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 280);
+            g.addColorStop(0, 'rgba(255,110,97,0.15)');
+            g.addColorStop(1, 'rgba(255,110,97,0.02)');
+            return g;
+          },
+          fill: true, tension: 0.4,
+          pointBackgroundColor: closingCash.map(v => v < 0 ? RED : '#2D9B6F'),
+          pointRadius: 6, pointHoverRadius: 8
+        },
+        {
+          label: 'Zero Line',
+          data: Array(12).fill(0),
+          borderColor: 'rgba(8,17,63,0.2)', borderWidth: 1,
+          borderDash: [6, 6], pointRadius: 0, fill: false
+        }
+      ]
+    },
+    options: {
+      ...chartOpts({ plugins: { legend: { position: 'bottom' } } }),
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+        y: { grid: { color: 'rgba(8,17,63,0.06)' }, ticks: { callback: v => fmtR(v), font: { size: 11 } } }
+      }
+    },
+    plugins: [cashPlugin]
+  });
+
+  // Active nav highlighting
+  const sections = document.querySelectorAll('section[id], .section[id]');
+  const navLinks = document.querySelectorAll('nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => {
+          a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  document.querySelectorAll('[id]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
