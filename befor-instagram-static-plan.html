@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>befor. — instagram static creative plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&family=Karla:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #222222;
+    --offwhite: #F7F7F7;
+    --sage: #ADCBC4;
+    --mineral: #C6D2DF;
+    --mint: #3EEBB7;
+    --grey: #888888;
+    --lightgrey: #CCCCCC;
+  }
+
+  body {
+    font-family: 'Karla', sans-serif;
+    background: var(--black);
+    color: var(--offwhite);
+    line-height: 1.5;
+    font-size: 15px;
+  }
+
+  /* ── HEADER ─────────────────────────────────────── */
+  .site-header {
+    background: var(--black);
+    border-bottom: 1px solid #333;
+    padding: 40px 60px 36px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--offwhite);
+    letter-spacing: -0.5px;
+  }
+
+  .logo span { color: var(--mint); }
+
+  .header-meta {
+    text-align: right;
+  }
+
+  .header-meta h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--grey);
+    margin-bottom: 4px;
+  }
+
+  .header-meta p {
+    font-family: 'Karla', sans-serif;
+    font-size: 13px;
+    color: #555;
+  }
+
+  /* ── CONTEXT SECTION ─────────────────────────────── */
+  .context-section {
+    background: #1a1a1a;
+    border-bottom: 1px solid #333;
+    padding: 60px;
+  }
+
+  .section-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--mint);
+    margin-bottom: 16px;
+  }
+
+  .context-heading {
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--offwhite);
+    line-height: 1.1;
+    max-width: 700px;
+    margin-bottom: 40px;
+  }
+
+  .context-heading em {
+    color: var(--mint);
+    font-style: normal;
+  }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: #333;
+    border: 1px solid #333;
+    margin-bottom: 40px;
+  }
+
+  .stat-card {
+    background: var(--black);
+    padding: 28px 24px;
+  }
+
+  .stat-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: var(--mint);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--grey);
+    line-height: 1.4;
+  }
+
+  .stat-label strong {
+    display: block;
+    color: var(--offwhite);
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .insight-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .insight-card {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid var(--mint);
+    padding: 20px 24px;
+  }
+
+  .insight-card.dead { border-left-color: #555; }
+
+  .insight-card h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--mint);
+    margin-bottom: 12px;
+  }
+
+  .insight-card.dead h3 { color: #555; }
+
+  .insight-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.4;
+  }
+
+  .insight-item::before {
+    content: '→';
+    color: var(--mint);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .insight-card.dead .insight-item::before { color: #444; }
+
+  /* ── PRIORITY MATRIX ─────────────────────────────── */
+  .priority-section {
+    background: var(--black);
+    padding: 60px;
+    border-bottom: 1px solid #333;
+  }
+
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--offwhite);
+    margin-bottom: 32px;
+  }
+
+  .priority-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .priority-table th {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--grey);
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid #333;
+  }
+
+  .priority-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #222;
+    color: #ccc;
+    vertical-align: top;
+  }
+
+  .priority-table tr:hover td { background: #1a1a1a; }
+
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .badge-urgent { background: var(--mint); color: var(--black); }
+  .badge-high { background: rgba(62,235,183,0.2); color: var(--mint); }
+  .badge-medium { background: #2a2a2a; color: #888; }
+
+  .ad-ref {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--offwhite);
+    background: #2a2a2a;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .data-badge {
+    display: inline-block;
+    background: rgba(62,235,183,0.1);
+    color: var(--mint);
+    border: 1px solid rgba(62,235,183,0.3);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+
+  /* ── PILLAR SECTION ──────────────────────────────── */
+  .pillar-section {
+    padding: 70px 60px;
+    border-bottom: 1px solid #333;
+  }
+
+  .pillar-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .pillar-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 80px;
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.08;
+    color: var(--offwhite);
+    margin-bottom: -20px;
+    margin-left: -4px;
+  }
+
+  .pillar-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--offwhite);
+    margin-bottom: 8px;
+  }
+
+  .pillar-subtitle {
+    font-size: 14px;
+    color: var(--grey);
+    max-width: 500px;
+    line-height: 1.6;
+  }
+
+  .pillar-tag {
+    font-family: 'Poppins', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    white-space: nowrap;
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+
+  .ads-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+  }
+
+  /* ── AD CONCEPT CARD ─────────────────────────────── */
+  .ad-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Mock Instagram Frame */
+  .mock-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/5;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .mock-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mock-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 22px 22px;
+  }
+
+  .mock-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    margin-bottom: auto;
+  }
+
+  .mock-content {
+    margin-top: auto;
+  }
+
+  .mock-eyebrow {
+    font-family: 'Karla', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+
+  .mock-headline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  .mock-body {
+    font-family: 'Karla', sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    opacity: 0.8;
+    margin-bottom: 16px;
+  }
+
+  .mock-cta {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+    padding: 9px 18px;
+    border-radius: 2px;
+  }
+
+  /* Copy spec panel */
+  .copy-spec {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    padding: 20px;
+  }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12.5px;
+    line-height: 1.5;
+  }
+
+  .spec-row:last-child { margin-bottom: 0; }
+
+  .spec-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #444;
+    padding-top: 1px;
+  }
+
+  .spec-value {
+    color: #ccc;
+  }
+
+  .spec-value strong {
+    color: var(--offwhite);
+    font-weight: 600;
+  }
+
+  .spec-code {
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-top: 14px;
+    letter-spacing: 1px;
+  }
+
+  .char-count {
+    font-size: 10px;
+    color: #444;
+    margin-left: 6px;
+  }
+
+  .char-ok { color: #3EEBB7; }
+  .char-warn { color: #f0a500; }
+
+  /* ── CAROUSEL SECTION ────────────────────────────── */
+  .carousel-section {
+    padding: 70px 60px;
+    border-bottom: 1px solid #333;
+  }
+
+  .carousel-block {
+    margin-bottom: 64px;
+  }
+
+  .carousel-block:last-child { margin-bottom: 0; }
+
+  .carousel-intro {
+    margin-bottom: 32px;
+  }
+
+  .carousel-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--offwhite);
+    margin-bottom: 8px;
+  }
+
+  .carousel-desc {
+    font-size: 14px;
+    color: var(--grey);
+    max-width: 600px;
+    line-height: 1.6;
+  }
+
+  .cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+  }
+
+  .carousel-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-frame {
+    aspect-ratio: 1/1;
+    border-radius: 4px 4px 0 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 18px 16px;
+  }
+
+  .card-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .card-overlay {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .card-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.5;
+    margin-bottom: auto;
+  }
+
+  .card-headline {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-top: auto;
+  }
+
+  .card-sub {
+    font-family: 'Karla', sans-serif;
+    font-weight: 400;
+    line-height: 1.4;
+    opacity: 0.75;
+    margin-top: 6px;
+  }
+
+  .card-spec {
+    background: #111;
+    border: 1px solid #2a2a2a;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    padding: 12px;
+    font-size: 11px;
+    color: #777;
+    line-height: 1.5;
+  }
+
+  /* ── COPY RULES SECTION ──────────────────────────── */
+  .rules-section {
+    background: #111;
+    padding: 60px;
+    border-bottom: 1px solid #333;
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 32px;
+    margin-top: 32px;
+  }
+
+  .rule-block h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--mint);
+    margin-bottom: 16px;
+  }
+
+  .rule-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #aaa;
+    line-height: 1.5;
+  }
+
+  .rule-item .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--mint);
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .rule-item .dot.grey { background: #444; }
+
+  .copy-example {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid var(--mint);
+    padding: 12px 14px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: var(--offwhite);
+    font-weight: 600;
+    margin: 8px 0;
+    line-height: 1.4;
+  }
+
+  .copy-example.dead {
+    border-left-color: #333;
+    color: #555;
+    text-decoration: line-through;
+  }
+
+  /* ── FOOTER ──────────────────────────────────────── */
+  .site-footer {
+    background: var(--black);
+    padding: 32px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #2a2a2a;
+    font-size: 12px;
+    color: #444;
+  }
+
+  .footer-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  /* ── DIVIDER ─────────────────────────────────────── */
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: var(--mint);
+    margin: 16px 0 24px;
+  }
+
+  /* ── COLOUR SWATCHES ──────────────────────────────── */
+  .swatch-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #333;
+  }
+
+  /* Pillar accent colours */
+  .p1 .pillar-number { color: var(--mint); opacity: 0.15; }
+  .p1 .pillar-tag { background: var(--mint); color: var(--black); }
+  .p1 .section-label { color: var(--mint); }
+
+  .p2 .pillar-number { color: var(--sage); opacity: 0.15; }
+  .p2 .pillar-tag { background: rgba(173,203,196,0.2); color: var(--sage); border: 1px solid rgba(173,203,196,0.4); }
+  .p2 .section-label { color: var(--sage); }
+
+  .p3 .pillar-number { color: var(--offwhite); opacity: 0.08; }
+  .p3 .pillar-tag { background: rgba(247,247,247,0.1); color: var(--offwhite); border: 1px solid #333; }
+  .p3 .section-label { color: var(--offwhite); }
+
+  .p4 .pillar-number { color: var(--mineral); opacity: 0.2; }
+  .p4 .pillar-tag { background: rgba(198,210,223,0.2); color: var(--mineral); border: 1px solid rgba(198,210,223,0.4); }
+  .p4 .section-label { color: var(--mineral); }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .ads-grid { grid-template-columns: repeat(2, 1fr); }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .cards-row { grid-template-columns: repeat(3, 1fr); }
+    .rules-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 750px) {
+    .site-header, .context-section, .priority-section, .pillar-section, .carousel-section, .rules-section { padding: 40px 24px; }
+    .ads-grid { grid-template-columns: 1fr; }
+    .cards-row { grid-template-columns: repeat(2, 1fr); }
+    .rules-grid { grid-template-columns: 1fr; }
+    .insight-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────── -->
+<header class="site-header">
+  <div class="logo">befor<span>.</span></div>
+  <div class="header-meta">
+    <h1>instagram static creative plan</h1>
+    <p>march 2026 · statics + carousels · 4 pillars · 12 ads + 10 carousel cards</p>
+  </div>
+</header>
+
+<!-- ── CONTEXT ─────────────────────────────────────── -->
+<section class="context-section">
+  <div class="section-label">why statics win</div>
+  <h2 class="context-heading">statics convert at <em>3× the rate</em> of video. the portfolio is starved of them.</h2>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-number">33×</div>
+      <div class="stat-label"><strong>best static ROAS</strong>1000sSwitching — the hidden gem with R155 spend and 3 purchases</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">20.2%</div>
+      <div class="stat-label"><strong>static ATC-to-purchase</strong>vs 6.3% for video. conversion rate is 3× higher on statics</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">6.8%</div>
+      <div class="stat-label"><strong>overall conversion rate</strong>264 ATCs → 18 purchases. the creative works. post-click doesn't.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">35+ days</div>
+      <div class="stat-label"><strong>no new creative</strong>portfolio fatiguing in real-time since early february</div>
+    </div>
+  </div>
+
+  <div class="insight-grid">
+    <div class="insight-card">
+      <h3>what works — build more of this</h3>
+      <div class="insight-item">number claims + social proof ("1,000s switching") → 42.9% ATC conversion</div>
+      <div class="insight-item">specific, named benefit ("frizz isn't your hair type. it's your water.") → high purchase intent</div>
+      <div class="insight-item">risk removal copy ("full refund. no questions.") → addresses checkout abandonment</div>
+      <div class="insight-item">SA-anchored data ("46% of sa water fails standards") → uniquely ownable, no competitor has it</div>
+      <div class="insight-item">before/after visual logic, even without transformation imagery → 35.9% hook rate</div>
+    </div>
+    <div class="insight-card dead">
+      <h3>what kills conversion — avoid entirely</h3>
+      <div class="insight-item">shock/discovery ("you've been showering wrong") → 40.9% hook rate, 0% purchase rate</div>
+      <div class="insight-item">feature dumps (filtration stages, KDF-55, ceramic zeolite) → 0% CTR on carousel test</div>
+      <div class="insight-item">pure lifestyle/aesthetic framing without functional benefit → low commercial intent</div>
+      <div class="insight-item">ugc reaction style (petsandbabies, ohmyword, 10out10) → algorithmically zeroed, all paused</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PRIORITY MATRIX ──────────────────────────────── -->
+<section class="priority-section">
+  <div class="section-label">build order</div>
+  <div class="section-title">priority matrix — make these first</div>
+
+  <table class="priority-table">
+    <thead>
+      <tr>
+        <th>ref</th>
+        <th>ad</th>
+        <th>pillar</th>
+        <th>why urgent</th>
+        <th>expected impact</th>
+        <th>priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="ad-ref">SP-1</span></td>
+        <td>"1,200+ sa households switched"</td>
+        <td>social proof</td>
+        <td>direct variation of 1000sSwitching (33× ROAS). algorithm needs 3+ variations to allocate spend.</td>
+        <td><span class="data-badge">high conversion likely</span></td>
+        <td><span class="badge badge-urgent">urgent</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">SP-2</span></td>
+        <td>"your neighbours already switched"</td>
+        <td>social proof</td>
+        <td>second variation on proven social proof signal. different format (off-white vs dark).</td>
+        <td><span class="data-badge">expands signal</span></td>
+        <td><span class="badge badge-urgent">urgent</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">RR-1</span></td>
+        <td>"better water in 30 days. guaranteed."</td>
+        <td>risk removal</td>
+        <td>addresses the 93% cart abandonment gap. nothing like this exists in the portfolio.</td>
+        <td><span class="data-badge">improves conversion</span></td>
+        <td><span class="badge badge-urgent">urgent</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">RR-2</span></td>
+        <td>"r10 a day for filtered water"</td>
+        <td>risk removal</td>
+        <td>price objection is likely driving cart abandonment. anchoring R10/day reframes R1,200.</td>
+        <td><span class="data-badge">objection killer</span></td>
+        <td><span class="badge badge-urgent">urgent</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">WP-2</span></td>
+        <td>"frizz isn't your hair type. it's your water."</td>
+        <td>water problem</td>
+        <td>new semantic signal. different protagonist + tone from ShowerScene. hair-specific angle.</td>
+        <td><span class="data-badge">new signal</span></td>
+        <td><span class="badge badge-high">high</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">WP-3</span></td>
+        <td>"46% of sa water fails quality standards"</td>
+        <td>water problem</td>
+        <td>uniquely ownable SA data. no competitor can run this. builds authority.</td>
+        <td><span class="data-badge">category-defining</span></td>
+        <td><span class="badge badge-high">high</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">CA</span></td>
+        <td>"what's in your water?" carousel</td>
+        <td>carousel</td>
+        <td>most shareable format. SA data makes each card distinctive. education-first swipe.</td>
+        <td><span class="data-badge">new format signal</span></td>
+        <td><span class="badge badge-high">high</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">BT-1</span></td>
+        <td>"this is what filtered water does to your hair"</td>
+        <td>benefit transformation</td>
+        <td>evolves beforafter_Static (72 ATCs, 35.9% hook rate). hair angle not yet tested.</td>
+        <td><span class="data-badge">proven format, new angle</span></td>
+        <td><span class="badge badge-medium">medium</span></td>
+      </tr>
+      <tr>
+        <td><span class="ad-ref">BT-3</span></td>
+        <td>"filtered water. forever."</td>
+        <td>benefit transformation</td>
+        <td>subscription framing missing from portfolio. LTV-building angle.</td>
+        <td><span class="data-badge">retention signal</span></td>
+        <td><span class="badge badge-medium">medium</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 1 — SOCIAL PROOF -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="pillar-section p1" style="background:#1a1a1a;">
+  <div class="pillar-header">
+    <div>
+      <div class="section-label">pillar 01</div>
+      <div class="pillar-number">01</div>
+      <h2 class="pillar-title">social proof + urgency</h2>
+      <p class="pillar-subtitle">direct expansion of 1000sSwitching — the best creative in the portfolio at 33× ROAS. number-driven, community framing, SA-specific. the algorithm needs 3+ variations of this signal to properly allocate spend.</p>
+    </div>
+    <span class="pillar-tag">scale · urgent</span>
+  </div>
+
+  <div class="ads-grid">
+
+    <!-- SP-1 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--black);">
+        <div class="mock-overlay" style="background:transparent;">
+          <div class="mock-logo" style="color:var(--offwhite);">befor.</div>
+          <div class="mock-content">
+            <div class="mock-eyebrow" style="color:var(--mint);">south africa</div>
+            <div class="mock-headline" style="color:var(--offwhite); font-size:20px;">1,200+ sa households switched this month</div>
+            <div class="mock-body" style="color:#ccc; font-size:12px;">better water. better skin. better hair. find out what they know.</div>
+            <div class="mock-cta" style="background:var(--mint); color:var(--black);">find out why →</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--mint);color:var(--black);">SP-1</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"1,200+ sa households switched this month"</strong> <span class="char-count char-ok">47 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"better water. better skin. better hair. find out what they know." <span class="char-count char-ok">65 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">find out why →</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">bg</span>
+          <span class="spec-value">#222222 dark — product image (fixd chrome front) with gradient overlay</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">image</span>
+          <span class="spec-value">fixd-shower-filter-befor-chome-front.jpg — right-aligned, dark overlay</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">format</span>
+          <span class="spec-value">1080×1350 (4:5 feed) · #222222 bg · off-white text · mint CTA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SP-2 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background: var(--offwhite);">
+
+        <div class="mock-overlay" style="background:transparent;">
+          <div class="mock-logo" style="color:var(--black);">befor.</div>
+          <div class="mock-content">
+            <div class="mock-eyebrow" style="color:#888; font-size:9px;">south african water fact</div>
+            <div class="mock-headline" style="color:var(--black); font-size:20px;">your neighbours already switched.</div>
+            <div class="mock-body" style="color:#555; font-size:12px;">1 in 2 sa homes has contaminated water. join the ones who fixed it.</div>
+            <div class="mock-cta" style="background:var(--black); color:var(--offwhite);">join the switch</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--mint);color:var(--black);">SP-2</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"your neighbours already switched."</strong> <span class="char-count char-ok">36 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"1 in 2 sa homes has contaminated water. join the ones who fixed it." <span class="char-count char-ok">69 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">join the switch</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">bg</span>
+          <span class="spec-value">#F7F7F7 off-white — product image soft/faded in background</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">image</span>
+          <span class="spec-value">handheld-shower-filter-befor-flex-hero.jpg — low opacity background fill</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">format</span>
+          <span class="spec-value">1080×1350 (4:5 feed) · #F7F7F7 bg · black text · black CTA button</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SP-3 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background: var(--sage);">
+
+        <div class="mock-overlay" style="background:transparent;">
+          <div class="mock-logo" style="color:var(--black);">befor.</div>
+          <div class="mock-content">
+            <div class="mock-eyebrow" style="color:rgba(0,0,0,0.4); font-size:9px;">professional recommendation</div>
+            <div class="mock-headline" style="color:var(--black); font-size:18px;">what hairstylists actually recommend.</div>
+            <div class="mock-body" style="color:rgba(0,0,0,0.55); font-size:12px;">filtered shower water. the single biggest upgrade for healthier hair.</div>
+            <div class="mock-cta" style="background:var(--black); color:var(--offwhite);">shop befor.</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--mint);color:var(--black);">SP-3</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"what hairstylists actually recommend."</strong> <span class="char-count char-ok">38 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"filtered shower water. the single biggest upgrade for healthier hair." <span class="char-count char-ok">70 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">shop befor.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">bg</span>
+          <span class="spec-value">#ADCBC4 sage — professional, wellness tone. product at low opacity.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">image</span>
+          <span class="spec-value">fixd-shower-filter-befor-chrome-45.jpg — multiply blend, desaturated</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">note</span>
+          <span class="spec-value">expands on hairstylist static from portfolio. different bg + copy angle.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 2 — THE SA WATER PROBLEM -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="pillar-section p2" style="background: var(--black);">
+  <div class="pillar-header">
+    <div>
+      <div class="section-label">pillar 02</div>
+      <div class="pillar-number">02</div>
+      <h2 class="pillar-title">the sa water problem</h2>
+      <p class="pillar-subtitle">new semantic signal. ShowerScene_Proofpoints attempts this angle but converts at 0.84× ROAS. this pillar differs on protagonist (consumer not brand), tone (empowering not calm), and proof type (data not demo). SA-specific data is entirely ownable — no competitor can run this.</p>
+    </div>
+    <span class="pillar-tag">new signal · high priority</span>
+  </div>
+
+  <div class="ads-grid">
+
+    <!-- WP-1 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:#111;">
+        <div class="mock-overlay" style="background: linear-gradient(135deg, #0d0d1a 0%, #1a1a2a 100%);">
+          <div class="mock-logo" style="color:#555;">befor.</div>
+          <div class="mock-content" style="padding-bottom:4px;">
+            <div class="mock-eyebrow" style="color:var(--sage);">your shower. every morning.</div>
+            <div class="mock-headline" style="color:var(--offwhite); font-size:19px; margin-bottom:12px;">your water is stripping your skin dry.</div>
+            <div style="display:flex; flex-direction:column; gap:5px; margin-bottom:12px;">
+              <div style="font-family:'Karla',sans-serif; font-size:11px; color:var(--sage); display:flex; align-items:center; gap:6px;"><span style="width:4px;height:4px;border-radius:50%;background:var(--sage);flex-shrink:0;"></span>chlorine</div>
+              <div style="font-family:'Karla',sans-serif; font-size:11px; color:var(--sage); display:flex; align-items:center; gap:6px;"><span style="width:4px;height:4px;border-radius:50%;background:var(--sage);flex-shrink:0;"></span>hard minerals</div>
+              <div style="font-family:'Karla',sans-serif; font-size:11px; color:var(--sage); display:flex; align-items:center; gap:6px;"><span style="width:4px;height:4px;border-radius:50%;background:var(--sage);flex-shrink:0;"></span>heavy metals</div>
+            </div>
+            <div class="mock-body" style="color:#777; font-size:11px; margin-bottom:14px;">still running through your shower every morning.</div>
+            <div class="mock-cta" style="background:var(--mint); color:var(--black);">fix it in 2 minutes</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--sage);color:var(--black);">WP-1</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"your water is stripping your skin dry."</strong> <span class="char-count char-ok">39 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"chlorine. hard minerals. heavy metals. still running through your shower every morning." <em style="color:#555;">(contaminant list as design element)</em></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">fix it in 2 minutes</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">bg</span>
+          <span class="spec-value">very dark navy/black gradient (#0d0d1a) — dramatic, no product image. typography-first.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">design</span>
+          <span class="spec-value">contaminants listed with sage dot markers as visual element. strong type hierarchy.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WP-2 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--black);">
+        <div class="mock-overlay" style="background:transparent;">
+          <div class="mock-logo" style="color:#666;">befor.</div>
+          <div class="mock-content">
+            <div class="mock-headline" style="color:var(--offwhite); font-size:21px; line-height:1.1;">frizz isn't your hair type.</div>
+            <div class="mock-headline" style="color:var(--mint); font-size:21px; line-height:1.1; margin-bottom:10px;">it's your water.</div>
+            <div class="mock-body" style="color:#aaa; font-size:12px;">hard water deposits coat every strand. befor. stops it at the source.</div>
+            <div class="mock-cta" style="background:var(--mint); color:var(--black);">get befor. →</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--sage);color:var(--black);">WP-2</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"frizz isn't your hair type. it's your water."</strong> <span class="char-count char-ok">46 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"hard water deposits coat every strand. befor. stops it at the source." <span class="char-count char-ok">70 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">get befor. →</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">design</span>
+          <span class="spec-value">split headline: "frizz isn't your hair type." (white) / "it's your water." (mint). strong contrast.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">image</span>
+          <span class="spec-value">fixd chrome front — full bleed, product revealed through gradient</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WP-3 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--black);">
+        <div class="mock-overlay" style="background:var(--black); display:flex; flex-direction:column; justify-content:space-between; padding:28px 24px;">
+          <div class="mock-logo" style="color:#333;">befor.</div>
+          <div>
+            <div style="font-family:'Poppins',sans-serif; font-size:72px; font-weight:900; color:var(--offwhite); line-height:1; margin-bottom:4px;">46%</div>
+            <div style="font-family:'Poppins',sans-serif; font-size:13px; font-weight:700; color:var(--sage); margin-bottom:12px; text-transform:lowercase; letter-spacing:0.5px;">of sa municipal water fails quality standards</div>
+            <div style="font-family:'Karla',sans-serif; font-size:12px; color:#666; margin-bottom:20px; line-height:1.5;">it shows up on your skin, your hair, your health.<br>we built the fix.</div>
+            <div class="mock-cta" style="background:var(--mint); color:var(--black);">start filtering</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--sage);color:var(--black);">WP-3</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"46% of sa water fails quality standards"</strong> <span class="char-count char-ok">40 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"it shows up on your skin, your hair, your health. we built the fix." <span class="char-count char-ok">68 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">start filtering</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">design</span>
+          <span class="spec-value">"46%" as massive display number (dominant visual). no product image. pure data statement.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">source</span>
+          <span class="spec-value">DWS 2023 Blue Drop data — 46% of municipal systems show poor/bad microbiological quality</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 3 — RISK REMOVAL + OFFER -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="pillar-section p3" style="background:#111;">
+  <div class="pillar-header">
+    <div>
+      <div class="section-label">pillar 03</div>
+      <div class="pillar-number">03</div>
+      <h2 class="pillar-title">risk removal + offer</h2>
+      <p class="pillar-subtitle">the most urgent gap in the portfolio. 264 ATCs produced only 18 purchases — 93.2% drop-off at checkout. the creative is working. the purchase decision isn't. this pillar exists to remove the friction: price objection, installation doubt, and commitment anxiety.</p>
+    </div>
+    <span class="pillar-tag">conversion-critical · urgent</span>
+  </div>
+
+  <div class="ads-grid">
+
+    <!-- RR-1 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--offwhite);">
+
+        <div class="mock-overlay" style="background:transparent; padding: 28px 24px;">
+          <div style="display:inline-block; background:var(--mint); color:var(--black); font-family:'Poppins',sans-serif; font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:2px; padding:5px 12px; border-radius:2px; margin-bottom:auto;">30-day guarantee</div>
+          <div class="mock-content">
+            <div class="mock-headline" style="color:var(--black); font-size:24px; line-height:1.1; margin-bottom:10px;">better water in 30 days. guaranteed.</div>
+            <div class="mock-body" style="color:#555; font-size:12px;">if your skin and hair don't improve, full refund. no questions. no drama.</div>
+            <div style="margin-top:16px;"><div class="mock-cta" style="background:var(--black); color:var(--offwhite);">try risk-free →</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:#ccc;color:var(--black);">RR-1</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"better water in 30 days. guaranteed."</strong> <span class="char-count char-ok">37 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"if your skin and hair don't improve, full refund. no questions. no drama." <span class="char-count char-ok">73 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">try risk-free →</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">design</span>
+          <span class="spec-value">mint "30-day guarantee" badge at top. #F7F7F7 clean bg. reassuring tone. product barely visible.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">intent</span>
+          <span class="spec-value">directly addresses checkout hesitation. "no drama" mirrors brand voice — not corporate.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RR-2 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--offwhite);">
+        <div class="mock-overlay" style="background:transparent; padding:28px 24px; justify-content:center;">
+          <div class="mock-logo" style="color:#bbb; position:absolute; top:24px; left:22px;">befor.</div>
+          <div style="width:100%;">
+            <div style="font-family:'Karla',sans-serif; font-size:11px; color:#999; text-transform:uppercase; letter-spacing:2px; margin-bottom:20px; text-align:center;">the real cost</div>
+            <div style="text-align:center; margin-bottom:8px;">
+              <span style="font-family:'Poppins',sans-serif; font-size:60px; font-weight:900; color:var(--black); line-height:1;">r10</span>
+              <span style="font-family:'Karla',sans-serif; font-size:16px; color:#888; margin-left:4px;">/ day</span>
+            </div>
+            <div style="font-family:'Poppins',sans-serif; font-size:14px; font-weight:700; color:var(--black); text-align:center; margin-bottom:10px;">for filtered shower water</div>
+            <div style="background:#eee; height:1px; margin: 14px 0;"></div>
+            <div style="font-family:'Karla',sans-serif; font-size:12px; color:#777; line-height:1.6; text-align:center; margin-bottom:18px;">r1,200 once. replacement filter every 4 months.<br>less than your morning coffee.</div>
+            <div style="text-align:center;"><div class="mock-cta" style="background:var(--mint); color:var(--black);">see the value</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:#ccc;color:var(--black);">RR-2</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"r10 a day for filtered shower water"</strong> <span class="char-count char-ok">36 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"r1,200 once. replacement filter every 4 months. less than your morning coffee." <span class="char-count char-ok">79 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">see the value</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">design</span>
+          <span class="spec-value">large "r10" as display element. clean white bg. no product image. pure cost-reframe.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">intent</span>
+          <span class="spec-value">price anchoring. R1,200 feels expensive until framed as R10/day. matches Jolie's positioning strategy.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RR-3 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--black);">
+        <div class="mock-overlay" style="background:transparent;">
+          <div class="mock-logo" style="color:#666;">befor.</div>
+          <div class="mock-content">
+            <div style="display:flex; gap:8px; margin-bottom:12px;">
+              <span style="font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;background:rgba(62,235,183,0.15);color:var(--mint);border:1px solid rgba(62,235,183,0.3);padding:3px 8px;border-radius:3px;">no plumber</span>
+              <span style="font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;background:rgba(62,235,183,0.15);color:var(--mint);border:1px solid rgba(62,235,183,0.3);padding:3px 8px;border-radius:3px;">no tools</span>
+              <span style="font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;background:rgba(62,235,183,0.15);color:var(--mint);border:1px solid rgba(62,235,183,0.3);padding:3px 8px;border-radius:3px;">2 minutes</span>
+            </div>
+            <div class="mock-headline" style="color:var(--offwhite); font-size:19px;">universal fit. self-install. any shower.</div>
+            <div class="mock-body" style="color:#aaa; font-size:12px;">works with any standard shower arm. starting today.</div>
+            <div class="mock-cta" style="background:var(--mint); color:var(--black);">shop now →</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:#ccc;color:var(--black);">RR-3</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"no plumber. no tools. 2 minutes."</strong> as tag chips + <strong>"universal fit. self-install. any shower."</strong></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"works with any standard shower arm. starting today." <span class="char-count char-ok">51 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">shop now →</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">design</span>
+          <span class="spec-value">"no plumber / no tools / 2 minutes" as three mint tag chips. installation shot as bg image.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">image</span>
+          <span class="spec-value">fixd-shower-filter-befor-chrome-handjpg.jpg — hand holding product, install context</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- PILLAR 4 — BENEFIT TRANSFORMATION -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="pillar-section p4" style="background:#1a1a1a;">
+  <div class="pillar-header">
+    <div>
+      <div class="section-label">pillar 04</div>
+      <div class="pillar-number">04</div>
+      <h2 class="pillar-title">benefit transformation</h2>
+      <p class="pillar-subtitle">beforafter_Static generated 72 ATCs and 35.9% hook rate. it works. it just needs copy and benefit angle variations. expand beyond water clarity to hair, skin, and subscription outcomes. tangible outcomes — before/after logic without needing before/after imagery.</p>
+    </div>
+    <span class="pillar-tag">evolve proven format</span>
+  </div>
+
+  <div class="ads-grid">
+
+    <!-- BT-1 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--offwhite);">
+
+        <div class="mock-overlay" style="background:transparent; padding:26px 22px;">
+          <div class="mock-logo" style="color:#aaa;">befor.</div>
+          <div class="mock-content">
+            <div class="mock-eyebrow" style="color:#aaa;">what filtered water does</div>
+            <div class="mock-headline" style="color:var(--black); font-size:20px; margin-bottom:10px;">this is what filtered water does to your hair.</div>
+            <div style="border-top:1px solid #ddd; margin:12px 0;"></div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:14px;">
+              <div style="font-family:'Karla',sans-serif; font-size:11px; color:#555;">less frizz</div>
+              <div style="font-family:'Karla',sans-serif; font-size:11px; color:#555;">more moisture</div>
+              <div style="font-family:'Karla',sans-serif; font-size:11px; color:#555;">cleaner scalp</div>
+              <div style="font-family:'Karla',sans-serif; font-size:11px; color:#555;">softer texture</div>
+            </div>
+            <div class="mock-body" style="color:#777; font-size:11px;">from your first shower.</div>
+            <div class="mock-cta" style="background:var(--black); color:var(--offwhite);">get befor.</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--mineral);color:var(--black);">BT-1</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"this is what filtered water does to your hair."</strong> <span class="char-count char-ok">47 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">benefit grid: "less frizz / more moisture / cleaner scalp / softer texture" + "from your first shower."</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">get befor.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">design</span>
+          <span class="spec-value">#F7F7F7 clean bg. benefit list as 2×2 grid element. editorial, skincare-brand aesthetic.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">note</span>
+          <span class="spec-value">source imagery from you/UGC when available — hair before/after transformation. placeholder: family hero.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BT-2 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--mineral);">
+        <div class="mock-overlay" style="background:transparent; padding:26px 22px;">
+          <div class="mock-logo" style="color:rgba(34,34,34,0.4);">befor.</div>
+          <div style="margin-top:20px;">
+            <div style="font-family:'Karla',sans-serif; font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:2px; color:rgba(34,34,34,0.4); margin-bottom:14px;">30-day result</div>
+            <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:22px; color:var(--black); line-height:1.1; margin-bottom:10px;">30 days of filtered water. this is what changes.</div>
+            <div style="background:rgba(34,34,34,0.08); height:1px; margin:16px 0;"></div>
+            <div style="font-family:'Karla',sans-serif; font-size:12px; color:rgba(34,34,34,0.6); line-height:1.6; margin-bottom:16px;">chlorine strips moisture. we stop chlorine. you get your skin back.</div>
+            <div class="mock-cta" style="background:var(--black); color:var(--offwhite);">start your 30 days</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--mineral);color:var(--black);">BT-2</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"30 days of filtered water. this is what changes."</strong> <span class="char-count char-ok">49 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"chlorine strips moisture. we stop chlorine. you get your skin back." <span class="char-count char-ok">68 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">start your 30 days</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">bg</span>
+          <span class="spec-value">#C6D2DF mineral blue — spa/wellness tone. no product image. type-only treatment.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">note</span>
+          <span class="spec-value">pairs naturally with Carousel B (30-day journey). can link landing page to a "30-day challenge" framing.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BT-3 -->
+    <div class="ad-card">
+      <div class="mock-frame" style="background:var(--black);">
+        <div class="mock-overlay" style="background:transparent;">
+          <div class="mock-logo" style="color:#666;">befor.</div>
+          <div class="mock-content">
+            <div class="mock-eyebrow" style="color:var(--mineral);">the subscription</div>
+            <div class="mock-headline" style="color:var(--offwhite); font-size:28px; font-weight:900; line-height:1;">filtered water. forever.</div>
+            <div style="width:30px; height:2px; background:var(--mint); margin:10px 0;"></div>
+            <div class="mock-body" style="color:#aaa; font-size:12px;">swap your filter every 4 months. subscribe and never think about it again.</div>
+            <div class="mock-cta" style="background:var(--mint); color:var(--black);">subscribe &amp; save →</div>
+          </div>
+        </div>
+      </div>
+      <div class="copy-spec">
+        <div class="spec-row">
+          <span class="spec-label">ref</span>
+          <span class="spec-value"><span class="spec-code" style="background:var(--mineral);color:var(--black);">BT-3</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">headline</span>
+          <span class="spec-value"><strong>"filtered water. forever."</strong> <span class="char-count char-ok">24 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">body</span>
+          <span class="spec-value">"swap your filter every 4 months. subscribe and never think about it again." <span class="char-count char-ok">74 chars ✓</span></span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">cta</span>
+          <span class="spec-value">subscribe &amp; save →</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">image</span>
+          <span class="spec-value">shower-filter-befor-flex-replacement.jpg — filter cartridge product. subscription context.</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">intent</span>
+          <span class="spec-value">LTV-building. subscription framing entirely absent from current portfolio. targets repeat-purchase intent.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- CAROUSELS -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="carousel-section" style="background:var(--black);">
+  <div class="section-label">carousels</div>
+  <div class="section-title">two carousel series</div>
+  <p style="color:var(--grey); font-size:14px; max-width:600px; margin-bottom:48px; line-height:1.6;">the previous carousel in the portfolio (feature list) generated zero clicks and zero ATCs. these two series are built on angles that work — education + transformation. each card is designed to reward the swipe.</p>
+
+  <!-- CAROUSEL A -->
+  <div class="carousel-block">
+    <div class="carousel-intro">
+      <div class="section-label" style="color:var(--sage);">carousel a</div>
+      <h3 class="carousel-title">"what's in your water?"</h3>
+      <p class="carousel-desc">problem-reveal carousel. each card names and explains one contaminant. high shareability. SA water data makes this uniquely ownable. cover is the hook — swipeable to find out what's actually in their shower.</p>
+    </div>
+    <div class="cards-row">
+
+      <!-- Cover -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:var(--black);">
+          <div class="card-overlay">
+            <div class="card-number" style="color:#444;">01 / cover</div>
+            <div>
+              <div class="card-headline" style="color:var(--offwhite); font-size:15px;">you don't know what's in your water.</div>
+              <div class="card-sub" style="color:var(--mint); font-size:12px;">but we do. →</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">cover</strong><br>
+          headline: "you don't know what's in your water. but we do." · bg: #222 · mint "→" swipe cue
+        </div>
+      </div>
+
+      <!-- Chlorine -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:#1a0f0f;">
+          <div class="card-overlay">
+            <div class="card-number" style="color:#4a2020;">02 / chlorine</div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:20px; color:#ff6b6b; line-height:1; margin-bottom:6px;">chlorine</div>
+              <div class="card-sub" style="color:#ccc; font-size:11px;">strips natural oils. causes dryness. fades colour-treated hair.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 2</strong><br>
+          contaminant: chlorine · dark red bg (#1a0f0f) · name in red + impact in body copy
+        </div>
+      </div>
+
+      <!-- Hard Minerals -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:#0f1520;">
+          <div class="card-overlay">
+            <div class="card-number" style="color:#1a2a3a;">03 / minerals</div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:16px; color:var(--mineral); line-height:1; margin-bottom:6px;">hard water minerals</div>
+              <div class="card-sub" style="color:#ccc; font-size:11px;">coats every strand. every shower. every day.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 3</strong><br>
+          contaminant: hard minerals · dark blue bg (#0f1520) · name in mineral blue
+        </div>
+      </div>
+
+      <!-- Heavy Metals -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:#111a0f;">
+          <div class="card-overlay">
+            <div class="card-number" style="color:#1a2a10;">04 / metals</div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:18px; color:#a8d5a2; line-height:1; margin-bottom:6px;">heavy metals</div>
+              <div class="card-sub" style="color:#ccc; font-size:11px;">linked to scalp inflammation, irritation, and hair loss.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 4</strong><br>
+          contaminant: heavy metals · dark green bg (#111a0f) · name in muted green
+        </div>
+      </div>
+
+      <!-- Solution -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:var(--mint);">
+
+          <div class="card-overlay">
+            <div class="card-number" style="color:rgba(34,34,34,0.3);">05 / fix</div>
+            <div>
+              <div style="font-family:'Poppins',sans-serif; font-weight:800; font-size:14px; color:var(--black); line-height:1.2; margin-bottom:6px;">befor. removes it all.</div>
+              <div class="card-sub" style="color:rgba(34,34,34,0.7); font-size:11px;">2-minute install. free shipping.</div>
+              <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:11px; color:var(--black); margin-top:8px; text-decoration:underline;">shop now →</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 5 · CTA</strong><br>
+          bg: mint green #3EEBB7 · product at low opacity · black text · "shop now →" link
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CAROUSEL B -->
+  <div class="carousel-block">
+    <div class="carousel-intro">
+      <div class="section-label" style="color:var(--mineral);">carousel b</div>
+      <h3 class="carousel-title">"30 days of filtered water"</h3>
+      <p class="carousel-desc">transformation journey. follows a timeline that rewards each swipe with a new outcome. most emotionally resonant carousel format. pairs directly with BT-2 static and the "30-day guarantee" framing.</p>
+    </div>
+    <div class="cards-row">
+
+      <!-- Cover -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:#0d0d18;">
+          <div class="card-overlay">
+            <div class="card-number" style="color:#333;">01 / cover</div>
+            <div>
+              <div class="card-headline" style="color:var(--offwhite); font-size:14px;">what 30 days of filtered water does to your body</div>
+              <div class="card-sub" style="color:var(--mineral); font-size:11px;">swipe to find out →</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">cover</strong><br>
+          dark bg · off-white headline · mineral "swipe to find out →" cue · no product
+        </div>
+      </div>
+
+      <!-- Day 7 -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:var(--offwhite);">
+          <div class="card-overlay">
+            <div style="font-family:'Poppins',sans-serif; font-size:10px; font-weight:700; color:#bbb; text-transform:uppercase; letter-spacing:2px;">day 7</div>
+            <div style="margin-top:auto;">
+              <div class="card-headline" style="color:var(--black); font-size:14px;">your skin starts retaining moisture again</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 2 · day 7</strong><br>
+          bg: off-white · "day 7" label top · skin benefit outcome in black · minimalist
+        </div>
+      </div>
+
+      <!-- Day 14 -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:#eef2f0;">
+          <div class="card-overlay">
+            <div style="font-family:'Poppins',sans-serif; font-size:10px; font-weight:700; color:#aac; text-transform:uppercase; letter-spacing:2px;">day 14</div>
+            <div style="margin-top:auto;">
+              <div class="card-headline" style="color:var(--black); font-size:14px;">hair feels softer. frizz starts to settle.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 3 · day 14</strong><br>
+          bg: very light sage (#eef2f0) · "day 14" in sage-toned label · hair benefit
+        </div>
+      </div>
+
+      <!-- Day 30 -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:var(--sage);">
+          <div class="card-overlay">
+            <div style="font-family:'Poppins',sans-serif; font-size:10px; font-weight:700; color:rgba(34,34,34,0.4); text-transform:uppercase; letter-spacing:2px;">day 30</div>
+            <div style="margin-top:auto;">
+              <div class="card-headline" style="color:var(--black); font-size:14px;">cleaner scalp. clearer skin. the baseline raised.</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 4 · day 30</strong><br>
+          bg: sage #ADCBC4 · peak of transformation · scalp + skin outcome
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="carousel-card">
+        <div class="card-frame" style="background:var(--black);">
+          <div class="card-overlay" style="background:transparent;">
+            <div class="card-number" style="color:#666;">05 / cta</div>
+            <div style="margin-top:auto;">
+              <div class="card-headline" style="color:var(--offwhite); font-size:13px;">join 1,200+ sa households. start today.</div>
+              <div style="font-family:'Poppins',sans-serif; font-size:11px; font-weight:700; color:var(--mint); margin-top:8px; text-decoration:underline;">shop befor. →</div>
+            </div>
+          </div>
+        </div>
+        <div class="card-spec">
+          <strong style="color:#888;">card 5 · CTA</strong><br>
+          product hero image · dark gradient · social proof headline · mint "shop befor. →"
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════ -->
+<!-- COPY RULES -->
+<!-- ═══════════════════════════════════════════════ -->
+<section class="rules-section">
+  <div class="section-label">production notes</div>
+  <div class="section-title">copy rules + brand system</div>
+
+  <div class="rules-grid">
+    <div class="rule-block">
+      <h3>copy rules</h3>
+      <div class="rule-item"><span class="dot"></span>all lowercase. always. no exceptions — not headlines, not CTAs, not the logo.</div>
+      <div class="rule-item"><span class="dot"></span>headline max: 60 characters. body max: 80 characters.</div>
+      <div class="rule-item"><span class="dot"></span>tone: playful irreverence meets no-bullshit clarity. science meets skincare.</div>
+      <div class="rule-item"><span class="dot"></span>never preachy. never corporate. no em dashes.</div>
+      <div class="rule-item"><span class="dot"></span>CTAs end in "." or "→" — not "!" or "NOW"</div>
+      <div class="rule-item"><span class="dot"></span>"befor." always with the full stop. never "befor" or "Befor."</div>
+    </div>
+
+    <div class="rule-block">
+      <h3>copy patterns that convert</h3>
+      <div class="copy-example">"1,200+ sa households switched this month"</div>
+      <div class="copy-example">"frizz isn't your hair type. it's your water."</div>
+      <div class="copy-example">"full refund. no questions. no drama."</div>
+      <div class="copy-example">"46% of sa water fails quality standards"</div>
+      <div class="copy-example">"r10 a day. less than your morning coffee."</div>
+    </div>
+
+    <div class="rule-block">
+      <h3>copy patterns to avoid</h3>
+      <div class="copy-example dead">"you've been showering wrong your whole life"</div>
+      <div class="copy-example dead">"KDF-55 media, calcium sulfite, zeolite ceramic"</div>
+      <div class="copy-example dead">"transform your bathroom experience"</div>
+      <div class="copy-example dead">"oh my word! I can't believe what came out of my filter"</div>
+      <div style="margin-top:10px; font-size:12px; color:#555; line-height:1.5;">shock/discovery + feature dumps + pure aesthetic = high hook rate, zero purchase rate. proven by data.</div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px;">
+    <div class="section-label" style="margin-bottom:16px;">colour palette</div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#222222;border:1px solid #444;"></div>
+        <div><div style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:#ccc;">black</div><div style="font-family:'Karla',sans-serif;font-size:10px;color:#555;">#222222</div></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#F7F7F7;border:1px solid #333;"></div>
+        <div><div style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:#ccc;">off white</div><div style="font-family:'Karla',sans-serif;font-size:10px;color:#555;">#F7F7F7</div></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#ADCBC4;border:1px solid #333;"></div>
+        <div><div style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:#ccc;">sage</div><div style="font-family:'Karla',sans-serif;font-size:10px;color:#555;">#ADCBC4</div></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#C6D2DF;border:1px solid #333;"></div>
+        <div><div style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:#ccc;">mineral blue</div><div style="font-family:'Karla',sans-serif;font-size:10px;color:#555;">#C6D2DF</div></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <div style="width:32px;height:32px;border-radius:50%;background:#3EEBB7;border:1px solid #333;"></div>
+        <div><div style="font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;color:#ccc;">mint green</div><div style="font-family:'Karla',sans-serif;font-size:10px;color:#555;">#3EEBB7 · CTAs + accents</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:40px; display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+    <div>
+      <div class="section-label" style="margin-bottom:16px;">fonts</div>
+      <div style="margin-bottom:12px;">
+        <div style="font-family:'Poppins',sans-serif; font-weight:700; font-size:18px; color:var(--offwhite);">poppins bold</div>
+        <div style="font-family:'Karla',sans-serif; font-size:12px; color:#555;">headlines, CTAs, labels — Google Fonts</div>
+      </div>
+      <div>
+        <div style="font-family:'Karla',sans-serif; font-weight:400; font-size:16px; color:#aaa;">karla regular</div>
+        <div style="font-family:'Karla',sans-serif; font-size:12px; color:#555;">body copy, captions — Google Fonts</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-label" style="margin-bottom:16px;">available images</div>
+      <div style="font-size:12px; color:#666; line-height:1.9;">
+        <div>fixd-shower-filter-befor-chome-front.jpg <span style="color:#444;">→ hero, dark bg ads</span></div>
+        <div>fixd-shower-filter-befor-chrome-45.jpg <span style="color:#444;">→ angled, risk removal</span></div>
+        <div>fixd-shower-filter-befor-chrome-handjpg.jpg <span style="color:#444;">→ install context</span></div>
+        <div>handheld-shower-filter-befor-flex-hero.jpg <span style="color:#444;">→ flex product, SP-2</span></div>
+        <div>family-shower-filter-befor-flex-fixd-hero.jpg <span style="color:#444;">→ lifestyle, carousels</span></div>
+        <div>shower-filter-befor-flex-replacement.jpg <span style="color:#444;">→ filter cartridge, subscription</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────────────── -->
+<footer class="site-footer">
+  <div class="footer-logo">befor.</div>
+  <div>instagram static creative plan · march 2026 · 12 statics · 10 carousel cards · 4 pillars</div>
+  <div>it starts with water</div>
+</footer>
+
+</body>
+</html>
