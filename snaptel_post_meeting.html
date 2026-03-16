@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TickeyBox + SnapTel | Post-Meeting Brief</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --warm-coral: #FF6E61;
+    --butter-yellow: #FFEE6B;
+    --pastel-mint: #B3E6C9;
+    --midnight-navy: #08113F;
+    --cream-canvas: #FFFAF0;
+    --surface: #FFFFFF;
+    --muted-bg: #F3F0E8;
+    --muted-border: rgba(8,17,63,0.1);
+    --danger: #E63946;
+    --warning: #F4A261;
+    --success: #2A9D8F;
+    --radius: 20px;
+    --shadow-card: 0 4px 20px rgba(8,17,63,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--midnight-navy);
+    background: var(--cream-canvas);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .header {
+    background: var(--midnight-navy);
+    color: var(--cream-canvas);
+    padding: 40px 40px 32px;
+  }
+  .header-inner {
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .header-eyebrow {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--warm-coral);
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-family: 'Bungee', cursive;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .header .subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0.75;
+    margin-bottom: 24px;
+  }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .header-meta-item {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-size: 13px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .header-meta-item strong {
+    color: var(--butter-yellow);
+    font-weight: 600;
+  }
+
+  .main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+  }
+
+  /* STATUS BANNER */
+  .status-banner {
+    background: var(--midnight-navy);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .status-item {
+    text-align: center;
+  }
+  .status-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,250,240,0.5);
+    margin-bottom: 6px;
+  }
+  .status-value {
+    font-family: 'Bungee', cursive;
+    font-size: 18px;
+    color: var(--cream-canvas);
+  }
+  .status-value.green { color: var(--pastel-mint); }
+  .status-value.yellow { color: var(--butter-yellow); }
+  .status-value.coral { color: var(--warm-coral); }
+
+  /* SECTION */
+  .section {
+    margin-bottom: 48px;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--muted-border);
+  }
+  .section-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .icon-coral { background: rgba(255,110,97,0.12); }
+  .icon-mint { background: rgba(179,230,201,0.25); }
+  .icon-yellow { background: rgba(255,238,107,0.25); }
+  .icon-navy { background: rgba(8,17,63,0.08); }
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--midnight-navy);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--muted-border);
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card p {
+    font-size: 14px;
+    color: rgba(8,17,63,0.75);
+    line-height: 1.65;
+  }
+  .card + .card { margin-top: 0; }
+
+  /* BADGE */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .badge-green { background: rgba(42,157,143,0.12); color: var(--success); }
+  .badge-yellow { background: rgba(244,162,97,0.15); color: #C87941; }
+  .badge-red { background: rgba(230,57,70,0.1); color: var(--danger); }
+  .badge-navy { background: rgba(8,17,63,0.08); color: var(--midnight-navy); }
+
+  /* PREP VS OUTCOME TABLE */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--muted-border);
+    margin-bottom: 16px;
+  }
+  .col-prep {
+    background: var(--muted-bg);
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(8,17,63,0.5);
+  }
+  .col-outcome {
+    background: var(--midnight-navy);
+    padding: 12px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,250,240,0.6);
+  }
+  .comparison-row {
+    display: contents;
+  }
+  .comparison-row .prep-cell {
+    background: var(--muted-bg);
+    padding: 16px 18px;
+    font-size: 13.5px;
+    color: rgba(8,17,63,0.65);
+    border-top: 1px solid rgba(8,17,63,0.06);
+    line-height: 1.55;
+  }
+  .comparison-row .outcome-cell {
+    background: var(--surface);
+    padding: 16px 18px;
+    font-size: 13.5px;
+    color: var(--midnight-navy);
+    border-top: 1px solid var(--muted-border);
+    line-height: 1.55;
+  }
+  .comparison-row .prep-cell .label {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: rgba(8,17,63,0.4);
+    margin-bottom: 4px;
+  }
+  .comparison-row .outcome-cell .label {
+    font-weight: 700;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--midnight-navy);
+    opacity: 0.45;
+    margin-bottom: 4px;
+  }
+
+  /* ACTION ITEMS */
+  .action-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .action-item {
+    background: var(--surface);
+    border-radius: 14px;
+    padding: 16px 20px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--muted-border);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: start;
+    gap: 14px;
+  }
+  .action-num {
+    width: 28px;
+    height: 28px;
+    background: var(--midnight-navy);
+    color: var(--cream-canvas);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bungee', cursive;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .action-num.coral { background: var(--warm-coral); }
+  .action-num.mint { background: var(--success); }
+  .action-body strong {
+    display: block;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 3px;
+  }
+  .action-body span {
+    font-size: 13px;
+    color: rgba(8,17,63,0.65);
+    line-height: 1.5;
+  }
+  .action-owner {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .owner-hannes { background: rgba(255,238,107,0.3); color: #8a7200; }
+  .owner-matt { background: rgba(255,110,97,0.12); color: #c0392b; }
+  .owner-both { background: rgba(179,230,201,0.3); color: #1a7a6e; }
+
+  /* OPEN QUESTIONS */
+  .question-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .question-item {
+    background: var(--surface);
+    border-left: 4px solid var(--warning);
+    border-radius: 0 14px 14px 0;
+    padding: 14px 18px;
+    box-shadow: var(--shadow-card);
+  }
+  .question-item.critical { border-left-color: var(--danger); }
+  .question-item.low { border-left-color: var(--pastel-mint); }
+  .question-item strong {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .question-item span {
+    font-size: 13px;
+    color: rgba(8,17,63,0.65);
+    line-height: 1.5;
+  }
+  .q-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  /* RISK BOX */
+  .risk-box {
+    background: rgba(230,57,70,0.06);
+    border: 1px solid rgba(230,57,70,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .risk-box h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--danger);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .risk-box p {
+    font-size: 13.5px;
+    color: rgba(8,17,63,0.7);
+    line-height: 1.6;
+  }
+
+  /* WIN BOX */
+  .win-box {
+    background: rgba(42,157,143,0.07);
+    border: 1px solid rgba(42,157,143,0.2);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .win-box h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--success);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .win-box p {
+    font-size: 13.5px;
+    color: rgba(8,17,63,0.7);
+    line-height: 1.6;
+  }
+
+  /* SURPRISE BOX */
+  .surprise-box {
+    background: rgba(255,238,107,0.15);
+    border: 1px solid rgba(255,238,107,0.5);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 12px;
+  }
+  .surprise-box h4 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #7a6800;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .surprise-box p {
+    font-size: 13.5px;
+    color: rgba(8,17,63,0.7);
+    line-height: 1.6;
+  }
+
+  /* MODEL CHECK */
+  .model-row {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--muted-border);
+  }
+  .model-row .assumption {
+    font-size: 13.5px;
+    font-weight: 600;
+  }
+  .model-row .assumed {
+    font-size: 13px;
+    color: rgba(8,17,63,0.5);
+    text-align: right;
+  }
+
+  /* COMMERCIAL SUMMARY */
+  .commercial-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--muted-border);
+  }
+  .commercial-table th {
+    background: var(--midnight-navy);
+    color: var(--cream-canvas);
+    padding: 12px 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+  .commercial-table td {
+    padding: 13px 18px;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--muted-border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .commercial-table tr:last-child td { border-bottom: none; }
+  .commercial-table tr:nth-child(even) td { background: var(--muted-bg); }
+  .commercial-table tr:nth-child(odd) td { background: var(--surface); }
+  .cell-label { font-weight: 700; }
+  .cell-assumed { color: rgba(8,17,63,0.45); font-size: 12px; margin-top: 2px; }
+  .cell-status { font-weight: 700; }
+
+  /* NEXT MEETING */
+  .meeting-card {
+    background: var(--midnight-navy);
+    border-radius: var(--radius);
+    padding: 28px;
+    color: var(--cream-canvas);
+  }
+  .meeting-card h3 {
+    font-family: 'Bungee', cursive;
+    font-size: 18px;
+    margin-bottom: 6px;
+  }
+  .meeting-card .when {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--butter-yellow);
+    margin-bottom: 16px;
+  }
+  .meeting-agenda {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .meeting-agenda li {
+    background: rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    display: flex;
+    align-items: start;
+    gap: 10px;
+  }
+  .agenda-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--warm-coral);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .tldr {
+    background: var(--midnight-navy);
+    color: var(--cream-canvas);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-bottom: 40px;
+  }
+  .tldr-label {
+    font-family: 'Bungee', cursive;
+    font-size: 13px;
+    color: var(--warm-coral);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .tldr p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: rgba(255,250,240,0.85);
+  }
+  .tldr strong { color: var(--butter-yellow); }
+
+  @media (max-width: 700px) {
+    .header, .main { padding: 24px 20px; }
+    .status-banner { grid-template-columns: 1fr; }
+    .comparison-grid, .comparison-header { grid-template-columns: 1fr; }
+    .col-prep { border-radius: var(--radius) var(--radius) 0 0; }
+    .action-item { grid-template-columns: auto 1fr; }
+    .action-owner { grid-column: 2; }
+    .model-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Post-Meeting Brief</div>
+    <h1>TickeyBox + SnapTel</h1>
+    <div class="subtitle">Hannes (SnapTel MD) — Call debrief &amp; situation update</div>
+    <div class="header-meta">
+      <div class="header-meta-item"><strong>Date</strong> Monday 9 March 2026</div>
+      <div class="header-meta-item"><strong>Format</strong> Video call ~40 min</div>
+      <div class="header-meta-item"><strong>SnapTel contacts</strong> Hannes (MD), Dion (portal access), Tian (dev)</div>
+      <div class="header-meta-item"><strong>Rate card due</strong> Friday 13 March</div>
+      <div class="header-meta-item"><strong>Next in-person</strong> Week of 23 March</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STATUS BANNER -->
+  <div class="status-banner">
+    <div class="status-item">
+      <div class="status-label">Architecture</div>
+      <div class="status-value green">Confirmed</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">Rate Card</div>
+      <div class="status-value yellow">Pending Fri</div>
+    </div>
+    <div class="status-item">
+      <div class="status-label">Dev Timeline</div>
+      <div class="status-value coral">~1 Week</div>
+    </div>
+  </div>
+
+  <!-- TL;DR -->
+  <div class="tldr">
+    <div class="tldr-label">TL;DR</div>
+    <p>
+      The call was broadly positive. The architecture questions are resolved: the per-household PBX model scales cleanly to 2,000+, TickeyBox-to-TickeyBox free calling is confirmed easy, and the platform is <strong>full API + webhooks</strong> — no lock-in risk from that angle.
+      The app build is <strong>approximately one week from completion</strong>, which is earlier than anticipated.
+      The R20/household cost directionally validates the model, though the formal rate card arrives Friday.
+      The critical outstanding item is <strong>WiFi provisioning</strong> — still open, Hannes is raising it in Boston this week.
+      A commercial/equity partnership conversation has been flagged but not pressed.
+      The main vulnerability remains <strong>operational dependency on a small SnapTel team</strong>, with the core development sitting with Tian.
+    </p>
+  </div>
+
+  <!-- SECTION 1: PREP VS OUTCOME -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-coral">📋</div>
+      <div class="section-title">Prep vs Outcome: What We Went In For</div>
+    </div>
+
+    <!-- Architecture: PBX Scale -->
+    <div class="comparison-grid">
+      <div class="col-prep">We assumed / asked</div>
+      <div class="col-outcome">What actually happened</div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">PBX scale architecture</div>
+          Concerned the per-household PBX model would break at 2,000+ households. Needed to know the ceiling and when to rearchitect.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Resolved ✅</div>
+          Confirmed it never breaks — it's <strong>virtual segmentation on shared infrastructure</strong>. SnapTel runs the entire global platform on ~8 physical PBX instances. Households are domain-level segments, not separate hardware. Can move segments across machines for failover. Pilot architecture = Year 1 architecture = Year 3 architecture.
+          <div style="margin-top:8px"><span class="badge badge-green">No redesign needed</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">Device provisioning</div>
+          The Grandstream setup process is IT-grade. Needed to understand who owns this and whether SnapTel can handle auto-provisioning so end users don't need to touch the web admin UI.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Mostly resolved ⚠️</div>
+          SnapTel already has auto-provisioning support for the GHP610W/611W on their platform. Initial LAN cable required — acceptable. <strong>WiFi credential push is the open question.</strong> Hannes is raising this specifically with the Boston (core PBX) team this week. Not resolved but promising direction.
+          <div style="margin-top:8px"><span class="badge badge-yellow">WiFi piece still open</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">TickeyBox-to-TickeyBox free calling</div>
+          Unclear how free internal calls would work if they traverse PBX infrastructure. Does PSTN get involved?
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Confirmed ✅</div>
+          No PSTN involvement. SnapTel knows which households are on-platform. Calls between TickeyBox numbers route internally, rated at R0. Implemented via ring group + zero-rate billing rule. Hannes called it "the easiest part."
+          <div style="margin-top:8px"><span class="badge badge-green">Easy to implement</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">Daily billing structure</div>
+          Spotted "Daily R Billing" and "Daily C Billing" in the reseller portal. Needed to understand what these columns meant and whether there was a consumption charge on top of the fixed rate.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Clarified ✅</div>
+          <strong>No consumption charge on the PBX layer.</strong> The PBX is trunk-agnostic — it doesn't include voice. Daily R Billing = the monthly extension fee divided by 30 days for billing accuracy (same model as AWS). No separate "Daily C Billing" for calls at this layer. Voice (minutes) is a separate, distinct billing item.
+          <div style="margin-top:8px"><span class="badge badge-green">Model assumption holds</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">Per-household cost</div>
+          Model assumed R40/month per household (PBX + DID + line rental). Needed validation.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Directionally confirmed ⚠️</div>
+          Hannes floated <strong>~R20 per extension/household</strong> as a figure he believes he can sell to his wholesale provider. He's specifically in Boston to negotiate better "home use" number pricing. Formal rate card due Friday 13 March. If R20 is the all-in PBX rate, the model improves. If R20 is per extension and households need 2, it aligns with the R40 assumption.
+          <div style="margin-top:8px"><span class="badge badge-yellow">Await formal rate card</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">API access &amp; webhooks</div>
+          Critical for avoiding lock-in. Needed to confirm whether SnapTel provides proper API access or requires everything to go through their proprietary tooling.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Fully confirmed ✅</div>
+          <strong>Full API + webhooks.</strong> SnapTel is "API and AI first" — all functionality is API-driven, including custom integrations. Any event can send a webhook to trigger TickeyBox-side logic. Custom development can be done on our side against the API. This is a strong architecture commitment.
+          <div style="margin-top:8px"><span class="badge badge-green">No lock-in risk from API angle</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">Prepaid vs postpaid billing</div>
+          Needed to understand how SnapTel bills resellers and whether a prepaid credit model was viable for TickeyBox to manage.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Confirmed ✅</div>
+          Resellers run on prepaid credit top-ups by default. Post-paid invoice billing available after ~6 months of relationship. This aligns perfectly with TickeyBox's own prepaid minute model. International calling excluded by default — Hannes recommends this to prevent fraud exposure (Pakistan-style burn). Matt agreed.
+          <div style="margin-top:8px"><span class="badge badge-green">Aligns with TickeyBox model</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">Development scope &amp; IP ownership</div>
+          Was expecting to get a quote for building the backend and app. Needed clarity on whether SnapTel builds it, what it costs, timeline, and who owns the code.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Partially answered — IP still open ⚠️</div>
+          The build is <strong>already ~1 week from completion</strong>. Dion and Tian have rewritten the app from scratch, including a desktop app. Dev cost structure not formally quoted. Hannes positioned this as "part of the SnapTel ecosystem" and hinted at an equity partnership rather than a fee model. IP ownership not explicitly discussed — this is unresolved.
+          <div style="margin-top:8px"><span class="badge badge-red">IP + commercial terms unresolved</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">SLA / support structure</div>
+          Critical concern: if SnapTel builds and hosts the stack, TickeyBox has no ability to fix issues itself. Needed SLA terms.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Acknowledged, detail deferred ⚠️</div>
+          Hannes confirmed the SLA concern is valid and committed to a formal SLA structure. Mentioned ~6 developers accessible for support, not just Tian. Pricing will include a separate SLA component that scales with household count. Home-use SLA expected to be cheaper than business reseller SLA. <strong>Full details deferred to the in-person March 23 meeting.</strong>
+          <div style="margin-top:8px"><span class="badge badge-yellow">To be resolved 23 March</span></div>
+        </div>
+      </div>
+      <div class="comparison-row">
+        <div class="prep-cell">
+          <div class="label">Minutes rate card</div>
+          Needed: landline rate, mobile rate, TickeyBox-to-TickeyBox rate, emergency call rate. These underpin the voice revenue and blended margin model.
+        </div>
+        <div class="outcome-cell">
+          <div class="label">Not disclosed yet ⚠️</div>
+          Hannes referenced dataphone.co.za/dataphone.af as a model for prepaid minute bundles with included allocations. Recommended a top-up model, not over-usage billing. Actual per-minute rates (landline, mobile, emergency) <strong>not stated on the call</strong>. Expected in the Friday rate card.
+          <div style="margin-top:8px"><span class="badge badge-yellow">Await Friday rate card</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: SURPRISES -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">⚡</div>
+      <div class="section-title">Surprises — Things Not in the Prep</div>
+    </div>
+
+    <div class="surprise-box">
+      <h4>The build is nearly done</h4>
+      <p>The prep assumed development hadn't started in earnest. In reality, Dion and Tian have <strong>rebuilt the entire app from scratch</strong>, including a desktop app, and are approximately one week from completion. Two development approvals pending (three done). This changes the timeline significantly — dogfooding can start much sooner than planned. The development cost has effectively already been incurred by SnapTel, which raises the commercial/equity discussion.</p>
+    </div>
+
+    <div class="surprise-box">
+      <h4>Equity partnership floated</h4>
+      <p>Hannes raised the idea of scaling in with an equity arrangement rather than a pure fee model. He explicitly didn't push it ("I don't wanna kill something") and positioned it as an option at scale. This wasn't on the radar coming in. It changes the nature of the relationship from vendor-customer to potential co-venture. <strong>Needs a deliberate commercial conversation — not something to drift into.</strong></p>
+    </div>
+
+    <div class="surprise-box">
+      <h4>Tiaan works remotely — availability needs to be confirmed</h4>
+      <p>The main developer (Tiaan) is not always on-site. For a business entirely dependent on SnapTel's technical stack at launch, understanding Tiaan's availability and backup arrangements is a support risk that wasn't explicitly on the radar. Hannes said he'd pull Gareth (another developer) into the March 23 meeting, which suggests Tiaan may not always be the right escalation point.</p>
+    </div>
+
+    <div class="surprise-box">
+      <h4>Competitive pressure already flagged</h4>
+      <p>Matt opened the call by mentioning that Grandstream has flagged <strong>someone else poking around in the same space</strong>. This wasn't previously on the risk register. Hannes responded that SnapTel can deploy 50 households "tomorrow" without the front end — the infrastructure is ready. The urgency of moving to dogfooding and pilot has increased.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 3: FINANCIAL MODEL CHECK -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-mint">💰</div>
+      <div class="section-title">Financial Model: Assumption Check</div>
+    </div>
+
+    <table class="commercial-table">
+      <thead>
+        <tr>
+          <th>Line Item</th>
+          <th>Model Assumption</th>
+          <th>Post-Call Status</th>
+          <th>Verdict</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="cell-label">PBX monthly cost per household</div><div class="cell-assumed">Core unit economics item</div></td>
+          <td>R40/month (PBX + DID + line rental)</td>
+          <td>Hannes floated ~R20/extension. If 1 extension per household, model improves. If 2 extensions, R40 holds. Formal rate due Friday.</td>
+          <td><span class="badge badge-yellow">Pending</span></td>
+        </tr>
+        <tr>
+          <td><div class="cell-label">TickeyBox-to-TickeyBox</div><div class="cell-assumed">Network effect foundation</div></td>
+          <td>Free (R0 cost)</td>
+          <td>Confirmed — internally routed, rated R0. No PSTN cost. Easy to implement.</td>
+          <td><span class="badge badge-green">Confirmed</span></td>
+        </tr>
+        <tr>
+          <td><div class="cell-label">Voice margin per minute</div><div class="cell-assumed">Assumed R0.20 margin</div></td>
+          <td>~R0.20/min blended margin</td>
+          <td>Per-minute rates not yet disclosed. Hannes referenced dataphone model (prepaid bundles). Rates due Friday.</td>
+          <td><span class="badge badge-red">Unknown</span></td>
+        </tr>
+        <tr>
+          <td><div class="cell-label">Prepaid billing model</div><div class="cell-assumed">How TickeyBox holds minutes credit</div></td>
+          <td>Prepaid credit float with SnapTel</td>
+          <td>Confirmed — resellers run on prepaid. Post-paid available at 6+ months. Working capital implication unchanged.</td>
+          <td><span class="badge badge-green">Confirmed</span></td>
+        </tr>
+        <tr>
+          <td><div class="cell-label">International calling</div><div class="cell-assumed">Not in model; excluded by design</div></td>
+          <td>Excluded</td>
+          <td>Hannes explicitly recommended excluding — fraud risk. Aligns with model and product design.</td>
+          <td><span class="badge badge-green">Aligned</span></td>
+        </tr>
+        <tr>
+          <td><div class="cell-label">SLA / support cost</div><div class="cell-assumed">Not modelled explicitly yet</div></td>
+          <td>Not modelled</td>
+          <td>Confirmed it will be a discrete charge, scales with household count, cheaper than business tier. Quantum unknown.</td>
+          <td><span class="badge badge-yellow">Pending 23 Mar</span></td>
+        </tr>
+        <tr>
+          <td><div class="cell-label">Development cost</div><div class="cell-assumed">Expected to receive a quote</div></td>
+          <td>To be quoted</td>
+          <td>Build already underway — no formal quote given. Commercial structure (fee vs equity) deferred to negotiation.</td>
+          <td><span class="badge badge-red">Unresolved</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 4: OPEN QUESTIONS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-coral">❓</div>
+      <div class="section-title">Open Questions — What Still Needs Answers</div>
+    </div>
+
+    <div class="question-list">
+      <div class="question-item critical">
+        <strong>WiFi credential provisioning — can it be done?</strong>
+        <span>This is the last-mile consumer setup problem. Auto-provisioning works for SIP credentials over LAN. The open question is whether WiFi SSID/password can be pushed to the device via provisioning config (XML), removing the need for parents to connect a LAN cable permanently or navigate the web admin UI. Hannes is specifically asking the Boston (core PBX engine) team this week.</span>
+        <div class="q-meta"><span class="badge badge-red">Critical path</span><span class="badge badge-navy">Hannes to report back</span></div>
+      </div>
+      <div class="question-item critical">
+        <strong>IP ownership of the app and backend — who owns the code?</strong>
+        <span>Tian/SnapTel have built the app. The commercial terms of this build were not explicitly discussed. If TickeyBox ever needs to change provider or bring development in-house, who has the right to the codebase? What are the data portability terms? This is existential for Year 2 and must be clarified before going live.</span>
+        <div class="q-meta"><span class="badge badge-red">Critical — resolve before pilot</span><span class="badge badge-navy">Commercial negotiation</span></div>
+      </div>
+      <div class="question-item">
+        <strong>Exact rate card: per-extension fee and per-minute rates</strong>
+        <span>Hannes committed to providing the formal rate card by Friday 13 March, covering: (1) fixed daily rate per extension/household, (2) landline per-minute rate, (3) mobile per-minute rate, (4) emergency call cost (should be zero), (5) any minimum monthly platform fee regardless of household count. The R20/household figure is directional only.</span>
+        <div class="q-meta"><span class="badge badge-yellow">Due Friday 13 March</span><span class="badge badge-navy">Hannes</span></div>
+      </div>
+      <div class="question-item">
+        <strong>Equity / commercial partnership structure — what is Hannes actually proposing?</strong>
+        <span>Hannes floated an equity arrangement without specifying terms. Is this a revenue share, an equity stake in TickeyBox, joint venture, or something else? This needs a clear commercial framework before it can be evaluated. The risk is drifting into an implied partnership without defined terms.</span>
+        <div class="q-meta"><span class="badge badge-yellow">Strategic decision needed</span><span class="badge badge-navy">Matt to lead</span></div>
+      </div>
+      <div class="question-item">
+        <strong>SLA specifics: response time, escalation path, pricing</strong>
+        <span>Hannes acknowledged the SLA need and committed to including it in the commercial structure. The specifics — response time SLAs (P1 through P4), escalation path and named contacts, pricing quantum, and how it scales — are all deferred to the March 23 meeting.</span>
+        <div class="q-meta"><span class="badge badge-yellow">Agenda item — 23 March</span><span class="badge badge-navy">Both</span></div>
+      </div>
+      <div class="question-item">
+        <strong>QR code / claim flow for device activation</strong>
+        <span>The provisioning model was confirmed as working, but the specific claim flow — QR code on device links to MAC, parent scans via app, extension auto-created — still needs to be designed and agreed as part of the app build. This is a dev coordination question between TickeyBox's preferred UX and what Tian has built.</span>
+        <div class="q-meta"><span class="badge badge-yellow">Design + dev alignment needed</span><span class="badge badge-navy">Matt + Tian/SnapTel</span></div>
+      </div>
+      <div class="question-item">
+        <strong>DID / phone number allocation process</strong>
+        <span>Phone numbers (DIDs) were not explicitly discussed. How are numbers assigned to households? Is there a self-serve API call? What is the cost of a DID? Is it bundled in the extension fee or separate? This needs to be in the rate card.</span>
+        <div class="q-meta"><span class="badge badge-yellow">Include in rate card request</span><span class="badge badge-navy">Hannes</span></div>
+      </div>
+      <div class="question-item low">
+        <strong>Minimum monthly platform fee</strong>
+        <span>During the pilot at 50 households, is there a minimum monthly spend regardless of household count? This affects the pilot cost floor and the go/no-go economics if churn happens early.</span>
+        <div class="q-meta"><span class="badge badge-green">Lower priority — include in Friday follow-up</span></div>
+      </div>
+      <div class="question-item low">
+        <strong>Volume-based pricing tiers</strong>
+        <span>At what household count does the per-extension cost step down? Having the pricing ladder (50 → 500 → 2,000) upfront matters for the financial model's scaling assumptions.</span>
+        <div class="q-meta"><span class="badge badge-green">Include in rate card request</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: RISKS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-coral">⚠️</div>
+      <div class="section-title">Risk Flags — New or Elevated Since the Call</div>
+    </div>
+
+    <div class="risk-box">
+      <h4>Single developer dependency (Tiaan)</h4>
+      <p>The entire technical build sits with Tiaan. If something goes wrong post-launch and Tiaan is unavailable, TickeyBox has no ability to intervene independently. Hannes mentioned ~6 developers for support, but Tiaan is the core engine person. This must be explicitly addressed in the SLA — defined escalation paths, named backups, and response time commitments that don't rely on a single individual.</p>
+    </div>
+
+    <div class="risk-box">
+      <h4>IP ownership ambiguity creates provider lock-in</h4>
+      <p>If the app and backend are built entirely by SnapTel and IP ownership is not formally agreed, TickeyBox has no leverage in a commercial dispute. Switching providers becomes extremely expensive — not just migration cost, but rebuilding the entire consumer-facing layer. This needs to be resolved in writing before going live, not after.</p>
+    </div>
+
+    <div class="risk-box">
+      <h4>Equity conversation without a framework</h4>
+      <p>Hannes raised equity as a concept without defining it. If this drifts — through informal conversations and deepening technical dependency — TickeyBox could find itself in a de facto partnership with undefined terms. The right move is to have a deliberate commercial conversation that either closes the equity discussion (fee model only) or structures it properly (equity stake, vesting, IP terms, exit).</p>
+    </div>
+
+    <div class="risk-box">
+      <h4>Competitive threat — someone else is circling</h4>
+      <p>Grandstream has flagged an unidentified party exploring the same product space. SnapTel can deploy infrastructure quickly, but the front-end experience (app, provisioning UX) is the differentiator and the thing that takes time. Closing the dogfooding phase and getting to a live pilot as fast as possible is now more urgent than previously framed.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 6: KEY WINS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-mint">✅</div>
+      <div class="section-title">What Was Confirmed — Clean Closes</div>
+    </div>
+
+    <div class="win-box">
+      <h4>Architecture is solid and future-proof</h4>
+      <p>The per-household PBX model is not a technical dead-end. It's virtual segmentation on shared infrastructure, fully scalable, and allows failover between physical hardware. No redesign required at any forecast volume. This removes one of the biggest technical unknowns from the risk register.</p>
+    </div>
+    <div class="win-box">
+      <h4>Full API access confirmed — no lock-in at the integration layer</h4>
+      <p>Every function is API-driven. Webhooks on every event. TickeyBox can build its own logic, app, and integrations against the SnapTel API without being forced through SnapTel's proprietary UI. This preserves long-term optionality even if the equity conversation doesn't go anywhere.</p>
+    </div>
+    <div class="win-box">
+      <h4>Free internal calling is straightforward to implement</h4>
+      <p>The network effect mechanism (TickeyBox-to-TickeyBox free) requires no complex infrastructure work. SnapTel knows which numbers are on-platform and can rate them at zero. This is a strategic product feature that costs nothing to implement.</p>
+    </div>
+    <div class="win-box">
+      <h4>Prepaid billing alignment — no model changes required</h4>
+      <p>SnapTel's prepaid credit model for resellers maps directly onto TickeyBox's end-user prepaid minute model. Working capital requirements are unchanged. International calling excluded by default — exactly what TickeyBox wants.</p>
+    </div>
+    <div class="win-box">
+      <h4>Build is closer to completion than expected</h4>
+      <p>Development is approximately one week from completion. Dogfooding with 9 households can begin as soon as the build is approved. This accelerates the path to pilot significantly and means the April pilot timeline is more achievable than it appeared before the call.</p>
+    </div>
+    <div class="win-box">
+      <h4>Waitlist above 300 — strong context setter</h4>
+      <p>Opening with 300+ waitlist entries (all organic) set the tone. Hannes heard that there is real demand and a partner worth investing in. This likely contributed to the openness around equity and the willingness to have the dev build already underway.</p>
+    </div>
+  </div>
+
+  <!-- SECTION 7: ACTION POINTS -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-coral">🎯</div>
+      <div class="section-title">Action Points</div>
+    </div>
+
+    <ul class="action-list">
+      <li class="action-item">
+        <div class="action-num coral">1</div>
+        <div class="action-body">
+          <strong>Receive and review the formal rate card</strong>
+          <span>Hannes committed to sending the rate card by Friday 13 March. It must include: (1) daily extension/household rate, (2) landline per-minute rate, (3) mobile per-minute rate, (4) DID cost, (5) any minimum monthly platform fee, (6) volume step-downs at 500 and 2,000 households. If not received by Friday afternoon, chase same day.</span>
+        </div>
+        <div class="action-owner owner-hannes">Hannes</div>
+      </li>
+      <li class="action-item">
+        <div class="action-num coral">2</div>
+        <div class="action-body">
+          <strong>Update financial model with confirmed rates</strong>
+          <span>Once the rate card arrives, update the Year 1 financial model. Key sensitivity: if PBX cost is R20 (not R40), what does that do to unit economics and operating surplus? Re-run the blended voice margin calculation with actual per-minute rates. Flag any line items that break the model.</span>
+        </div>
+        <div class="action-owner owner-matt">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="action-num">3</div>
+        <div class="action-body">
+          <strong>Chase WiFi provisioning answer from Boston</strong>
+          <span>Hannes is visiting the core PBX team in Boston this week (back by 19–20 March). The specific question: can WiFi SSID and password be pushed to the GHP611W via provisioning XML/config, based on parent input from the app? This is the last unresolved architecture question. Get a yes/no with technical approach by the time of the March 23 meeting.</span>
+        </div>
+        <div class="action-owner owner-hannes">Hannes</div>
+      </li>
+      <li class="action-item">
+        <div class="action-num">4</div>
+        <div class="action-body">
+          <strong>Set up March 23 in-person meeting</strong>
+          <span>Hannes confirmed the week of 23–24 March. Matt to propose a specific date and time. Agenda to cover: SLA structure and pricing, IP ownership and commercial terms, equity discussion framework, WiFi provisioning outcome from Boston, QR code claim flow design, rate card follow-up if anything unresolved. Hannes to bring Tiaan and Gareth (or patch Tiaan in remotely if needed).</span>
+        </div>
+        <div class="action-owner owner-matt">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="action-num mint">5</div>
+        <div class="action-body">
+          <strong>Prepare for dogfooding — 9 households ready</strong>
+          <span>Matt confirmed 9 people lined up for dogfooding as soon as the build completes (~1 week). Device provisioning process needs to be clear enough for a friendly user to follow. Prepare a simple setup guide for dogfood participants. Identify which provisioning steps still require manual intervention (LAN cable, web UI) and document what experience they should expect so feedback is structured.</span>
+        </div>
+        <div class="action-owner owner-matt">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="action-num">6</div>
+        <div class="action-body">
+          <strong>Clarify IP ownership before going live</strong>
+          <span>Before dogfooding expands or the pilot launches, get written clarity on: (1) who owns the app codebase, (2) who owns the backend/API integration layer, (3) data portability — can TickeyBox export all household and call data if it switches providers, (4) notice period and transition support obligations. This can be part of the March 23 agenda but must not be left to later.</span>
+        </div>
+        <div class="action-owner owner-matt">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="action-num">7</div>
+        <div class="action-body">
+          <strong>Decide how to respond to the equity conversation</strong>
+          <span>Hannes raised equity informally. Matt needs to decide his position before the March 23 meeting: (A) politely close it — fee model only, preserve optionality; (B) explore it — define what equity means, what SnapTel contributes, what terms are acceptable; (C) defer — focus on getting to pilot before any equity discussion. Each option has material implications for the long-term relationship.</span>
+        </div>
+        <div class="action-owner owner-matt">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="action-num">8</div>
+        <div class="action-body">
+          <strong>Assess competitive threat — who is the other player?</strong>
+          <span>Grandstream flagged someone else poking around in this space. Try to get more specifics from the Grandstream contact. Who are they? Where are they based? What's their stage? This matters for whether TickeyBox should accelerate the pilot timeline or whether the threat is still early enough to not change the plan.</span>
+        </div>
+        <div class="action-owner owner-matt">Matt</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SECTION 8: NEXT MEETING -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-navy">📅</div>
+      <div class="section-title">Next Meeting</div>
+    </div>
+
+    <div class="meeting-card">
+      <h3>In-Person Session: TickeyBox + SnapTel</h3>
+      <div class="when">Week of 23–24 March 2026 — Hannes's office. Matt to confirm date.</div>
+      <ul class="meeting-agenda">
+        <li><div class="agenda-dot"></div>WiFi provisioning outcome — what did Boston say?</li>
+        <li><div class="agenda-dot"></div>SLA structure: response times, escalation path, pricing model</li>
+        <li><div class="agenda-dot"></div>IP ownership and data portability — written terms</li>
+        <li><div class="agenda-dot"></div>Commercial/equity structure — deliberate framework conversation</li>
+        <li><div class="agenda-dot"></div>QR code claim flow design — UX walkthrough with Tian/Gareth</li>
+        <li><div class="agenda-dot"></div>Rate card follow-up: DID allocation, volume tiers, minimum fees</li>
+        <li><div class="agenda-dot"></div>Dogfooding debrief — what did early users surface?</li>
+        <li><div class="agenda-dot"></div>Pilot readiness checklist — go/no-go for April</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
