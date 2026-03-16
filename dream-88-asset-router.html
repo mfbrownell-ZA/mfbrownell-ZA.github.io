@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dream 88: Case Study Asset Router | Jem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&family=Manrope:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #FF697F;
+    --navy: #062133;
+    --cream: #FFF7EC;
+    --candy: #FFBEC8;
+    --lavender: #E1E9FF;
+    --ice: #B6E9F9;
+    --mint: #DAFFDA;
+    --white: #FCFCFC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    font-weight: 400;
+    background: var(--cream);
+    color: var(--navy);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Header */
+  .header {
+    background: var(--navy);
+    padding: 48px 0 40px;
+    margin-bottom: 40px;
+  }
+  .header .logo {
+    display: inline-block;
+    background: var(--pink);
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    padding: 6px 16px;
+    border-radius: 10px;
+    letter-spacing: -0.5px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    color: #fff;
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .header .subtitle {
+    color: var(--candy);
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+    font-size: 17px;
+  }
+  .header .date {
+    color: rgba(255,255,255,0.5);
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  /* Section labels */
+  .section-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--pink);
+    margin-bottom: 8px;
+  }
+
+  /* How to use */
+  .how-to {
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(6,33,51,0.06);
+  }
+  .how-to h2 { font-size: 20px; margin-bottom: 16px; }
+  .how-to ol { padding-left: 20px; }
+  .how-to li { margin-bottom: 8px; }
+  .how-to li strong { font-family: 'Inter', sans-serif; font-weight: 600; }
+
+  /* Inventory */
+  .inventory { margin-bottom: 48px; }
+  .inventory h2 { font-size: 22px; margin-bottom: 20px; }
+  .case-study-block {
+    background: #fff;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    border: 1px solid rgba(6,33,51,0.06);
+    overflow: hidden;
+  }
+  .cs-header {
+    padding: 20px 28px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+  }
+  .cs-header:hover { background: rgba(6,33,51,0.02); }
+  .cs-header h3 { font-size: 17px; }
+  .cs-header .cs-meta {
+    font-size: 13px;
+    color: rgba(6,33,51,0.5);
+    font-weight: 300;
+  }
+  .cs-header .toggle-icon {
+    font-size: 20px;
+    color: var(--pink);
+    transition: transform 0.2s;
+  }
+  .cs-body {
+    display: none;
+    padding: 0 28px 24px;
+    border-top: 1px solid rgba(6,33,51,0.06);
+  }
+  .cs-body.open { display: block; }
+  .cs-header.open .toggle-icon { transform: rotate(45deg); }
+  .cs-body .best-for {
+    font-size: 13px;
+    color: rgba(6,33,51,0.6);
+    margin: 16px 0;
+    padding: 12px 16px;
+    background: var(--cream);
+    border-radius: 8px;
+  }
+  .cs-body .best-for strong {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: var(--navy);
+  }
+  .atom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+  .atom-table th {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--navy);
+    color: var(--navy);
+  }
+  .atom-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(6,33,51,0.08);
+    vertical-align: top;
+  }
+  .atom-table tr:last-child td { border-bottom: none; }
+  .format-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .format-video { background: var(--lavender); color: #3a4a8a; }
+  .format-onepager { background: var(--mint); color: #2a6a2a; }
+  .format-slide { background: var(--ice); color: #2a5a7a; }
+  .format-article { background: var(--candy); color: #8a3a4a; }
+  .format-wip { background: #eee; color: #888; }
+
+  /* Sector playbook cards */
+  .playbooks-section { margin-bottom: 48px; }
+  .playbooks-section > h2 { font-size: 22px; margin-bottom: 24px; }
+  .playbook-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(6,33,51,0.06);
+  }
+  .playbook-card .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .playbook-card h3 { font-size: 19px; margin: 0; }
+  .card-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    padding: 3px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-sector { background: var(--lavender); color: #3a4a8a; }
+  .badge-count { background: var(--cream); color: var(--navy); border: 1px solid rgba(6,33,51,0.1); }
+  .badge-existing { background: var(--mint); color: #2a6a2a; }
+  .card-match {
+    font-size: 14px;
+    margin: 12px 0 16px;
+    padding: 12px 16px;
+    background: var(--cream);
+    border-radius: 8px;
+    border-left: 3px solid var(--pink);
+  }
+  .card-match strong {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+  }
+  .role-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .role-table th {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--navy);
+    white-space: nowrap;
+  }
+  .role-table td {
+    padding: 10px 10px;
+    border-bottom: 1px solid rgba(6,33,51,0.06);
+    vertical-align: top;
+  }
+  .role-table tr:last-child td { border-bottom: none; }
+  .role-name {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .asset-name { font-weight: 400; }
+  .context-tag {
+    font-size: 11px;
+    color: rgba(6,33,51,0.5);
+    font-style: italic;
+  }
+  .objection-box {
+    background: rgba(6,33,51,0.03);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  .objection-box .obj-label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--pink);
+    margin-bottom: 4px;
+  }
+  .objection-box .obj-answer {
+    margin-top: 6px;
+    color: rgba(6,33,51,0.7);
+  }
+  .objection-box .obj-answer strong {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: var(--navy);
+  }
+
+  /* Master table */
+  .master-section { margin-bottom: 60px; }
+  .master-section h2 { font-size: 22px; margin-bottom: 20px; }
+
+  .search-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-bar input {
+    font-family: 'Manrope', sans-serif;
+    font-size: 15px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(6,33,51,0.15);
+    background: #fff;
+    color: var(--navy);
+    flex: 1;
+    min-width: 200px;
+    outline: none;
+  }
+  .search-bar input:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(255,105,127,0.1);
+  }
+  .filter-badges {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .filter-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    border: 1px solid rgba(6,33,51,0.12);
+    background: #fff;
+    color: var(--navy);
+    transition: all 0.15s;
+  }
+  .filter-badge:hover { background: var(--lavender); border-color: var(--lavender); }
+  .filter-badge.active { background: var(--pink); color: #fff; border-color: var(--pink); }
+
+  .master-wrap {
+    overflow-x: auto;
+    border-radius: 16px;
+    border: 1px solid rgba(6,33,51,0.06);
+  }
+  .master-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+    min-width: 900px;
+  }
+  .master-table thead th {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--navy);
+    background: var(--navy);
+    color: #fff;
+    white-space: nowrap;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+  .master-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(6,33,51,0.06);
+    vertical-align: middle;
+  }
+  .master-table tr:last-child td { border-bottom: none; }
+  .master-table tbody tr:hover td { background: rgba(255,105,127,0.04); }
+  .master-table .sector-separator td {
+    background: var(--cream);
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--pink);
+    padding: 8px 14px;
+    border-bottom: 1px solid rgba(6,33,51,0.1);
+  }
+  .master-table .account-row.hidden { display: none; }
+  .master-table .sector-separator.hidden { display: none; }
+  .override-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--candy);
+    color: #8a3a4a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .existing-badge {
+    display: inline-block;
+    font-size: 9px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--mint);
+    color: #2a6a2a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  .result-count {
+    font-size: 13px;
+    color: rgba(6,33,51,0.5);
+    margin-bottom: 12px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 0;
+    font-size: 13px;
+    color: rgba(6,33,51,0.4);
+    border-top: 1px solid rgba(6,33,51,0.08);
+  }
+
+  /* Print */
+  @media print {
+    body { font-size: 12px; }
+    .header { padding: 24px 0; margin-bottom: 24px; }
+    .playbook-card { break-inside: avoid; }
+    .cs-body { display: block !important; }
+    .toggle-icon { display: none; }
+    .search-bar { display: none; }
+    .filter-badges { display: none; }
+    .master-table thead th { position: static; }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 24px; }
+    .playbook-card { padding: 20px; }
+    .role-table { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="container">
+    <div class="logo">jem</div>
+    <h1>Dream 88: Case Study Asset Router</h1>
+    <div class="subtitle">Sector playbooks and account-level asset matching for enterprise sales</div>
+    <div class="date">Generated 16 March 2026</div>
+  </div>
+</div>
+
+<!-- HOW TO USE -->
+<div class="container">
+  <div class="how-to">
+    <p class="section-label">Sales Enablement</p>
+    <h2>How to use this playbook</h2>
+    <ol>
+      <li><strong>Search your account</strong> in the master table below. Type the company name in the search box to filter instantly.</li>
+      <li><strong>Note the sector</strong> assigned to your account. Click the sector badge to jump to the full sector playbook.</li>
+      <li><strong>Read the sector playbook</strong> for role-specific asset recommendations, objection counters, and timing guidance. Use the primary case study for first touch, secondary for reinforcement.</li>
+      <li><strong>Check for overrides.</strong> Accounts with a pink "Override" badge have a custom case study match that differs from their sector default.</li>
+    </ol>
+  </div>
+
+<!-- ============================================================ -->
+<!-- ASSET INVENTORY -->
+<!-- ============================================================ -->
+<div class="inventory">
+  <p class="section-label">Reference</p>
+  <h2>Case Study Asset Inventory</h2>
+
+  <!-- MERIDIAN -->
+  <div class="case-study-block">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div><h3>Meridian Group</h3><span class="cs-meta">Retail &bull; 5,500 employees &bull; 9 assets</span></div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="cs-body">
+      <div class="best-for"><strong>Proves:</strong> Adoption at scale (80% survey response), platform reach (50,000+ lives touched), multi-store retail deployment, employee engagement ROI</div>
+      <table class="atom-table">
+        <tr><th>Asset</th><th>Format</th><th>Message</th></tr>
+        <tr><td>Meridian Sales Deck Slide</td><td><span class="format-tag format-slide">Slide</span></td><td>Enterprise retail scale proof with adoption metrics</td></tr>
+        <tr><td>Meridian WhatsApp One-Pager</td><td><span class="format-tag format-onepager">One-Pager</span></td><td>Forwardable proof of retail deployment success</td></tr>
+        <tr><td>Meridian Long-Form Article</td><td><span class="format-tag format-article">Article</span></td><td>Deep-dive on how Jem reached 50,000+ lives through Meridian partnership</td></tr>
+        <tr><td>Clip 1: "80% of 5,500 employees responded to a survey through Jem"</td><td><span class="format-tag format-video">Video</span></td><td>Adoption proof: unprecedented engagement through WhatsApp channel</td></tr>
+        <tr><td>Clip 2: "Jem has touched over 50,000 lives through Meridian"</td><td><span class="format-tag format-video">Video</span></td><td>Scale and human impact: platform reach beyond direct headcount</td></tr>
+        <tr><td>Clip 3: "Payslips were being handed out manually across 200+ stores"</td><td><span class="format-tag format-video">Video</span></td><td>Pain point: manual processes at retail scale are unsustainable</td></tr>
+        <tr><td>Clip 4: "We needed one platform that works for everyone, not just head office"</td><td><span class="format-tag format-video">Video</span></td><td>Platform unification: deskless workers included, not just office staff</td></tr>
+        <tr><td>Clip 5: "The ROI conversation became easy once we saw the engagement numbers"</td><td><span class="format-tag format-video">Video</span></td><td>ROI justification: engagement data makes the business case self-evident</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- WASTEPLAN -->
+  <div class="case-study-block">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div><h3>WastePlan</h3><span class="cs-meta">Waste Management &bull; 2,400 employees &bull; 10 assets</span></div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="cs-body">
+      <div class="best-for"><strong>Proves:</strong> Switching from competitor (chose Jem over alternative), admin relief, client-site workforce management, moral case for EWA, cost vs value argument, consequences of removing benefits</div>
+      <table class="atom-table">
+        <tr><th>Asset</th><th>Format</th><th>Message</th></tr>
+        <tr><td>WastePlan Sales Deck Slide</td><td><span class="format-tag format-slide">Slide</span></td><td>Switching proof and operational scale in dispersed workforce</td></tr>
+        <tr><td>WastePlan WhatsApp One-Pager</td><td><span class="format-tag format-onepager">One-Pager</span></td><td>Forwardable case study with key stats</td></tr>
+        <tr><td>WastePlan Long-Form Article</td><td><span class="format-tag format-article">Article</span></td><td>Full story of how WastePlan switched to Jem and the impact on operations</td></tr>
+        <tr><td>Clip 1: "We switched from [competitor] because Jem understood our workers"</td><td><span class="format-tag format-video">Video</span></td><td>Switching proof: chose Jem on worker-centricity, not features</td></tr>
+        <tr><td>Clip 2: "The admin burden was crushing our HR team"</td><td><span class="format-tag format-video">Video</span></td><td>Pain: manual HR at scale consumes leadership time</td></tr>
+        <tr><td>Clip 3: "You can't take this away from people once they have it"</td><td><span class="format-tag format-video">Video</span></td><td>Stickiness: EWA becomes essential, removal causes backlash</td></tr>
+        <tr><td>Clip 4: "It's a moral duty to give workers access to their own money"</td><td><span class="format-tag format-video">Video</span></td><td>Dignity/moral argument: ethical case for EWA</td></tr>
+        <tr><td>Clip 5: "What used to take days now takes minutes"</td><td><span class="format-tag format-video">Video</span></td><td>Speed: operational efficiency gains from digitisation</td></tr>
+        <tr><td>Clip 6: "The cost is negligible compared to what we were spending on manual processes"</td><td><span class="format-tag format-video">Video</span></td><td>ROI: cost justification through operational savings</td></tr>
+        <tr><td>Clip 7: "Our workers are on client sites, we can't put up notice boards"</td><td><span class="format-tag format-video">Video</span></td><td>Client-site proof: WhatsApp as only viable channel for dispersed workers</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- MARSHALL -->
+  <div class="case-study-block">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div><h3>Marshall Security</h3><span class="cs-meta">Security &bull; 2,300 employees &bull; 7 assets</span></div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="cs-body">
+      <div class="best-for"><strong>Proves:</strong> Compliance and credential management in regulated sector, 5-day deployment speed, EWA as peace-of-mind for shift workers, 24/7 operations viability</div>
+      <table class="atom-table">
+        <tr><th>Asset</th><th>Format</th><th>Message</th></tr>
+        <tr><td>Marshall Sales Deck Slide</td><td><span class="format-tag format-slide">Slide</span></td><td>Security sector proof with compliance and speed metrics</td></tr>
+        <tr><td>Marshall WhatsApp One-Pager</td><td><span class="format-tag format-onepager">One-Pager</span></td><td>Forwardable security sector case study</td></tr>
+        <tr><td>Marshall Long-Form Article</td><td><span class="format-tag format-article">Article</span></td><td>How Marshall deployed Jem in 5 days across their security operation</td></tr>
+        <tr><td>Clip 1: "Five days. That's all it took to get everyone on the platform"</td><td><span class="format-tag format-video">Video</span></td><td>Speed proof: 5-day deployment, minimal IT overhead</td></tr>
+        <tr><td>Clip 2: "Our guards need to know their credentials are up to date"</td><td><span class="format-tag format-video">Video</span></td><td>Compliance: credential tracking via WhatsApp</td></tr>
+        <tr><td>Clip 3: "EWA gives our team peace of mind between pay cycles"</td><td><span class="format-tag format-video">Video</span></td><td>EWA as retention and wellness tool for shift workers</td></tr>
+        <tr><td>Clip 4: "We operate 24/7, we needed something that works on any shift"</td><td><span class="format-tag format-video">Video</span></td><td>Always-on: platform works across shifts, no downtime dependency</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- SERVEST -->
+  <div class="case-study-block">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div><h3>Servest</h3><span class="cs-meta">Facilities Management &bull; 18,000 employees &bull; 2 assets</span></div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="cs-body">
+      <div class="best-for"><strong>Proves:</strong> Largest scale deployment (18,000), multi-brand facilities management, enterprise-grade platform credibility. <em>Supporting case study only</em> due to limited asset set.</div>
+      <table class="atom-table">
+        <tr><th>Asset</th><th>Format</th><th>Message</th></tr>
+        <tr><td>Servest Sales Deck Slide</td><td><span class="format-tag format-slide">Slide</span></td><td>18,000-employee deployment proof at enterprise scale</td></tr>
+        <tr><td>Servest WhatsApp One-Pager</td><td><span class="format-tag format-onepager">One-Pager</span></td><td>Forwardable scale proof for facilities management</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- TIAUTO -->
+  <div class="case-study-block">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div><h3>TiAuto Investments</h3><span class="cs-meta">Automotive Retail &bull; 2,200 employees &bull; 5 assets</span></div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="cs-body">
+      <div class="best-for"><strong>Proves:</strong> CEO-level buy-in, scaling from 15 to 160+ stores without growing HR, 3-4 headcount saves, culture and comms equity across distributed retail, 90% adoption in first month</div>
+      <table class="atom-table">
+        <tr><th>Asset</th><th>Format</th><th>Message</th></tr>
+        <tr><td>TiAuto Sales Deck Slide</td><td><span class="format-tag format-slide">Slide</span></td><td>CEO proof: scaled 10x without growing HR team</td></tr>
+        <tr><td>TiAuto WhatsApp One-Pager</td><td><span class="format-tag format-onepager">One-Pager</span></td><td>Forwardable automotive retail case study with scale and ROI stats</td></tr>
+        <tr><td>Clip 1: "Whoever didn't get it is at a disadvantage"</td><td><span class="format-tag format-video">Video</span></td><td>CEO conviction: Jem as competitive advantage, culture equity</td></tr>
+        <tr><td>Clip 2: "It was fine at 15 stores. At 150, it was impossible."</td><td><span class="format-tag format-video">Video</span></td><td>Pain/scale: manual HR breaks at multi-site growth</td></tr>
+        <tr><td>Clip 3: "3-4 hires saved. HR team unchanged in 5+ years."</td><td><span class="format-tag format-video">Video</span></td><td>ROI: measurable headcount savings, HR scalability proof</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- STAR RETAILERS -->
+  <div class="case-study-block">
+    <div class="cs-header" onclick="toggleCS(this)">
+      <div><h3>Star Retailers Group</h3><span class="cs-meta">Multi-Industry &bull; 2,000 employees &bull; 6 assets</span></div>
+      <span class="toggle-icon">+</span>
+    </div>
+    <div class="cs-body">
+      <div class="best-for"><strong>Proves:</strong> Multi-industry platform (6 industries on one Jem instance), notice board replacement, EWA emotional impact on frontline workers, payslip distribution time savings (1-2 days/month recovered)</div>
+      <table class="atom-table">
+        <tr><th>Asset</th><th>Format</th><th>Message</th></tr>
+        <tr><td>Star Retailers Sales Deck Slide</td><td><span class="format-tag format-slide">Slide</span></td><td>Multi-industry proof: 6 sectors, one platform, 2,000 employees</td></tr>
+        <tr><td>Star Retailers WhatsApp One-Pager</td><td><span class="format-tag format-onepager">One-Pager</span></td><td>Forwardable multi-industry case study</td></tr>
+        <tr><td>Star Retailers Long-Form Article</td><td><span class="format-tag format-article">Article</span></td><td>How Star Retailers connects 2,000 employees across six industries</td></tr>
+        <tr><td>Clip 1: EWA impact on frontline workers</td><td><span class="format-tag format-video">Video</span></td><td>Emotional proof: real workers describing financial relief from EWA</td></tr>
+        <tr><td>Clip 2: "I used to be a normal employee"</td><td><span class="format-tag format-video">Video</span></td><td>HR empathy: champion perspective on understanding worker needs</td></tr>
+        <tr><td>Clip 3: "Jem changed the entire ballgame"</td><td><span class="format-tag format-video">Video</span></td><td>Platform value: comms, payslips, benefits unified</td></tr>
+        <tr><td>Clip 4: "Losing 1-2 days per month handing out payslips"</td><td><span class="format-tag format-video">Video</span></td><td>ROI: time savings quantified, admin burden eliminated</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTOR PLAYBOOKS -->
+<!-- ============================================================ -->
+<div class="playbooks-section">
+  <p class="section-label">Strategy</p>
+  <h2>Sector Playbooks</h2>
+
+  <!-- RETAIL -->
+  <div class="playbook-card" id="sector-retail">
+    <div class="card-top">
+      <h3>Retail</h3>
+      <div class="card-badges"><span class="badge badge-count">20 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> Meridian Group (retail, 5,500 staff, 80% survey adoption, 50,000+ lives). <strong>Secondary:</strong> Star Retailers (multi-industry, notice board replacement, payslip time savings). Retail buyers need adoption metrics and multi-store deployment proof. Meridian delivers both at scale.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">Meridian WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">Star Retailers Clip 2: "I used to be a normal employee"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch via WhatsApp forward</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">Meridian Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">TiAuto Clip 1: "Whoever didn't get it is at a disadvantage"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Embed in presentation or pre-meeting send</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">Meridian Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Meridian Clip 1: "80% survey response"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">After initial meeting, due diligence phase</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">Meridian Clip 5: "ROI conversation became easy"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">Star Retailers Clip 4: "Losing 1-2 days per month"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">When cost objection surfaces</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"It won't get adopted by store-floor staff."</div>
+      <div class="obj-answer">Counter with <strong>Meridian Clip 1</strong>: 80% of 5,500 employees responded to a survey through Jem, proving WhatsApp adoption in retail environments. Reinforce with <strong>Star Retailers Clip 3</strong>: "Jem changed the entire ballgame" for comms unification proof.</div>
+    </div>
+    <div class="objection-box">
+      <div class="obj-label">Secondary objection</div>
+      <div>"We already distribute payslips through our existing system."</div>
+      <div class="obj-answer">Counter with <strong>Star Retailers Clip 4</strong>: quantified time savings of 1-2 days per month on payslip distribution alone. Manual processes don't scale across multiple stores.</div>
+    </div>
+  </div>
+
+  <!-- AUTOMOTIVE -->
+  <div class="playbook-card" id="sector-automotive">
+    <div class="card-top">
+      <h3>Automotive</h3>
+      <div class="card-badges"><span class="badge badge-count">7 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> TiAuto Investments (automotive retail, 2,200 staff, CEO-level, 160+ stores, 3-4 headcount saves). <strong>Secondary:</strong> Meridian (multi-store retail scale). Direct sector match with CEO proof point. TiAuto is the only case study with C-suite interview, making it uniquely powerful for automotive DMs.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">TiAuto WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">TiAuto Clip 2: "Fine at 15 stores, impossible at 150"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, share internally to build buy-in</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">TiAuto Clip 1: "Whoever didn't get it is at a disadvantage"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">TiAuto Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="context-tag">CEO-to-CEO credibility, pre-meeting or in-meeting</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">TiAuto Clip 3: "3-4 hires saved, HR unchanged 5+ years"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">Meridian Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="context-tag">Due diligence, operational evaluation</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">TiAuto Clip 3: "3-4 hires saved"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">When CFO questions cost</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"Our CEO won't buy in to a WhatsApp-based platform."</div>
+      <div class="obj-answer">Counter with <strong>TiAuto Clip 1</strong>: Alex Taplin (CEO, Tiger Wheel & Tyre) directly states competitive advantage. This is CEO-to-CEO proof. Reinforce with <strong>TiAuto Clip 2</strong>: the pain of scaling without digital HR infrastructure.</div>
+    </div>
+  </div>
+
+  <!-- SECURITY -->
+  <div class="playbook-card" id="sector-security">
+    <div class="card-top">
+      <h3>Security</h3>
+      <div class="card-badges"><span class="badge badge-count">10 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> Marshall Security (security, 2,300 staff, 5-day deployment, compliance, EWA peace of mind). <strong>Secondary:</strong> WastePlan (switching proof, dispersed workforce). Direct sector match. Security companies care about compliance, shift coverage, and speed of deployment. Marshall proves all three.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">Marshall WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">Marshall Clip 3: "EWA gives peace of mind"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, WhatsApp forward</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">Marshall Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">WastePlan Clip 4: "Moral duty"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Presentation embed, credibility building</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">Marshall Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Marshall Clip 2: "Credentials up to date"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Compliance evaluation, due diligence</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">Marshall Clip 1: "Five days"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">When cost or implementation complexity raised</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"We need compliance tracking, not just comms."</div>
+      <div class="obj-answer">Counter with <strong>Marshall Clip 2</strong>: credential tracking built into the WhatsApp workflow. Compliance is core, not an add-on. Reinforce with <strong>Marshall Long-Form Article</strong> for operational detail.</div>
+    </div>
+    <div class="objection-box">
+      <div class="obj-label">Secondary objection</div>
+      <div>"Implementation will take months and disrupt operations."</div>
+      <div class="obj-answer">Counter with <strong>Marshall Clip 1</strong>: 5-day deployment. Minimal IT overhead, no operational disruption.</div>
+    </div>
+  </div>
+
+  <!-- MINING -->
+  <div class="playbook-card" id="sector-mining">
+    <div class="card-top">
+      <h3>Mining</h3>
+      <div class="card-badges"><span class="badge badge-count">8 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> WastePlan (dispersed, client-site, moral case) + Marshall (compliance, regulated, 24/7). <strong>Dual primary</strong> because mining requires both the dignity/moral argument (unionised workforce) and compliance proof (regulated industry). Always lead with dignity.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">WastePlan WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">WastePlan Clip 4: "Moral duty"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Lead with dignity argument, WhatsApp forward</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">WastePlan Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">Marshall Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="context-tag">Dual slides: moral case + compliance proof</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">Marshall Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">WastePlan Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="context-tag">Compliance and operational detail for technical eval</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">WastePlan Clip 3: "Can't take it away"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Union resistance or cost objection</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"Unions will resist financial products."</div>
+      <div class="obj-answer">Counter with <strong>WastePlan Clip 4</strong>: "It's a moral duty to give workers access to their own money." Frame EWA as equity and dignity, not a financial product. Reinforce with <strong>WastePlan Clip 3</strong>: once workers have EWA, taking it away causes backlash. Unions become allies, not blockers.</div>
+    </div>
+    <div class="objection-box">
+      <div class="obj-label">Sector note</div>
+      <div>Mining accounts should ALWAYS receive the dignity/moral argument. This overrides pure sector matching. Lead every conversation with worker equity and the consequences of inaction.</div>
+    </div>
+  </div>
+
+  <!-- OUTSOURCED / FACILITIES -->
+  <div class="playbook-card" id="sector-outsourced">
+    <div class="card-top">
+      <h3>Outsourced Services / Facilities</h3>
+      <div class="card-badges"><span class="badge badge-count">9 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> WastePlan (client-site, dispersed, switching proof). <strong>Secondary:</strong> Servest (18,000 scale proof, facilities management). Outsourced workforces deploy on client premises, meaning no notice boards, no fixed comms. WastePlan proves WhatsApp is the only viable channel. Servest adds scale credibility.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">WastePlan WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">WastePlan Clip 7: "Workers on client sites"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, client-site empathy angle</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">WastePlan Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">Servest Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="context-tag">Switching proof + 18,000 scale proof</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">WastePlan Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">WastePlan Clip 5: "Takes minutes not days"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Operational evaluation</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">WastePlan Clip 1: "Switched from competitor"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">When existing systems objection raised</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"We already have HR systems in place."</div>
+      <div class="obj-answer">Counter with <strong>WastePlan Clip 1</strong>: WastePlan switched from an existing competitor because Jem understood their workers better. Existing systems don't solve the deskless communication gap. Reinforce with <strong>WastePlan Clip 7</strong>: client-site workers can't access traditional HR systems.</div>
+    </div>
+  </div>
+
+  <!-- HOSPITALITY/QSR -->
+  <div class="playbook-card" id="sector-hospitality">
+    <div class="card-top">
+      <h3>Hospitality / QSR</h3>
+      <div class="card-badges"><span class="badge badge-count">9 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> Meridian (multi-store retail, adoption at scale). <strong>Secondary:</strong> Star Retailers (multi-industry, notice board replacement). QSR and hospitality share retail DNA: multi-site, high turnover, store-floor workers. Meridian's 80% adoption rate is the proof point that matters most.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">Meridian WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">Star Retailers Clip 1: EWA impact</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, WhatsApp forward</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">Meridian Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">TiAuto Clip 1: "At a disadvantage"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Scale proof for boardroom presentation</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">Meridian Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Star Retailers Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="context-tag">Due diligence, operational comparison</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">Star Retailers Clip 4: "1-2 days per month on payslips"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">Meridian Clip 5: "ROI became easy"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Cost justification or admin burden objection</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"Our staff turnover is too high for adoption to stick."</div>
+      <div class="obj-answer">Counter with <strong>Meridian Clip 1</strong>: 80% adoption proves WhatsApp-native platforms work in high-turnover environments because onboarding is instant. No app download, no training. Reinforce with <strong>Star Retailers Clip 3</strong>: platform value that workers don't want to lose.</div>
+    </div>
+  </div>
+
+  <!-- LOGISTICS/TRANSPORT -->
+  <div class="playbook-card" id="sector-logistics">
+    <div class="card-top">
+      <h3>Logistics / Transport</h3>
+      <div class="card-badges"><span class="badge badge-count">6 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> WastePlan (dispersed field workforce, client-site deployment). <strong>Secondary:</strong> Marshall (compliance, 24/7 operations). Logistics workers are constantly mobile. No fixed location means no notice boards, no office-based HR. WastePlan's client-site proof translates directly.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">WastePlan WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">WastePlan Clip 7: "Workers on client sites"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, mobile workforce empathy</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">WastePlan Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">Marshall Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="context-tag">Operational proof for executive presentation</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">WastePlan Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Marshall Clip 4: "24/7 operations"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Operational evaluation, shift coverage proof</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">Marshall Clip 1: "Five days"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Cost or implementation time objection</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"Our drivers/field staff are too busy to engage with another tool."</div>
+      <div class="obj-answer">Counter with <strong>Marshall Clip 1</strong>: 5-day deployment with no training required. WhatsApp is already on every phone. Reinforce with <strong>WastePlan Clip 5</strong>: processes that took days now take minutes for both HR and workers.</div>
+    </div>
+  </div>
+
+  <!-- CONSTRUCTION -->
+  <div class="playbook-card" id="sector-construction">
+    <div class="card-top">
+      <h3>Construction</h3>
+      <div class="card-badges"><span class="badge badge-count">5 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> WastePlan (remote sites, transient workforce, dispersed operations). <strong>Secondary:</strong> Marshall (compliance, credential management). Construction sites are temporary and remote. Workers move between projects. WastePlan's model of reaching workers who have no fixed base applies directly.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">WastePlan WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">WastePlan Clip 7: "Workers on client sites"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, site-based workforce empathy</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">WastePlan Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">Servest Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="context-tag">Dispersed ops proof + 18,000 scale credibility</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">WastePlan Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Marshall Clip 2: "Credentials up to date"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Safety/compliance angle for construction</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">WastePlan Clip 5: "Minutes not days"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Cost or complexity objection</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"Our workforce is too transient for a platform to take hold."</div>
+      <div class="obj-answer">Counter with <strong>WastePlan Clip 7</strong>: workers on client sites with no fixed infrastructure still adopted WhatsApp-based HR instantly. No training, no apps, no infrastructure required. Transient workforces are exactly who benefits most.</div>
+    </div>
+  </div>
+
+  <!-- FOOD/FMCG -->
+  <div class="playbook-card" id="sector-food">
+    <div class="card-top">
+      <h3>Food / FMCG</h3>
+      <div class="card-badges"><span class="badge badge-count">7 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> Star Retailers (multi-entity, factory/warehouse workers, payslip time savings). <strong>Secondary:</strong> TiAuto (multi-site scaling, headcount savings). Food and FMCG companies run multi-entity operations with factory, warehouse, and distribution workers. Star Retailers proves Jem works across diverse operational units on a single platform.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">Star Retailers WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">Star Retailers Clip 2: "I used to be a normal employee"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, HR empathy angle</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">Star Retailers Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">TiAuto Clip 1: "At a disadvantage"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Multi-entity proof for boardroom</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">Star Retailers Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Star Retailers Clip 3: "Changed the ballgame"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Operational evaluation, platform breadth</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">Star Retailers Clip 4: "1-2 days per month"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">TiAuto Clip 3: "3-4 hires saved"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">ROI justification, headcount savings</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"We have multiple entities and brands, one platform won't fit all."</div>
+      <div class="obj-answer">Counter with <strong>Star Retailers Sales Deck Slide</strong>: 6 different industries (Spar, bus fleet, bakery, gym, training academy, social housing) all running on one Jem instance. Reinforce with <strong>TiAuto Clip 2</strong>: scaling from 15 to 160+ locations on a single platform.</div>
+    </div>
+  </div>
+
+  <!-- HEALTHCARE/PHARMA -->
+  <div class="playbook-card" id="sector-healthcare">
+    <div class="card-top">
+      <h3>Healthcare / Pharma</h3>
+      <div class="card-badges"><span class="badge badge-count">2 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> Marshall (regulated, compliance, 24/7 shift operations). <strong>Secondary:</strong> WastePlan (client-site, dispersed, dignity argument). Healthcare shares security's regulatory DNA: credential management, compliance, 24/7 shifts. Marshall's compliance proof translates directly.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">Marshall WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">Marshall Clip 3: "EWA peace of mind"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, compliance-led</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">Marshall Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">Servest Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="context-tag">Compliance + scale for exec presentation</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">Marshall Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Marshall Clip 2: "Credentials up to date"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Regulatory evaluation, credential tracking</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">Marshall Clip 1: "Five days"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Implementation speed or cost objection</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"We have strict compliance and data requirements."</div>
+      <div class="obj-answer">Counter with <strong>Marshall Clip 2</strong>: credential and compliance tracking built into the WhatsApp workflow. Security sector has the same regulatory burden and Marshall deployed in 5 days. Reinforce with <strong>Marshall Long-Form Article</strong> for operational detail.</div>
+    </div>
+  </div>
+
+  <!-- CONGLOMERATE/MULTI-BRAND -->
+  <div class="playbook-card" id="sector-conglomerate">
+    <div class="card-top">
+      <h3>Conglomerate / Multi-Brand</h3>
+      <div class="card-badges"><span class="badge badge-count">5 accounts</span></div>
+    </div>
+    <div class="card-match"><strong>Primary:</strong> Star Retailers (multi-industry, 6 sectors on one platform). <strong>Secondary:</strong> Servest (18,000 scale, multi-brand facilities). Conglomerates need proof that one platform serves diverse business units. Star Retailers is the definitive proof point: Spar, buses, bakery, gym, training, housing all on one Jem instance.</div>
+    <table class="role-table">
+      <tr><th>Role</th><th>Primary Asset</th><th>Supporting Asset</th><th>Timing</th></tr>
+      <tr><td><span class="role-name">Champion</span></td><td><span class="asset-name">Star Retailers WhatsApp One-Pager</span> <span class="format-tag format-onepager">One-Pager</span></td><td><span class="asset-name">Star Retailers Clip 3: "Changed the ballgame"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">First touch, platform unification proof</span></td></tr>
+      <tr><td><span class="role-name">Decision Maker</span></td><td><span class="asset-name">Star Retailers Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="asset-name">Servest Sales Deck Slide</span> <span class="format-tag format-slide">Slide</span></td><td><span class="context-tag">Multi-industry proof + 18,000 scale</span></td></tr>
+      <tr><td><span class="role-name">Influencer</span></td><td><span class="asset-name">Star Retailers Long-Form Article</span> <span class="format-tag format-article">Article</span></td><td><span class="asset-name">Star Retailers Clip 4: "1-2 days on payslips"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Operational evaluation, time savings proof</span></td></tr>
+      <tr><td><span class="role-name">Blocker</span></td><td><span class="asset-name">TiAuto Clip 3: "3-4 hires saved"</span> <span class="format-tag format-video">Video</span></td><td><span class="asset-name">WastePlan Clip 6: "Cost is negligible"</span> <span class="format-tag format-video">Video</span></td><td><span class="context-tag">Cost justification, headcount savings proof</span></td></tr>
+    </table>
+    <div class="objection-box">
+      <div class="obj-label">Likely objection</div>
+      <div>"Each of our business units has different needs."</div>
+      <div class="obj-answer">Counter with <strong>Star Retailers Sales Deck Slide</strong>: 6 completely different industries (retail, transport, food production, fitness, education, housing) all running on one Jem instance with a single HR team managing the whole portfolio. Reinforce with <strong>Servest One-Pager</strong>: 18,000 employees across multi-brand facilities.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MASTER ACCOUNT TABLE -->
+<!-- ============================================================ -->
+<div class="master-section">
+  <p class="section-label">Accounts</p>
+  <h2>Master Account Table</h2>
+
+  <div class="search-bar">
+    <input type="text" id="accountSearch" placeholder="Search by company name..." onkeyup="filterAccounts()">
+    <div class="filter-badges" id="sectorFilters">
+      <span class="filter-badge" onclick="filterSector(this, 'all')">All</span>
+      <span class="filter-badge" onclick="filterSector(this, 'retail')">Retail</span>
+      <span class="filter-badge" onclick="filterSector(this, 'automotive')">Automotive</span>
+      <span class="filter-badge" onclick="filterSector(this, 'security')">Security</span>
+      <span class="filter-badge" onclick="filterSector(this, 'mining')">Mining</span>
+      <span class="filter-badge" onclick="filterSector(this, 'outsourced')">Outsourced</span>
+      <span class="filter-badge" onclick="filterSector(this, 'hospitality')">Hospitality</span>
+      <span class="filter-badge" onclick="filterSector(this, 'logistics')">Logistics</span>
+      <span class="filter-badge" onclick="filterSector(this, 'construction')">Construction</span>
+      <span class="filter-badge" onclick="filterSector(this, 'food')">Food/FMCG</span>
+      <span class="filter-badge" onclick="filterSector(this, 'healthcare')">Healthcare</span>
+      <span class="filter-badge" onclick="filterSector(this, 'conglomerate')">Conglomerate</span>
+    </div>
+  </div>
+
+  <div class="result-count" id="resultCount">Showing 88 accounts</div>
+
+  <div class="master-wrap">
+    <table class="master-table" id="masterTable">
+      <thead>
+        <tr>
+          <th>Account</th>
+          <th>Sector</th>
+          <th>Est. Employees</th>
+          <th>Primary Case Study</th>
+          <th>First-Touch Asset</th>
+          <th>Likely Objection</th>
+          <th>Counter Asset</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- RETAIL -->
+        <tr class="sector-separator" data-sector="retail"><td colspan="7">Retail (20 accounts)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="shoprite"><td>Shoprite</td><td><span class="badge badge-sector">Retail</span></td><td>140,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Too big, won't scale"</td><td>Servest Slide (18,000 proof)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="pepkor"><td>Pepkor</td><td><span class="badge badge-sector">Retail</span></td><td>50,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="woolworths"><td>Woolworths</td><td><span class="badge badge-sector">Retail</span></td><td>30,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="tfg the foschini group"><td>TFG</td><td><span class="badge badge-sector">Retail</span></td><td>25,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Already have systems"</td><td>Star Retailers Clip 3 (platform value)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="mr price"><td>Mr Price</td><td><span class="badge badge-sector">Retail</span></td><td>18,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="clicks"><td>Clicks</td><td><span class="badge badge-sector">Retail</span></td><td>15,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Already have systems"</td><td>Star Retailers Clip 4 (time savings)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="dis-chem"><td>Dis-Chem</td><td><span class="badge badge-sector">Retail</span></td><td>15,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="ackermans"><td>Ackermans</td><td><span class="badge badge-sector">Retail</span></td><td>14,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="truworths"><td>Truworths</td><td><span class="badge badge-sector">Retail</span></td><td>10,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="cashbuild"><td>Cashbuild</td><td><span class="badge badge-sector">Retail</span></td><td>7,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="cash crusaders"><td>Cash Crusaders</td><td><span class="badge badge-sector">Retail</span></td><td>3,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Too expensive"</td><td>Star Retailers Clip 4 (time savings)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="holdsport"><td>HoldSport</td><td><span class="badge badge-sector">Retail</span></td><td>3,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="italtile"><td>Italtile</td><td><span class="badge badge-sector">Retail</span></td><td>3,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="food lovers market"><td>Food Lover's Market</td><td><span class="badge badge-sector">Retail</span></td><td>5,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="econofoods"><td>EconoFoods</td><td><span class="badge badge-sector">Retail</span></td><td>2,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Too expensive"</td><td>Star Retailers Clip 4 (time savings)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="retailability"><td>Retailability</td><td><span class="badge badge-sector">Retail</span></td><td>2,500+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="the building company"><td>The Building Company</td><td><span class="badge badge-sector">Retail</span></td><td>2,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="colefax"><td>Colefax</td><td><span class="badge badge-sector">Retail</span></td><td>1,500+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Too expensive"</td><td>Star Retailers Clip 4 (time savings)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="bata"><td>Bata</td><td><span class="badge badge-sector">Retail</span></td><td>2,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="retail" data-name="meridian group"><td>Meridian Group <span class="existing-badge">Customer</span></td><td><span class="badge badge-sector">Retail</span></td><td>5,500</td><td>Meridian</td><td>--</td><td>--</td><td>--</td></tr>
+
+        <!-- AUTOMOTIVE -->
+        <tr class="sector-separator" data-sector="automotive"><td colspan="7">Automotive (7 accounts)</td></tr>
+        <tr class="account-row" data-sector="automotive" data-name="motus"><td>Motus</td><td><span class="badge badge-sector">Automotive</span></td><td>18,000+</td><td>TiAuto</td><td>TiAuto One-Pager</td><td>"CEO won't buy in"</td><td>TiAuto Clip 1 (CEO proof)</td></tr>
+        <tr class="account-row" data-sector="automotive" data-name="cmh"><td>CMH</td><td><span class="badge badge-sector">Automotive</span></td><td>5,000+</td><td>TiAuto</td><td>TiAuto One-Pager</td><td>"Can't scale"</td><td>TiAuto Clip 2 (15 to 160 stores)</td></tr>
+        <tr class="account-row" data-sector="automotive" data-name="halfway group"><td>Halfway Group</td><td><span class="badge badge-sector">Automotive</span></td><td>3,000+</td><td>TiAuto</td><td>TiAuto One-Pager</td><td>"Too expensive"</td><td>TiAuto Clip 3 (3-4 hires saved)</td></tr>
+        <tr class="account-row" data-sector="automotive" data-name="hyundai"><td>Hyundai</td><td><span class="badge badge-sector">Automotive</span></td><td>2,500+</td><td>TiAuto</td><td>TiAuto One-Pager</td><td>"CEO won't buy in"</td><td>TiAuto Clip 1 (CEO proof)</td></tr>
+        <tr class="account-row" data-sector="automotive" data-name="g.u.d. holdings gud"><td>G.U.D. Holdings</td><td><span class="badge badge-sector">Automotive</span></td><td>3,500+</td><td>TiAuto</td><td>TiAuto One-Pager</td><td>"Already have systems"</td><td>TiAuto Clip 2 (scaling pain)</td></tr>
+        <tr class="account-row" data-sector="automotive" data-name="goscor"><td>Goscor</td><td><span class="badge badge-sector">Automotive</span></td><td>2,000+</td><td>TiAuto</td><td>TiAuto One-Pager</td><td>"Too expensive"</td><td>TiAuto Clip 3 (3-4 hires saved)</td></tr>
+        <tr class="account-row" data-sector="automotive" data-name="tiauto investments"><td>TiAuto Investments <span class="existing-badge">Customer</span></td><td><span class="badge badge-sector">Automotive</span></td><td>2,200</td><td>TiAuto</td><td>--</td><td>--</td><td>--</td></tr>
+
+        <!-- SECURITY -->
+        <tr class="sector-separator" data-sector="security"><td colspan="7">Security (10 accounts)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="g4s"><td>G4S</td><td><span class="badge badge-sector">Security</span></td><td>30,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Too big to deploy"</td><td>Servest Slide (18,000 proof)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="24/7 security"><td>24/7 Security</td><td><span class="badge badge-sector">Security</span></td><td>3,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Compliance critical"</td><td>Marshall Clip 2 (credentials)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="afri guard"><td>Afri Guard</td><td><span class="badge badge-sector">Security</span></td><td>2,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="eagle eye"><td>Eagle Eye</td><td><span class="badge badge-sector">Security</span></td><td>2,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"No IT bandwidth"</td><td>Marshall Clip 1 (5 days)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="royal security"><td>Royal Security</td><td><span class="badge badge-sector">Security</span></td><td>2,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Compliance critical"</td><td>Marshall Clip 2 (credentials)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="securitas"><td>Securitas</td><td><span class="badge badge-sector">Security</span></td><td>5,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="sinqobile"><td>Sinqobile</td><td><span class="badge badge-sector">Security</span></td><td>2,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="stallion"><td>Stallion</td><td><span class="badge badge-sector">Security</span></td><td>3,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"No IT bandwidth"</td><td>Marshall Clip 1 (5 days)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="ezingeni"><td>Ezingeni</td><td><span class="badge badge-sector">Security</span></td><td>2,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Compliance critical"</td><td>Marshall Clip 2 (credentials)</td></tr>
+        <tr class="account-row" data-sector="security" data-name="marshall security"><td>Marshall Security <span class="existing-badge">Customer</span></td><td><span class="badge badge-sector">Security</span></td><td>2,300</td><td>Marshall</td><td>--</td><td>--</td><td>--</td></tr>
+
+        <!-- MINING -->
+        <tr class="sector-separator" data-sector="mining"><td colspan="7">Mining (8 accounts)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="exxaro"><td>Exxaro</td><td><span class="badge badge-sector">Mining</span></td><td>7,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Unions will resist"</td><td>WastePlan Clip 4 (moral duty)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="harmony gold"><td>Harmony Gold</td><td><span class="badge badge-sector">Mining</span></td><td>35,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Too big to scale"</td><td>Servest Slide (18,000 proof)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="implats"><td>Implats</td><td><span class="badge badge-sector">Mining</span></td><td>40,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Unions will resist"</td><td>WastePlan Clip 4 (moral duty)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="arm african rainbow minerals"><td>ARM</td><td><span class="badge badge-sector">Mining</span></td><td>10,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Unions will resist"</td><td>WastePlan Clip 4 (moral duty)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="glencore"><td>Glencore</td><td><span class="badge badge-sector">Mining</span></td><td>25,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Compliance critical"</td><td>Marshall Clip 2 (credentials)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="samancor"><td>Samancor</td><td><span class="badge badge-sector">Mining</span></td><td>5,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Unions will resist"</td><td>WastePlan Clip 4 (moral duty)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="seriti"><td>Seriti</td><td><span class="badge badge-sector">Mining</span></td><td>5,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Unions will resist"</td><td>WastePlan Clip 4 (moral duty)</td></tr>
+        <tr class="account-row" data-sector="mining" data-name="enaex"><td>Enaex</td><td><span class="badge badge-sector">Mining</span></td><td>2,000+</td><td>WastePlan + Marshall</td><td>WastePlan One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+
+        <!-- OUTSOURCED/FACILITIES -->
+        <tr class="sector-separator" data-sector="outsourced"><td colspan="7">Outsourced Services / Facilities (9 accounts)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="tsebo"><td>Tsebo</td><td><span class="badge badge-sector">Outsourced</span></td><td>30,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="gp retail ops"><td>GP Retail Ops</td><td><span class="badge badge-sector">Outsourced</span></td><td>3,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Workers on client sites"</td><td>WastePlan Clip 7 (client sites)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="empact"><td>Empact</td><td><span class="badge badge-sector">Outsourced</span></td><td>5,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="feedem"><td>Feedem</td><td><span class="badge badge-sector">Outsourced</span></td><td>3,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Workers on client sites"</td><td>WastePlan Clip 7 (client sites)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="imvula"><td>iMvula</td><td><span class="badge badge-sector">Outsourced</span></td><td>4,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="diversey"><td>Diversey</td><td><span class="badge badge-sector">Outsourced</span></td><td>2,500+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="csg"><td>CSG</td><td><span class="badge badge-sector">Outsourced</span></td><td>8,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Too big to deploy"</td><td>Servest Slide (18,000 proof)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="wastewant"><td>Wastewant</td><td><span class="badge badge-sector">Outsourced</span></td><td>1,500+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="outsourced" data-name="enviroserv"><td>EnviroServ</td><td><span class="badge badge-sector">Outsourced</span></td><td>3,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Workers on client sites"</td><td>WastePlan Clip 7 (client sites)</td></tr>
+
+        <!-- HOSPITALITY/QSR -->
+        <tr class="sector-separator" data-sector="hospitality"><td colspan="7">Hospitality / QSR (9 accounts)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="nandos nando's"><td>Nando's</td><td><span class="badge badge-sector">Hospitality</span></td><td>5,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"High turnover"</td><td>Meridian Clip 1 (instant adoption)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="mcdonalds mcdonald's"><td>McDonald's</td><td><span class="badge badge-sector">Hospitality</span></td><td>10,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Already have systems"</td><td>Star Retailers Clip 3 (platform value)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="famous brands"><td>Famous Brands</td><td><span class="badge badge-sector">Hospitality</span></td><td>5,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="simbisa brands"><td>Simbisa Brands</td><td><span class="badge badge-sector">Hospitality</span></td><td>8,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="baobab kfc"><td>Baobab (KFC)</td><td><span class="badge badge-sector">Hospitality</span></td><td>4,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"High turnover"</td><td>Meridian Clip 1 (instant adoption)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="peg retail kfc"><td>PEG Retail (KFC)</td><td><span class="badge badge-sector">Hospitality</span></td><td>4,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"High turnover"</td><td>Meridian Clip 1 (instant adoption)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="radisson"><td>Radisson</td><td><span class="badge badge-sector">Hospitality</span></td><td>3,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Won't get adopted"</td><td>Meridian Clip 1 (80% adoption)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="peermont"><td>Peermont</td><td><span class="badge badge-sector">Hospitality</span></td><td>4,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Already have systems"</td><td>Star Retailers Clip 3 (platform value)</td></tr>
+        <tr class="account-row" data-sector="hospitality" data-name="sun international"><td>Sun International</td><td><span class="badge badge-sector">Hospitality</span></td><td>10,000+</td><td>Meridian</td><td>Meridian One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+
+        <!-- LOGISTICS/TRANSPORT -->
+        <tr class="sector-separator" data-sector="logistics"><td colspan="7">Logistics / Transport (6 accounts)</td></tr>
+        <tr class="account-row" data-sector="logistics" data-name="unitrans"><td>Unitrans</td><td><span class="badge badge-sector">Logistics</span></td><td>8,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Staff too busy"</td><td>Marshall Clip 1 (5-day deploy)</td></tr>
+        <tr class="account-row" data-sector="logistics" data-name="dp world"><td>DP World</td><td><span class="badge badge-sector">Logistics</span></td><td>5,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Compliance critical"</td><td>Marshall Clip 2 (credentials)</td></tr>
+        <tr class="account-row" data-sector="logistics" data-name="imperial"><td>Imperial</td><td><span class="badge badge-sector">Logistics</span></td><td>20,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Too big to deploy"</td><td>Servest Slide (18,000 proof)</td></tr>
+        <tr class="account-row" data-sector="logistics" data-name="sa cargo"><td>SA Cargo</td><td><span class="badge badge-sector">Logistics</span></td><td>2,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="logistics" data-name="hellmann"><td>Hellmann</td><td><span class="badge badge-sector">Logistics</span></td><td>3,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+        <tr class="account-row" data-sector="logistics" data-name="trollope"><td>Trollope</td><td><span class="badge badge-sector">Logistics</span></td><td>2,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Staff too busy"</td><td>Marshall Clip 1 (5-day deploy)</td></tr>
+
+        <!-- CONSTRUCTION -->
+        <tr class="sector-separator" data-sector="construction"><td colspan="7">Construction (5 accounts)</td></tr>
+        <tr class="account-row" data-sector="construction" data-name="stefanutti stocks"><td>Stefanutti Stocks</td><td><span class="badge badge-sector">Construction</span></td><td>8,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Workforce too transient"</td><td>WastePlan Clip 7 (client sites)</td></tr>
+        <tr class="account-row" data-sector="construction" data-name="concor"><td>ConCor</td><td><span class="badge badge-sector">Construction</span></td><td>3,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Workforce too transient"</td><td>WastePlan Clip 7 (client sites)</td></tr>
+        <tr class="account-row" data-sector="construction" data-name="wbho"><td>WBHO</td><td><span class="badge badge-sector">Construction</span></td><td>10,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Too big to deploy"</td><td>Servest Slide (18,000 proof)</td></tr>
+        <tr class="account-row" data-sector="construction" data-name="raubex"><td>Raubex</td><td><span class="badge badge-sector">Construction</span></td><td>6,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Too expensive"</td><td>WastePlan Clip 6 (cost negligible)</td></tr>
+        <tr class="account-row" data-sector="construction" data-name="murray roberts murray & roberts"><td>Murray & Roberts</td><td><span class="badge badge-sector">Construction</span></td><td>8,000+</td><td>WastePlan</td><td>WastePlan One-Pager</td><td>"Workforce too transient"</td><td>WastePlan Clip 7 (client sites)</td></tr>
+
+        <!-- FOOD/FMCG -->
+        <tr class="sector-separator" data-sector="food"><td colspan="7">Food / FMCG (7 accounts)</td></tr>
+        <tr class="account-row" data-sector="food" data-name="astral foods"><td>Astral Foods</td><td><span class="badge badge-sector">Food/FMCG</span></td><td>10,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Multiple entities"</td><td>Star Retailers Slide (6 industries)</td></tr>
+        <tr class="account-row" data-sector="food" data-name="rhodes food"><td>Rhodes Food</td><td><span class="badge badge-sector">Food/FMCG</span></td><td>5,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Multiple entities"</td><td>Star Retailers Slide (6 industries)</td></tr>
+        <tr class="account-row" data-sector="food" data-name="fpg foods"><td>FPG Foods</td><td><span class="badge badge-sector">Food/FMCG</span></td><td>3,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Too expensive"</td><td>Star Retailers Clip 4 (time savings)</td></tr>
+        <tr class="account-row" data-sector="food" data-name="roos foods"><td>Roos Foods</td><td><span class="badge badge-sector">Food/FMCG</span></td><td>2,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Too expensive"</td><td>Star Retailers Clip 4 (time savings)</td></tr>
+        <tr class="account-row" data-sector="food" data-name="agrimark"><td>Agrimark</td><td><span class="badge badge-sector">Food/FMCG</span></td><td>3,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Already have systems"</td><td>Star Retailers Clip 3 (platform value)</td></tr>
+        <tr class="account-row" data-sector="food" data-name="rohloff group"><td>Rohloff Group</td><td><span class="badge badge-sector">Food/FMCG</span></td><td>2,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Too expensive"</td><td>TiAuto Clip 3 (headcount savings)</td></tr>
+        <tr class="account-row" data-sector="food" data-name="ab-inbev ab inbev"><td>AB-InBev</td><td><span class="badge badge-sector">Food/FMCG</span></td><td>8,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Already have systems"</td><td>WastePlan Clip 1 (switching)</td></tr>
+
+        <!-- HEALTHCARE/PHARMA -->
+        <tr class="sector-separator" data-sector="healthcare"><td colspan="7">Healthcare / Pharma (2 accounts)</td></tr>
+        <tr class="account-row" data-sector="healthcare" data-name="life healthcare"><td>Life Healthcare</td><td><span class="badge badge-sector">Healthcare</span></td><td>20,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Compliance critical"</td><td>Marshall Clip 2 (credentials)</td></tr>
+        <tr class="account-row" data-sector="healthcare" data-name="viatris"><td>Viatris</td><td><span class="badge badge-sector">Healthcare</span></td><td>3,000+</td><td>Marshall</td><td>Marshall One-Pager</td><td>"Compliance critical"</td><td>Marshall Clip 2 (credentials)</td></tr>
+
+        <!-- CONGLOMERATE -->
+        <tr class="sector-separator" data-sector="conglomerate"><td colspan="7">Conglomerate / Multi-Brand (5 accounts)</td></tr>
+        <tr class="account-row" data-sector="conglomerate" data-name="reunert"><td>Reunert</td><td><span class="badge badge-sector">Conglomerate</span></td><td>6,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Each unit has different needs"</td><td>Star Retailers Slide (6 industries)</td></tr>
+        <tr class="account-row" data-sector="conglomerate" data-name="kuipers group"><td>Kuipers Group</td><td><span class="badge badge-sector">Conglomerate</span></td><td>3,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Each unit has different needs"</td><td>Star Retailers Slide (6 industries)</td></tr>
+        <tr class="account-row" data-sector="conglomerate" data-name="true blue"><td>True Blue</td><td><span class="badge badge-sector">Conglomerate</span></td><td>2,500+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Each unit has different needs"</td><td>Star Retailers Slide (6 industries)</td></tr>
+        <tr class="account-row" data-sector="conglomerate" data-name="oryx group"><td>Oryx Group</td><td><span class="badge badge-sector">Conglomerate</span></td><td>2,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Too expensive"</td><td>TiAuto Clip 3 (headcount savings)</td></tr>
+        <tr class="account-row" data-sector="conglomerate" data-name="sekta group"><td>Sekta Group</td><td><span class="badge badge-sector">Conglomerate</span></td><td>2,000+</td><td>Star Retailers</td><td>Star Retailers One-Pager</td><td>"Each unit has different needs"</td><td>Star Retailers Slide (6 industries)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="container">
+    <div style="display:inline-block;background:var(--pink);color:#fff;font-family:'Inter',sans-serif;font-weight:600;font-size:16px;padding:4px 12px;border-radius:8px;letter-spacing:-0.5px;margin-bottom:8px;">jem</div>
+    <br>Case Study Asset Router &bull; Dream 88 &bull; 16 March 2026
+  </div>
+</div>
+
+</div><!-- end container -->
+
+<script>
+function toggleCS(header) {
+  var body = header.nextElementSibling;
+  header.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+var activeSector = 'all';
+
+function filterAccounts() {
+  var query = document.getElementById('accountSearch').value.toLowerCase();
+  var rows = document.querySelectorAll('.account-row');
+  var separators = document.querySelectorAll('.sector-separator');
+  var visible = 0;
+  var visibleSectors = {};
+
+  rows.forEach(function(row) {
+    var name = row.getAttribute('data-name');
+    var sector = row.getAttribute('data-sector');
+    var matchesSearch = name.indexOf(query) > -1;
+    var matchesSector = activeSector === 'all' || sector === activeSector;
+
+    if (matchesSearch && matchesSector) {
+      row.classList.remove('hidden');
+      visible++;
+      visibleSectors[sector] = true;
+    } else {
+      row.classList.add('hidden');
+    }
+  });
+
+  separators.forEach(function(sep) {
+    var sector = sep.getAttribute('data-sector');
+    if (visibleSectors[sector]) {
+      sep.classList.remove('hidden');
+    } else {
+      sep.classList.add('hidden');
+    }
+  });
+
+  document.getElementById('resultCount').textContent = 'Showing ' + visible + ' account' + (visible !== 1 ? 's' : '');
+}
+
+function filterSector(badge, sector) {
+  var badges = document.querySelectorAll('.filter-badge');
+  badges.forEach(function(b) { b.classList.remove('active'); });
+  badge.classList.add('active');
+  activeSector = sector;
+  filterAccounts();
+
+  if (sector !== 'all') {
+    var playbook = document.getElementById('sector-' + sector);
+    if (playbook) {
+      playbook.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}
+</script>
+
+</body>
+</html>
