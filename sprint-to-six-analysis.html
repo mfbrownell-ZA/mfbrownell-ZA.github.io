@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sprint to Six — Pattern Analysis | Jem</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080810;
+      --surface: #0f0f1a;
+      --surface-2: #16162a;
+      --surface-3: #1e1e35;
+      --border: rgba(255,255,255,0.07);
+      --border-light: rgba(255,255,255,0.12);
+      --green: #22c55e;
+      --green-dim: rgba(34,197,94,0.15);
+      --green-border: rgba(34,197,94,0.3);
+      --amber: #f59e0b;
+      --amber-dim: rgba(245,158,11,0.12);
+      --amber-border: rgba(245,158,11,0.3);
+      --red: #ef4444;
+      --red-dim: rgba(239,68,68,0.12);
+      --red-border: rgba(239,68,68,0.3);
+      --blue: #6366f1;
+      --blue-dim: rgba(99,102,241,0.12);
+      --text-1: #f1f5f9;
+      --text-2: #94a3b8;
+      --text-3: #64748b;
+      --accent: #818cf8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-1);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* LAYOUT */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* HEADER */
+    .header {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 80px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--text-1);
+      margin-bottom: 16px;
+    }
+
+    .header-sub {
+      font-size: 18px;
+      color: var(--text-2);
+      margin-bottom: 48px;
+      font-weight: 400;
+    }
+
+    .status-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 100px;
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid;
+    }
+
+    .status-pill.hit { background: var(--green-dim); border-color: var(--green-border); color: var(--green); }
+    .status-pill.partial { background: var(--amber-dim); border-color: var(--amber-border); color: var(--amber); }
+    .status-pill.missed { background: var(--red-dim); border-color: var(--red-border); color: var(--red); }
+
+    .pill-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .pill-label { opacity: 0.7; font-weight: 400; }
+
+    /* FOUNDER READ */
+    .founder-read {
+      background: var(--surface);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 32px 36px;
+      margin-top: 40px;
+      position: relative;
+    }
+
+    .founder-read-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .founder-read p {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .founder-read strong {
+      color: var(--text-1);
+      font-weight: 600;
+    }
+
+    /* SECTION TITLES */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-1);
+      margin-bottom: 40px;
+      line-height: 1.2;
+    }
+
+    /* INITIATIVE GRID */
+    .initiative-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .initiative-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      transition: border-color 0.2s, background 0.2s;
+      cursor: default;
+    }
+
+    .initiative-card:hover {
+      background: var(--surface-2);
+      border-color: var(--border-light);
+    }
+
+    .initiative-card.hit { border-left: 3px solid var(--green); }
+    .initiative-card.partial { border-left: 3px solid var(--amber); }
+    .initiative-card.missed { border-left: 3px solid var(--red); }
+
+    .initiative-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .initiative-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-1);
+      line-height: 1.4;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .status-badge.hit { background: var(--green-dim); color: var(--green); }
+    .status-badge.partial { background: var(--amber-dim); color: var(--amber); }
+    .status-badge.missed { background: var(--red-dim); color: var(--red); }
+
+    .initiative-owner {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .initiative-metric {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    .initiative-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      margin-top: 24px;
+      margin-bottom: 12px;
+    }
+
+    /* PATTERN ANALYSIS */
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .pattern-grid { grid-template-columns: 1fr; }
+    }
+
+    .pattern-column-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pattern-column-title span {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .pattern-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+
+    .pattern-item:hover { border-color: var(--border-light); }
+
+    .pattern-item-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .pattern-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
+      line-height: 1.4;
+    }
+
+    .pattern-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .pattern-count.bad { background: var(--red-dim); color: var(--red); }
+    .pattern-count.good { background: var(--green-dim); color: var(--green); }
+
+    .pattern-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .pattern-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pattern-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: var(--surface-3);
+      color: var(--text-3);
+      border: 1px solid var(--border);
+    }
+
+    .freq-bar {
+      width: 100%;
+      height: 3px;
+      background: var(--surface-3);
+      border-radius: 2px;
+      margin: 10px 0 12px;
+      overflow: hidden;
+    }
+
+    .freq-bar-fill {
+      height: 100%;
+      border-radius: 2px;
+      transition: width 1s ease;
+    }
+
+    .freq-bar-fill.bad { background: var(--red); }
+    .freq-bar-fill.good { background: var(--green); }
+
+    /* BIG SIGNALS */
+    .signals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .signals-grid { grid-template-columns: 1fr; }
+    }
+
+    .signal-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .signal-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+    }
+
+    .signal-card.signal-a::before { background: var(--green); }
+    .signal-card.signal-b::before { background: var(--blue); }
+    .signal-card.signal-c::before { background: var(--amber); }
+
+    .signal-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-3);
+      margin-bottom: 16px;
+    }
+
+    .signal-stat {
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .signal-card.signal-a .signal-stat { color: var(--green); }
+    .signal-card.signal-b .signal-stat { color: var(--accent); }
+    .signal-card.signal-c .signal-stat { color: var(--amber); }
+
+    .signal-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-1);
+      margin-bottom: 8px;
+    }
+
+    .signal-context {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+
+    /* KEY NUMBERS */
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .number-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 22px;
+    }
+
+    .number-value {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(22px, 3vw, 30px);
+      font-weight: 700;
+      color: var(--text-1);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .number-label {
+      font-size: 12px;
+      color: var(--text-3);
+      font-weight: 500;
+    }
+
+    .number-context {
+      font-size: 11px;
+      color: var(--text-3);
+      margin-top: 6px;
+    }
+
+    /* STRUCTURAL RISKS */
+    .risks-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .risk-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .risk-icon {
+      font-size: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .risk-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 4px;
+    }
+
+    .risk-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* NEXT SPRINT */
+    .commits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+
+    .commit-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .commit-category {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .commit-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-1);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .commit-desc {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    .footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 12px;
+      color: var(--text-3);
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: var(--border-light);
+      margin: 0 0 32px;
+    }
+
+    /* HEAT MAP */
+    .heatmap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      overflow-x: auto;
+    }
+
+    .heatmap-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 4px;
+      min-width: 800px;
+    }
+
+    .heatmap-table th {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      text-align: center;
+      padding: 6px 4px;
+    }
+
+    .heatmap-table th:first-child {
+      text-align: left;
+      padding-left: 8px;
+      min-width: 180px;
+    }
+
+    .heatmap-table td {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-2);
+      padding: 8px 6px;
+    }
+
+    .heatmap-table td:first-child {
+      font-weight: 600;
+      color: var(--text-1);
+      padding-left: 8px;
+    }
+
+    .heatmap-cell {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .cell-yes { background: var(--red-dim); border: 1px solid var(--red-border); }
+    .cell-no { background: var(--surface-2); border: 1px solid var(--border); opacity: 0.3; }
+    .cell-win { background: var(--green-dim); border: 1px solid var(--green-border); }
+
+    /* CALLOUT */
+    .callout {
+      background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(99,102,241,0.03) 100%);
+      border: 1px solid rgba(99,102,241,0.2);
+      border-radius: 16px;
+      padding: 28px 32px;
+      margin-bottom: 40px;
+    }
+
+    .callout p {
+      font-size: 16px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    .callout strong { color: var(--text-1); font-weight: 600; }
+
+    /* SCROLL INDICATOR */
+    .scroll-hint {
+      font-size: 11px;
+      color: var(--text-3);
+      text-align: right;
+      margin-top: 8px;
+    }
+
+    @media (max-width: 600px) {
+      section { padding: 48px 0; }
+      h2 { margin-bottom: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="container">
+      <div class="eyebrow">Jem · Sprint to Six · Pattern Analysis</div>
+      <h1>What the<br>sprint revealed.</h1>
+      <p class="header-sub">Oct 2025 – Mar 2026 &nbsp;·&nbsp; 18 initiatives &nbsp;·&nbsp; 6 machines</p>
+
+      <div class="status-bar">
+        <div class="status-pill hit">
+          <div class="pill-dot"></div>
+          <strong>3 Hit</strong>
+          <span class="pill-label">16%</span>
+        </div>
+        <div class="status-pill partial">
+          <div class="pill-dot"></div>
+          <strong>11 Partial</strong>
+          <span class="pill-label">61%</span>
+        </div>
+        <div class="status-pill missed">
+          <div class="pill-dot"></div>
+          <strong>4 Missed</strong>
+          <span class="pill-label">22%</span>
+        </div>
+      </div>
+
+      <div class="founder-read" style="margin-top: 40px;">
+        <div class="founder-read-tag">Founder's Read</div>
+        <p>
+          <strong>The sprint exposed three structural truths.</strong> First, Jem closes well but activates slowly — the gap between signed contract and live, earning revenue is the biggest drag on MRR targets across every initiative. Second, <strong>on-site human contact is systematically underweighted</strong> across sales and marketing, despite data that makes the case plainly: 3× faster conversion, one-third the cancellation rate. Third, <strong>the team has the execution capability</strong> — when given clear scope and the right tools (Claude Code, customer validation, design partnerships), things move fast. The failure modes are almost always upstream: wrong metric, undocumented scope, missing DRI, or assumed trust in a segment that needs to earn it.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INITIATIVE MAP -->
+  <section>
+    <div class="container">
+      <div class="section-label">All Initiatives</div>
+      <h2>Sprint overview</h2>
+
+      <div class="initiative-section-label">Core Sprints</div>
+      <div class="initiative-grid" style="margin-bottom: 24px;">
+
+        <div class="initiative-card hit">
+          <div class="initiative-header">
+            <div class="initiative-name">Reach R6M MRR from EWA & Mobile</div>
+            <div class="status-badge hit">Hit</div>
+          </div>
+          <div class="initiative-owner">Chris · Sales</div>
+          <div class="initiative-metric">R2.08M closed / R1.6M target · 130%</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Onboard Priority Clients for R800K MRR</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Nonsuku · Client Success</div>
+          <div class="initiative-metric">R578K live / R800K target · 72%</div>
+        </div>
+
+        <div class="initiative-card missed">
+          <div class="initiative-header">
+            <div class="initiative-name">Increase EWA Activation Rate to 75%</div>
+            <div class="status-badge missed">Missed</div>
+          </div>
+          <div class="initiative-owner">Alex · Product</div>
+          <div class="initiative-metric">65% achieved / 75% target · deprioritised</div>
+        </div>
+
+        <div class="initiative-card missed">
+          <div class="initiative-header">
+            <div class="initiative-name">Improve Mobile Uptake to 10%</div>
+            <div class="status-badge missed">Missed</div>
+          </div>
+          <div class="initiative-owner">Nonsuku · Mobile</div>
+          <div class="initiative-metric">2.9% / 10% target · KU base tripled</div>
+        </div>
+
+        <div class="initiative-card missed">
+          <div class="initiative-header">
+            <div class="initiative-name">Replace Noloco</div>
+            <div class="status-badge missed">Missed</div>
+          </div>
+          <div class="initiative-owner">Thams · Engineering</div>
+          <div class="initiative-metric">Done, but 2 months late · pivoted via Claude Code</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Build Repeatable Marketing Engine</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Matt · Marketing</div>
+          <div class="initiative-metric">1,755 contracts · 44% of MRR target</div>
+        </div>
+      </div>
+
+      <div class="initiative-section-label">OKR Initiatives</div>
+      <div class="initiative-grid">
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">T&A: Build with Design Partners</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Dawie · Product</div>
+          <div class="initiative-metric">5 partners, 576 KU live, 72% shift resolution</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">T&A: Test Propensity to Pay</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Chris · Sales</div>
+          <div class="initiative-metric">R77K signed / R304K quoted · R20/ee validated</div>
+        </div>
+
+        <div class="initiative-card missed">
+          <div class="initiative-header">
+            <div class="initiative-name">Build AI-Native T&A Product</div>
+            <div class="status-badge missed">Missed</div>
+          </div>
+          <div class="initiative-owner">Thams · Product</div>
+          <div class="initiative-metric">Built, tested, not deployed · days away</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Close Tranche 1 of Fundraise</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Evan · Finance</div>
+          <div class="initiative-metric">£1.2M / £1.5M hard committed</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Create AI-Native Team at Jem</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Simon · People</div>
+          <div class="initiative-metric">7/9 KRs on track · no ROI measurement yet</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Build Awareness & Market Trust</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Matt · Marketing</div>
+          <div class="initiative-metric">R432K inbound MRR · 3.5× vs sply · R840K referrals</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Build Core Enterprise Capabilities</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Dawie · Engineering</div>
+          <div class="initiative-metric">67% delivery score · 6/12 complete</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Establish JemX as AI Transformation Engine</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Simon · JemX</div>
+          <div class="initiative-metric">R180K / R300K MRR · goal changed 3× times</div>
+        </div>
+
+        <div class="initiative-card hit">
+          <div class="initiative-header">
+            <div class="initiative-name">Strengthen Executive Relationships</div>
+            <div class="status-badge hit">Hit</div>
+          </div>
+          <div class="initiative-owner">Simon · Leadership</div>
+          <div class="initiative-metric">40 WhatsApp contacts, 76 companies mapped</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Launch Dream 200</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Chris · Sales</div>
+          <div class="initiative-metric">76 companies active / 100 target · 6/20 plans done</div>
+        </div>
+
+        <div class="initiative-card hit">
+          <div class="initiative-header">
+            <div class="initiative-name">New IEP & AI-Native Talent Plan</div>
+            <div class="status-badge hit">Hit</div>
+          </div>
+          <div class="initiative-owner">Dani · People</div>
+          <div class="initiative-metric">IEP live · AI talent map shipped</div>
+        </div>
+
+        <div class="initiative-card partial">
+          <div class="initiative-header">
+            <div class="initiative-name">Profitability Plan for 2027</div>
+            <div class="status-badge partial">Partial</div>
+          </div>
+          <div class="initiative-owner">Evan · Finance</div>
+          <div class="initiative-metric">Levers identified · gross margin 22% → 25%</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PATTERN ANALYSIS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Cross-Retro Analysis</div>
+      <h2>Recurring patterns</h2>
+
+      <div class="callout">
+        <p>Patterns appearing in <strong>3 or more retros</strong> are not coincidences — they're system behaviours. The failure modes below are structural. They will repeat next sprint unless the system changes, not just the commitments.</p>
+      </div>
+
+      <div class="pattern-grid">
+
+        <!-- FAILURE PATTERNS -->
+        <div>
+          <div class="pattern-column-title">
+            <span style="background: var(--red);"></span>
+            Failure Patterns — what broke repeatedly
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Execution Gap</div>
+              <div class="pattern-count bad">5 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 100%"></div></div>
+            <div class="pattern-desc">Playbook or plan existed. Implementation was inconsistent. The system knew what to do — it just didn't do it.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Sales MRR</span>
+              <span class="pattern-tag">Noloco</span>
+              <span class="pattern-tag">AI-Native Team</span>
+              <span class="pattern-tag">Dream 200</span>
+              <span class="pattern-tag">Profitability</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Scope Never Written Down</div>
+              <div class="pattern-count bad">5 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 100%"></div></div>
+            <div class="pattern-desc">No written target state at kickoff. Stakeholders held different definitions of "done" in their heads. This gap compounds silently for weeks.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Noloco</span>
+              <span class="pattern-tag">T&A AI</span>
+              <span class="pattern-tag">Dream 200 CRM</span>
+              <span class="pattern-tag">IEP Embedding</span>
+              <span class="pattern-tag">T&A Sales</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Single-Threaded Execution</div>
+              <div class="pattern-count bad">5 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 100%"></div></div>
+            <div class="pattern-desc">One person responsible for too many workstreams simultaneously. One person on leave = initiative stops. One person's capacity = the initiative's ceiling.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Marketing</span>
+              <span class="pattern-tag">CS Backlog</span>
+              <span class="pattern-tag">Enterprise Eng.</span>
+              <span class="pattern-tag">Noloco</span>
+              <span class="pattern-tag">Awareness Hiring</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Time-to-Revenue Lag</div>
+              <div class="pattern-count bad">4 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 80%"></div></div>
+            <div class="pattern-desc">Signed deals ≠ live revenue. Enterprise onboarding compresses sprint MRR targets even when the commercial pipeline is healthy.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Client Onboarding</span>
+              <span class="pattern-tag">Mobile Uptake</span>
+              <span class="pattern-tag">T&A Sales</span>
+              <span class="pattern-tag">Fundraise</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Data Infrastructure Unready</div>
+              <div class="pattern-count bad">4 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 80%"></div></div>
+            <div class="pattern-desc">No single source of truth across key functions. Every insight required manual cross-referencing. Decisions lagged days behind reality.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Marketing</span>
+              <span class="pattern-tag">Mobile</span>
+              <span class="pattern-tag">AI-Native Team</span>
+              <span class="pattern-tag">Enterprise</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Client-Side Blockers Absorbed Capacity</div>
+              <div class="pattern-count bad">4 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 80%"></div></div>
+            <div class="pattern-desc">Tharisa, Seattle, Rohloff, WastePlan — external inaction silently consumed internal capacity. Escalation came too late and too softly.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Enterprise Eng.</span>
+              <span class="pattern-tag">Client Onboarding</span>
+              <span class="pattern-tag">T&A Design Partners</span>
+              <span class="pattern-tag">T&A Sales</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Wrong Metric / Wrong Lever</div>
+              <div class="pattern-count bad">3 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 60%"></div></div>
+            <div class="pattern-desc">KPI worked against us as the business grew. EWA rate diluted with new clients. Mobile uptake % fell as KU base tripled. JemX goal moved 3 times.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">EWA Activation</span>
+              <span class="pattern-tag">Mobile Uptake</span>
+              <span class="pattern-tag">JemX</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Digital-First Assumption Broke</div>
+              <div class="pattern-count bad">3 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill bad" style="width: 60%"></div></div>
+            <div class="pattern-desc">Audience earns R5,985/month median. They need a person before they commit to a monthly deduction. Digital channels convert slower and churn harder.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Marketing Engine</span>
+              <span class="pattern-tag">Mobile Uptake</span>
+              <span class="pattern-tag">EWA Activation</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- SUCCESS PATTERNS -->
+        <div>
+          <div class="pattern-column-title">
+            <span style="background: var(--green);"></span>
+            Success Patterns — what held consistently
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">AI as Execution Accelerant</div>
+              <div class="pattern-count good">4 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill good" style="width: 100%"></div></div>
+            <div class="pattern-desc">When Claude Code was in the loop, things moved fast. Noloco PoC faster than weeks of Retool. T&A AI from idea to built in 2 weeks. White label tooling compounds.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Noloco Pivot</span>
+              <span class="pattern-tag">T&A AI Agent</span>
+              <span class="pattern-tag">Enterprise WL</span>
+              <span class="pattern-tag">Awareness Reporting</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">On-Site Activation Dominates</div>
+              <div class="pattern-count good">3 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill good" style="width: 75%"></div></div>
+            <div class="pattern-desc">On-site: 3-day median close, 3.7% cancellation. Remote: 26 days, 11.6%. Chatbot: 38 days, 13.1%. This is the highest-conviction data point in the sprint.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Mobile Uptake</span>
+              <span class="pattern-tag">Client Onboarding</span>
+              <span class="pattern-tag">Marketing Engine</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Executive Relationships as Leverage</div>
+              <div class="pattern-count good">3 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill good" style="width: 75%"></div></div>
+            <div class="pattern-desc">WhatsApp access to decision-makers changes deal velocity entirely. 6 case studies secured in one afternoon. WastePlan and Rohloff unblocked by CEO-level calls.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Exec Relationships</span>
+              <span class="pattern-tag">Client Onboarding</span>
+              <span class="pattern-tag">JemX Brand</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Experiment-Before-Build</div>
+              <div class="pattern-count good">3 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill good" style="width: 75%"></div></div>
+            <div class="pattern-desc">Low-stakes experiments ran before committing resources. EWA learned cheaply. Marketing corrected pricing assumptions. T&A AI validated customer pain before writing code.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">EWA Activation</span>
+              <span class="pattern-tag">Marketing Engine</span>
+              <span class="pattern-tag">T&A AI</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Design Partner / Co-Build Model</div>
+              <div class="pattern-count good">3 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill good" style="width: 75%"></div></div>
+            <div class="pattern-desc">Clients in the build phase → commercial proof points. Trollope and ProSec both signed. Design partners validated the Late No-Show Agent before a line of production code was written.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">T&A Design Partners</span>
+              <span class="pattern-tag">T&A Sales</span>
+              <span class="pattern-tag">T&A AI</span>
+            </div>
+          </div>
+
+          <div class="pattern-item">
+            <div class="pattern-item-header">
+              <div class="pattern-name">Big Deal Capability is Real</div>
+              <div class="pattern-count good">3 retros</div>
+            </div>
+            <div class="freq-bar"><div class="freq-bar-fill good" style="width: 75%"></div></div>
+            <div class="pattern-desc">4 deals above R100K MRR accounted for more than half of total closed won. Dream 200 launched from blank page to 76 companies in 6 weeks. The machine can move fast when focused.</div>
+            <div class="pattern-tags">
+              <span class="pattern-tag">Sales MRR</span>
+              <span class="pattern-tag">Dream 200</span>
+              <span class="pattern-tag">Client Onboarding</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE 3 BIG SIGNALS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Highest-Conviction Insights</div>
+      <h2>The 3 signals that matter</h2>
+
+      <div class="signals-grid">
+
+        <div class="signal-card signal-a">
+          <div class="signal-number">SIGNAL 01</div>
+          <div class="signal-stat">3×</div>
+          <div class="signal-label">On-site vs digital conversion rate</div>
+          <div class="signal-context">
+            On-site activations close in 3 days. Chatbot takes 38. On-site cancels at 3.7%. Chatbot at 13.1%. This is the most important number in the retros and it's being systematically underweighted in resource allocation. Every activation plan that doesn't start with on-site is working against the data.
+          </div>
+        </div>
+
+        <div class="signal-card signal-b">
+          <div class="signal-number">SIGNAL 02</div>
+          <div class="signal-stat">3–4mo</div>
+          <div class="signal-label">Avg gap between signed deal and revenue</div>
+          <div class="signal-context">
+            Enterprise onboarding consistently runs 3–4 months from contract to earning MRR. Rohloff: signed, R0 revenue. Bidvest: R480K signed, R10K live. Servest: R420K signed, live 6 April. Sprint MRR targets need to account for this pipeline lag structurally — not be surprised by it.
+          </div>
+        </div>
+
+        <div class="signal-card signal-c">
+          <div class="signal-number">SIGNAL 03</div>
+          <div class="signal-stat">62.9%</div>
+          <div class="signal-label">Mobile contracts from 3 employers</div>
+          <div class="signal-context">
+            Meridian (604), Stallion (273), Marshall (154) = 62.9% of active mobile contracts. Stallion already showed what one relationship breakdown costs: 42 contracts flagged as unable to deduct, R100K+ exposure. Client concentration is the silent structural risk no retro addressed directly.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- KEY NUMBERS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Sprint Metrics</div>
+      <h2>Numbers that tell the story</h2>
+
+      <div class="numbers-grid">
+
+        <div class="number-card">
+          <div class="number-value">R2.08M</div>
+          <div class="number-label">Closed Won MRR · Sales</div>
+          <div class="number-context">130% of target · 33 deals</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">R578K</div>
+          <div class="number-label">Priority client MRR live</div>
+          <div class="number-context">72% of R800K target as of 9 Mar</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">60,931</div>
+          <div class="number-label">Mobile KU base</div>
+          <div class="number-context">122% of 50K target — but uptake only 2.9%</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">1,755</div>
+          <div class="number-label">Mobile contracts sold</div>
+          <div class="number-context">44% of 4,000 target · R637K MRR</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">R5,985</div>
+          <div class="number-label">Median customer salary</div>
+          <div class="number-context">63% earn under R6K — needs trust, not digital</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">98.7%</div>
+          <div class="number-label">Mobile recommendation rate</div>
+          <div class="number-context">377 survey responses · product-market fit confirmed</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">£1.2M</div>
+          <div class="number-label">Fundraise committed</div>
+          <div class="number-context">£1.5M target · Axian still soft commit</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">40</div>
+          <div class="number-label">Executive WhatsApp contacts</div>
+          <div class="number-context">Up from 14 in Oct · 76 companies mapped</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">R432K</div>
+          <div class="number-label">Inbound qualified MRR</div>
+          <div class="number-context">3.5× vs same period last year</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">576</div>
+          <div class="number-label">KU live on T&A clocking</div>
+          <div class="number-context">3× target · 72% shift resolution (target 95%)</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">R20/ee</div>
+          <div class="number-label">T&A validated price point</div>
+          <div class="number-context">Every quoted deal at R20 · R50 unvalidated</div>
+        </div>
+
+        <div class="number-card">
+          <div class="number-value">35.6%</div>
+          <div class="number-label">Unsigned contract campaign CVR</div>
+          <div class="number-context">Best marketing result · targeted re-engagement works</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CROSS-INITIATIVE HEAT MAP -->
+  <section>
+    <div class="container">
+      <div class="section-label">Failure Mode Distribution</div>
+      <h2>Where each pattern showed up</h2>
+
+      <div class="heatmap">
+        <div class="scroll-hint" style="margin-bottom: 12px; color: var(--text-3); font-size: 11px;">← scroll if needed on mobile</div>
+        <table class="heatmap-table">
+          <thead>
+            <tr>
+              <th>Initiative</th>
+              <th>Exec Gap</th>
+              <th>Scope Gap</th>
+              <th>Single Thread</th>
+              <th>Revenue Lag</th>
+              <th>Data Gap</th>
+              <th>Client Block</th>
+              <th>Wrong KPI</th>
+              <th>Digital Fail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Sales MRR</td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>Client Onboarding</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>EWA Activation</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+            </tr>
+            <tr>
+              <td>Mobile Uptake</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+            </tr>
+            <tr>
+              <td>Replace Noloco</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>Marketing Engine</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+            </tr>
+            <tr>
+              <td>T&A Design Partners</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>T&A Sales</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>T&A AI Product</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>AI-Native Team</td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>Enterprise Capabilities</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>JemX</td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>Dream 200</td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+            <tr>
+              <td>Profitability Plan</td>
+              <td><div class="heatmap-cell cell-yes">✕</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+              <td><div class="heatmap-cell cell-no">·</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRUCTURAL RISKS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Blind Spots</div>
+      <h2>Structural risks no retro owned</h2>
+
+      <div class="risks-list">
+
+        <div class="risk-item">
+          <div class="risk-icon">⚡</div>
+          <div>
+            <div class="risk-title">Client concentration in Mobile</div>
+            <div class="risk-desc">Meridian (604), Stallion (273), and Marshall (154) account for 62.9% of all active mobile contracts. The Stallion reconciliation crisis (42 contracts unable to deduct, R100K+ exposure) showed what one relationship breakdown costs. No retro named this as a strategic risk to diversify. It needs to be an explicit next-sprint goal, not an implicit hope.</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-icon">📉</div>
+          <div>
+            <div class="risk-title">Fundraise valuation ahead of market</div>
+            <div class="risk-desc">£1.2M of £1.5M committed with the explicit acknowledgement that the valuation is ahead of where the market is. The retro commits to "shifting narrative to shareholder value creation" — but the target metrics (R6M MRR by June, R7.2M by September) are now the fundraise's credibility collateral. Any shortfall compounds. This is the constraint that shapes everything else's priority.</div>
+          </div>
+        </div>
+
+        <div class="risk-item">
+          <div class="risk-icon">🔁</div>
+          <div>
+            <div class="risk-title">Accountability is still person-dependent, not system-dependent</div>
+            <div class="risk-desc">Multiple retros (AI-Native Team, Dream 200, T&A AI, Enterprise) name the same gap: accountability runs through leadership pushing, not through systems that enforce it. Simon-driven exec relationships aren't a system. Pipeline reviews that flag issues but don't enforce consequences aren't a system. The sprint delivered culture; it hasn't yet delivered infrastructure.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- NEXT SPRINT COMMITMENTS -->
+  <section>
+    <div class="container">
+      <div class="section-label">Aggregated Commitments</div>
+      <h2>What the team is building next</h2>
+
+      <div class="callout">
+        <p>These are the recurring commitments from the "Going Forward" sections, grouped by theme. The overlap is notable — <strong>5 separate retros independently converged on written scope and clear DRI</strong> as a fix. The sprint may have a discipline problem at the system level, not the individual level.</p>
+      </div>
+
+      <div class="commits-grid">
+
+        <div class="commit-card">
+          <div class="commit-category">Activation & Sales</div>
+          <div class="commit-title">Scale on-site activation as primary sales channel</div>
+          <div class="commit-desc">Build a standardised activation marketing kit (pre-visit comms, day-of materials, post-activation sequence). Every priority client gets an on-site activation cadence. Monthly visit cadence for top accounts.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Sales Process</div>
+          <div class="commit-title">Enforce pipeline playbook discipline</div>
+          <div class="commit-desc">DME and Q&N stages as primary pipeline coverage metric. Deals above R100K require an executive WhatsApp intro. Mutual action plans required for every Q&N-stage deal. Stale deals escalated before they become January.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Onboarding</div>
+          <div class="commit-title">Pre-launch readiness checklist with hard deadlines</div>
+          <div class="commit-desc">Client-side comms obligations and sign-off before go-live is confirmed. RM and EWA limits documented and signed as part of contract. Tiered onboarding paths: Fast Track (&lt;30 days) vs Slow Track (30–90 days with PM).</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Product</div>
+          <div class="commit-title">Written brief before any build begins</div>
+          <div class="commit-desc">Objective, target state, definition of done, explicit out-of-scope. Manual operational processes documented alongside code. Applies to every new initiative — no exceptions after the Noloco lesson.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">AI & Product</div>
+          <div class="commit-title">AI-first design for all new T&A features</div>
+          <div class="commit-desc">Every new feature starts with: "What would this look like if AI was the primary interface?" The Late No-Show Agent ships to production. Group-photo-based clock-in validated with 2+ design partners.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Engineering</div>
+          <div class="commit-title">Structured integration PM framework</div>
+          <div class="commit-desc">Every integration gets shared timeline, named owners, explicit dependencies, traffic-light status visible to commercial. Client-side delay past 5 days → automatic escalation. SLA commitments in every integration scope.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Marketing</div>
+          <div class="commit-title">Two distinct customer journeys</div>
+          <div class="commit-desc">Existing Jem customers (trust baseline) vs new-to-Jem (no trust). Separate campaign templates, messaging, and channel strategy for each. Surface Jem Mobile at payslip delivery and VAS data purchase moments.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">People & AI</div>
+          <div class="commit-title">Measurable AI outcomes per machine</div>
+          <div class="commit-desc">Clear expectations of AI use per function. Clear outcomes: agents deployed, time saved, ZAR saved. Clear measurement cadence (daily, weekly). Accountability moves from Simon pushing to system enforcing.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">JemX</div>
+          <div class="commit-title">Spin JemX out with single commercial mandate</div>
+          <div class="commit-desc">R500K profit by end of Q3 (R2.5M revenue over 6 months). One goal, one P&L, one accountability line. Innovation value becomes a byproduct of commercial work — not a parallel objective competing for definition.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Dream 200</div>
+          <div class="commit-title">CRM hygiene sprint + standing updates</div>
+          <div class="commit-desc">Zero companies without a stage by end of March. Correct all "Uncontacted" companies with clear evidence of engagement. Dream 200 stage updates become a standing item in every weekly pod check-in.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Finance</div>
+          <div class="commit-title">Implement cost-saving actions + roll out efficiency metrics</div>
+          <div class="commit-desc">Priority on WhatsApp and Jem Mobile cost reduction. ARR per employee and employee efficiency metrics rolled out with machine leads. Stitch as primary, Paysoft as backup only.</div>
+        </div>
+
+        <div class="commit-card">
+          <div class="commit-category">Revenue</div>
+          <div class="commit-title">Hit the investor milestones</div>
+          <div class="commit-desc">Investors have visibility: R6M MRR by end of June, R7.2M by end of September. These aren't just internal targets — they're the valuation's credibility collateral. Everything else is secondary to these two numbers.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="container">
+      <p>Sprint to Six · Oct 2025 – Mar 2026 · Jem · Pattern analysis across 18 initiatives</p>
+    </div>
+  </div>
+
+  <script>
+    // Animate frequency bars on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.freq-bar-fill').forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => { bar.style.width = width; }, 100);
+          });
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.pattern-item').forEach(item => observer.observe(item));
+  </script>
+
+</body>
+</html>
