@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TickeyBox + SnapTel | Working Session — 24 March 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral:   #FF6E61;
+    --yellow:  #FFEE6B;
+    --mint:    #B3E6C9;
+    --navy:    #08113F;
+    --canvas:  #FFFAF0;
+    --surface: #FFFFFF;
+    --muted:   #F3F0E8;
+    --border:  rgba(8,17,63,0.1);
+    --danger:  #E63946;
+    --warn:    #F4A261;
+    --success: #2A9D8F;
+    --r:       18px;
+    --shadow:  0 4px 20px rgba(8,17,63,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    background: var(--canvas);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--navy);
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-logo {
+    font-family: 'Bungee', cursive;
+    font-size: 13px;
+    color: var(--coral);
+    white-space: nowrap;
+    padding: 14px 20px 14px 0;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+  .nav a {
+    color: rgba(255,250,240,0.6);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 14px 14px;
+    white-space: nowrap;
+    transition: color 0.15s;
+    flex-shrink: 0;
+  }
+  .nav a:hover { color: var(--canvas); }
+  .nav a.active { color: var(--yellow); }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    color: var(--canvas);
+    padding: 48px 40px 40px;
+  }
+  .header-inner { max-width: 960px; margin: 0 auto; }
+  .header-eyebrow {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-family: 'Bungee', cursive;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+  .header .subtitle {
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    opacity: 0.75;
+    margin-bottom: 28px;
+  }
+  .header-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .meta-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 7px 13px;
+    font-size: 13px;
+    display: flex;
+    gap: 8px;
+  }
+  .meta-pill strong { color: var(--yellow); font-weight: 600; }
+
+  .intent-strip {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 18px 22px;
+  }
+  .intent-strip p {
+    font-size: 14px;
+    color: rgba(255,250,240,0.75);
+    line-height: 1.65;
+  }
+  .intent-strip strong { color: var(--canvas); }
+
+  /* ── MAIN ── */
+  .main { max-width: 960px; margin: 0 auto; padding: 40px 40px 80px; }
+
+  /* agenda strip */
+  .agenda-strip {
+    background: var(--navy);
+    border-radius: var(--r);
+    padding: 20px 24px;
+    margin-bottom: 48px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .agenda-strip .ag-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,250,240,0.4);
+    margin-right: 4px;
+    flex-shrink: 0;
+  }
+  .ag-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,250,240,0.75);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .ag-item:hover { background: rgba(255,255,255,0.13); color: var(--canvas); }
+  .ag-num {
+    width: 18px; height: 18px;
+    background: var(--coral);
+    border-radius: 5px;
+    font-family: 'Bungee', cursive;
+    font-size: 10px;
+    display: flex; align-items: center; justify-content: center;
+    color: white; flex-shrink: 0;
+  }
+  .ag-num.y { background: var(--yellow); color: var(--navy); }
+  .ag-num.m { background: var(--mint); color: var(--navy); }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 56px; scroll-margin-top: 60px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .sec-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px 4px 8px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .sec-badge .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .sb-coral  { background: rgba(255,110,97,0.12); color: #c0392b; }
+  .sb-coral .dot  { background: var(--coral); }
+  .sb-mint   { background: rgba(42,157,143,0.1); color: var(--success); }
+  .sb-mint .dot   { background: var(--success); }
+  .sb-yellow { background: rgba(255,238,107,0.25); color: #7a6800; }
+  .sb-yellow .dot { background: #d4aa00; }
+  .sb-navy   { background: rgba(8,17,63,0.08); color: var(--navy); }
+  .sb-navy .dot   { background: var(--navy); }
+  .section-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .section-time {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(8,17,63,0.35);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  /* ── CONTEXT NOTE ── */
+  .context-note {
+    background: var(--muted);
+    border-left: 3px solid rgba(8,17,63,0.2);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: rgba(8,17,63,0.6);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+  .context-note strong { color: var(--navy); }
+
+  /* ── STATUS TABLE ── */
+  .status-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--r);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 14px;
+  }
+  .status-table th {
+    background: var(--navy);
+    color: var(--canvas);
+    padding: 11px 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: left;
+  }
+  .status-table td {
+    padding: 12px 16px;
+    font-size: 13.5px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .status-table tr:last-child td { border-bottom: none; }
+  .status-table tr:nth-child(even) td { background: var(--muted); }
+  .status-table tr:nth-child(odd) td { background: var(--surface); }
+
+  /* ── BADGE ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 9px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+  .b-green  { background: rgba(42,157,143,0.12); color: var(--success); }
+  .b-yellow { background: rgba(255,238,107,0.3); color: #8a7200; }
+  .b-red    { background: rgba(230,57,70,0.1); color: var(--danger); }
+  .b-navy   { background: rgba(8,17,63,0.08); color: var(--navy); }
+
+  /* ── TALKING POINTS ── */
+  .tp-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .tp-item {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 14px 18px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    font-size: 14px;
+    color: var(--navy);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .tp-item .tp-icon { font-size: 18px; flex-shrink: 0; line-height: 1.4; }
+  .tp-item .tp-body strong { display: block; font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .tp-item .tp-body span { font-size: 13px; color: rgba(8,17,63,0.6); line-height: 1.5; }
+
+  /* ── DISCUSSION BLOCKS ── */
+  .discussion {
+    border: 2px solid var(--border);
+    border-radius: var(--r);
+    overflow: hidden;
+    margin-bottom: 18px;
+  }
+  .discussion-header {
+    background: var(--navy);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .discussion-header .dh-icon { font-size: 16px; }
+  .discussion-header .dh-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--canvas);
+    flex: 1;
+  }
+  .discussion-header .dh-badge {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; padding: 3px 9px; border-radius: 12px;
+  }
+  .dh-today    { background: rgba(230,57,70,0.25); color: #ff8a8a; }
+  .dh-discuss  { background: rgba(255,238,107,0.2); color: var(--yellow); }
+  .dh-walkthru { background: rgba(179,230,201,0.2); color: var(--mint); }
+  .discussion-body { background: var(--surface); padding: 18px 20px; }
+  .discussion-body .pre-context {
+    font-size: 13.5px;
+    color: rgba(8,17,63,0.65);
+    margin-bottom: 14px;
+    line-height: 1.6;
+  }
+  .q-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: rgba(8,17,63,0.4); margin-bottom: 8px;
+  }
+  .q-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .q-item { display: flex; gap: 10px; align-items: flex-start; }
+  .q-dot {
+    width: 22px; height: 22px; border-radius: 6px; background: var(--coral);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bungee', cursive; font-size: 10px;
+    color: white; flex-shrink: 0; margin-top: 1px;
+  }
+  .q-dot.mint   { background: var(--success); }
+  .q-dot.yellow { background: #c9a800; }
+  .q-text { font-size: 14px; color: var(--navy); line-height: 1.55; flex: 1; }
+  .q-text .sub {
+    display: block; font-size: 12.5px; color: rgba(8,17,63,0.5);
+    margin-top: 2px; line-height: 1.5;
+  }
+
+  /* decision box */
+  .decision-box {
+    background: rgba(255,110,97,0.05);
+    border: 1.5px dashed rgba(255,110,97,0.35);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 14px;
+  }
+  .decision-box.green {
+    background: rgba(42,157,143,0.05);
+    border-color: rgba(42,157,143,0.3);
+  }
+  .db-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--coral); margin-bottom: 6px;
+  }
+  .db-label.green { color: var(--success); }
+  .db-content { font-size: 13.5px; color: var(--navy); line-height: 1.6; }
+  .db-content ul { padding-left: 16px; margin-top: 4px; }
+  .db-content li { margin-bottom: 3px; font-size: 13.5px; }
+
+  /* ── DEMO FLOW ── */
+  .demo-flow { display: flex; flex-direction: column; gap: 0; }
+  .demo-step {
+    display: flex; gap: 16px; align-items: flex-start; position: relative;
+  }
+  .demo-step:not(:last-child)::after {
+    content: ''; position: absolute;
+    left: 15px; top: 32px; bottom: -10px;
+    width: 2px; background: var(--border);
+  }
+  .demo-step-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--navy); color: var(--canvas);
+    font-family: 'Bungee', cursive; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1; position: relative;
+  }
+  .demo-step-body {
+    background: var(--surface); border-radius: 12px;
+    padding: 14px 18px; box-shadow: var(--shadow);
+    border: 1px solid var(--border); margin-bottom: 10px; flex: 1;
+  }
+  .demo-step-body strong { display: block; font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .demo-step-body p { font-size: 13.5px; color: rgba(8,17,63,0.65); margin-bottom: 8px; }
+  .demo-flag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,238,107,0.15); border: 1px solid rgba(255,238,107,0.4);
+    border-radius: 8px; padding: 4px 10px;
+    font-size: 12px; font-weight: 600; color: #8a7200;
+    margin-right: 6px; margin-top: 2px;
+  }
+
+  /* ── DECISION LOG ── */
+  .decision-log {
+    background: var(--navy);
+    border-radius: var(--r);
+    padding: 28px;
+    margin-bottom: 14px;
+  }
+  .decision-log h3 {
+    font-family: 'Bungee', cursive; font-size: 18px;
+    color: var(--canvas); margin-bottom: 6px;
+  }
+  .decision-log .dl-sub {
+    font-size: 13px; color: rgba(255,250,240,0.5); margin-bottom: 22px;
+  }
+  .dl-item {
+    background: rgba(255,255,255,0.06); border-radius: 12px;
+    padding: 14px 18px; margin-bottom: 10px;
+    display: grid; grid-template-columns: auto 1fr;
+    gap: 12px; align-items: start;
+  }
+  .dl-num {
+    width: 26px; height: 26px; border-radius: 7px; background: var(--coral);
+    color: white; font-family: 'Bungee', cursive; font-size: 12px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .dl-num.y { background: var(--yellow); color: var(--navy); }
+  .dl-num.m { background: var(--mint); color: var(--navy); }
+  .dl-body strong { display: block; font-size: 13.5px; font-weight: 700; color: var(--canvas); margin-bottom: 3px; }
+  .dl-body span { font-size: 12.5px; color: rgba(255,250,240,0.45); line-height: 1.5; }
+  .dl-blank {
+    display: block; margin-top: 6px; height: 28px;
+    border-bottom: 1.5px dashed rgba(255,255,255,0.15);
+  }
+
+  /* ── ACTION LIST ── */
+  .action-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .action-item {
+    background: var(--surface); border-radius: 14px;
+    padding: 15px 20px; box-shadow: var(--shadow); border: 1px solid var(--border);
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: start; gap: 14px;
+  }
+  .a-num {
+    width: 28px; height: 28px; background: var(--navy); color: var(--canvas);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Bungee', cursive; font-size: 13px; flex-shrink: 0;
+  }
+  .a-num.coral { background: var(--coral); }
+  .a-num.mint  { background: var(--success); }
+  .a-body strong { display: block; font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .a-body span { font-size: 13px; color: rgba(8,17,63,0.6); line-height: 1.5; }
+  .a-owner {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+  }
+  .ow-h { background: rgba(255,238,107,0.3); color: #8a7200; }
+  .ow-t { background: rgba(179,230,201,0.25); color: #1a7a6e; }
+  .ow-m { background: rgba(255,110,97,0.12); color: #c0392b; }
+  .ow-a { background: rgba(8,17,63,0.08); color: var(--navy); }
+
+  /* ── PARKING LOT ── */
+  .parking-lot {
+    background: var(--muted);
+    border: 2px dashed rgba(8,17,63,0.15);
+    border-radius: var(--r);
+    padding: 26px 28px;
+    margin-bottom: 14px;
+  }
+  .parking-lot h3 {
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 15px;
+    color: var(--navy); margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .parking-lot .pl-sub {
+    font-size: 13px; color: rgba(8,17,63,0.5);
+    margin-bottom: 16px; line-height: 1.6;
+  }
+  .pl-item {
+    background: var(--surface); border-radius: 12px;
+    padding: 13px 16px; margin-bottom: 8px;
+    font-size: 13.5px; color: rgba(8,17,63,0.65);
+    border: 1px solid var(--border);
+    line-height: 1.55;
+  }
+  .pl-item strong { color: var(--navy); font-weight: 700; }
+
+  @media (max-width: 680px) {
+    .header, .main { padding: 24px 20px; }
+    .action-item { grid-template-columns: auto 1fr; }
+    .a-owner { grid-column: 2; }
+    .section-time { display: none; }
+    .nav { padding: 0 16px; }
+    .nav a { padding: 14px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- STICKY NAV -->
+<nav class="nav">
+  <div class="nav-logo">TICKEYBOX</div>
+  <a href="#context">Where we're at</a>
+  <a href="#update">TB Update</a>
+  <a href="#demo">App Demo</a>
+  <a href="#commercial">Pricing</a>
+  <a href="#technical">Technical</a>
+  <a href="#legal">Commercial terms</a>
+  <a href="#sla">SLA</a>
+  <a href="#decisions">Decisions</a>
+  <a href="#parking">Parking lot</a>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Working Session</div>
+    <h1>TickeyBox + SnapTel</h1>
+    <div class="subtitle">24 March 2026 &nbsp;·&nbsp; Getting to pilot-ready together</div>
+    <div class="header-meta">
+      <div class="meta-pill"><strong>Date</strong> Tuesday 24 March 2026</div>
+      <div class="meta-pill"><strong>Format</strong> In-person, ~2.5 hrs</div>
+      <div class="meta-pill"><strong>Attendees</strong> Matt (TickeyBox) · Hannes (SnapTel) · Tiaan (SnapTel)</div>
+    </div>
+    <div class="intent-strip">
+      <p>
+        We've made good progress since the March 9 call. A number of things were confirmed — architecture, API access, billing model — and a handful of items were flagged for a deeper session. This document is the agenda for that session. The goal is simple: <strong>leave today with everything agreed that we need to run a live pilot in April.</strong> Rate card confirmed, provisioning approach locked, commercial foundations agreed, and a clear build completion date from Tiaan.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- AGENDA STRIP -->
+  <div class="agenda-strip">
+    <span class="ag-label">Agenda</span>
+    <a href="#context" class="ag-item"><span class="ag-num y">0</span> Where we're at</a>
+    <a href="#update" class="ag-item"><span class="ag-num y">1</span> TB update</a>
+    <a href="#demo" class="ag-item"><span class="ag-num y">2</span> App demo</a>
+    <a href="#commercial" class="ag-item"><span class="ag-num">3</span> Pricing</a>
+    <a href="#technical" class="ag-item"><span class="ag-num m">4</span> Technical</a>
+    <a href="#legal" class="ag-item"><span class="ag-num">5</span> Commercial terms</a>
+    <a href="#sla" class="ag-item"><span class="ag-num">6</span> SLA</a>
+    <a href="#decisions" class="ag-item"><span class="ag-num m">7</span> Decisions</a>
+    <a href="#parking" class="ag-item"><span class="ag-num y">P</span> Parking lot</a>
+  </div>
+
+
+  <!-- ── WHERE WE'RE AT ── -->
+  <div class="section" id="context">
+    <div class="section-header">
+      <span class="sec-badge sb-navy"><span class="dot"></span>Context</span>
+      <span class="section-title">Where We're At</span>
+      <span class="section-time">~5 min</span>
+    </div>
+
+    <div class="context-note">
+      Quick recap of what came out of the <strong>9 March call</strong>. Several things were locked in; a few were deferred to this session.
+    </div>
+
+    <table class="status-table">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Status</th>
+          <th>Today's agenda?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PBX scale architecture</strong> — virtual segmentation, no ceiling</td>
+          <td><span class="badge b-green">Locked in</span></td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><strong>TickeyBox-to-TickeyBox free calling</strong></td>
+          <td><span class="badge b-green">Confirmed</span></td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><strong>Full API + webhooks</strong></td>
+          <td><span class="badge b-green">Confirmed</span></td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><strong>Prepaid billing model</strong> — reseller credit float</td>
+          <td><span class="badge b-green">Confirmed</span></td>
+          <td>No</td>
+        </tr>
+        <tr>
+          <td><strong>Rate card</strong> — per-household fee and per-minute rates</td>
+          <td><span class="badge b-yellow">Pending</span> Promised by 13 March</td>
+          <td>Yes — Section 3</td>
+        </tr>
+        <tr>
+          <td><strong>WiFi provisioning</strong> — outcome of Boston trip</td>
+          <td><span class="badge b-yellow">Pending</span> Hannes raising with Boston team</td>
+          <td>Yes — Section 4</td>
+        </tr>
+        <tr>
+          <td><strong>App build</strong> — first look and completion timeline</td>
+          <td><span class="badge b-yellow">~1 week out</span> as of 9 March</td>
+          <td>Yes — Section 2</td>
+        </tr>
+        <tr>
+          <td><strong>Commercial foundations</strong> — IP, ownership, data</td>
+          <td><span class="badge b-red">Not yet discussed</span></td>
+          <td>Yes — Section 5</td>
+        </tr>
+        <tr>
+          <td><strong>SLA structure</strong> — response times, contacts, pricing</td>
+          <td><span class="badge b-yellow">Deferred to today</span></td>
+          <td>Yes — Section 6</td>
+        </tr>
+        <tr>
+          <td><strong>Longer-term commercial relationship</strong></td>
+          <td><span class="badge b-navy">Post-pilot</span></td>
+          <td>Parking lot only</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <!-- ── TICKEYBOX UPDATE ── -->
+  <div class="section" id="update">
+    <div class="section-header">
+      <span class="sec-badge sb-yellow"><span class="dot"></span>Update</span>
+      <span class="section-title">TickeyBox — Where Things Stand</span>
+      <span class="section-time">~15 min</span>
+    </div>
+
+    <div class="context-note">
+      Matt gives a brief update on the TickeyBox side — demand, pilot pipeline, and timeline. This sets the context for why the items being discussed today matter and why the April timeline is the target.
+    </div>
+
+    <ul class="tp-list">
+      <li class="tp-item">
+        <div class="tp-icon">📋</div>
+        <div class="tp-body">
+          <strong>Waitlist and demand — 325 households, all organic</strong>
+          <span>The waitlist is at 325 and still growing entirely through word of mouth — no paid acquisition has been run. A notable pattern has emerged: people are signing up in friendship groups of 5–10, effectively self-organising into calling pods. The motivation is getting TickeyBox-to-TickeyBox free calling across a friend group, which is validating the network effect assumption at the core of the product design.</span>
+        </div>
+      </li>
+      <li class="tp-item">
+        <div class="tp-icon">🏠</div>
+        <div class="tp-body">
+          <strong>Pilot cohort — ~40 households confirmed and ready</strong>
+          <span>We have approximately 40 households ready for the paid pilot — slightly below the original 50-household target but a strong cohort. Predominantly Western Cape with a small number of households in Johannesburg. The pilot will be paid, at a low introductory price. This cohort is ready to go as soon as the app build is in a position to support it.</span>
+        </div>
+      </li>
+      <li class="tp-item">
+        <div class="tp-icon">🐶</div>
+        <div class="tp-body">
+          <strong>Dogfooding — ready but currently blocked</strong>
+          <span>We have 8 Grandstream GHP611W units in hand and the dogfood participant group is lined up. We are ready to start as soon as the app build allows it. No dogfooding has happened yet — the app build is the sole blocker at this point. This makes the build completion date and the provisioning story the critical path for everything that follows.</span>
+        </div>
+      </li>
+      <li class="tp-item">
+        <div class="tp-icon">📦</div>
+        <div class="tp-body">
+          <strong>Hardware and supply chain — in good shape</strong>
+          <span>TickeyBox is now an official reseller through <strong>First Distribution</strong>. Grandstream are actively supporting the pilot order for the 50-unit cohort, with a backup supply option in place if needed. Lead time for the pilot units is approximately 2–3 weeks from order. For the full launch, conversations are underway with Grandstream on a 1,000-unit order — and that order needs to be placed 8–10 weeks before the intended launch date, which sets the hardware decision deadline.</span>
+        </div>
+      </li>
+      <li class="tp-item">
+        <div class="tp-icon">🗓</div>
+        <div class="tp-body">
+          <strong>Timeline — everything gates on the app build</strong>
+          <span>Every other part of the TickeyBox side is in motion: the pilot cohort is confirmed, hardware supply is arranged, and dogfood participants are standing by. The single constraint is the app build. Once that is ready, dogfooding starts immediately, followed by the paid pilot. The 1,000-unit launch order has an 8–10 week lead time, which means the go/no-go decision for full launch needs to be made while the pilot is still running — not after it finishes.</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- ── APP DEMO ── -->
+  <div class="section" id="demo">
+    <div class="section-header">
+      <span class="sec-badge sb-yellow"><span class="dot"></span>Demo</span>
+      <span class="section-title">App Build — Walkthrough</span>
+      <span class="section-time">~30 min</span>
+    </div>
+
+    <div class="context-note">
+      Tiaan leads this section. The build was approximately one week from completion as of 9 March. Walk through the current state of the app and backend — what's working, what's still in progress, and where decisions need to be made about how things should work for a consumer audience.
+    </div>
+
+    <div class="demo-flow">
+      <div class="demo-step">
+        <div class="demo-step-num">1</div>
+        <div class="demo-step-body">
+          <strong>Account creation and household setup</strong>
+          <p>Parent creates account, sets up household, creates child profiles. Walk through the sign-up flow as it stands today.</p>
+          <span class="demo-flag">Discuss: what's required at sign-up vs what can be done later?</span>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">2</div>
+        <div class="demo-step-body">
+          <strong>Device claiming and provisioning</strong>
+          <p>How does a parent register a new device and get it online? Walk through the exact steps — from unboxing to the device being registered and ready to make calls. This is the flow we most want to see and discuss.</p>
+          <span class="demo-flag">Discuss: how does this land for a non-technical parent?</span>
+          <span class="demo-flag">Discuss: where does WiFi fit into this flow?</span>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">3</div>
+        <div class="demo-step-body">
+          <strong>Whitelist management</strong>
+          <p>How does a parent manage approved contacts? Adding by name and number, editing, removing. What happens when a child tries to call a number that isn't approved?</p>
+          <span class="demo-flag">Discuss: is the contact management feel simple enough?</span>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">4</div>
+        <div class="demo-step-body">
+          <strong>Time-based rules</strong>
+          <p>Can parents set calling windows — no calls during school hours, no outbound after 8pm? Walk through how rules are configured and how they translate into the dial plan.</p>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">5</div>
+        <div class="demo-step-body">
+          <strong>Call logs and device status</strong>
+          <p>What can a parent see in terms of call history? Can they see if the device is online? What does a missed or failed call look like?</p>
+          <span class="demo-flag">Discuss: is there enough for a parent to diagnose a problem themselves?</span>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">6</div>
+        <div class="demo-step-body">
+          <strong>Minutes and credit</strong>
+          <p>How does the prepaid model surface in the parent app? Can they see remaining balance, top up, and get notified before credit runs out?</p>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">7</div>
+        <div class="demo-step-body">
+          <strong>Admin and reseller view</strong>
+          <p>What does the TickeyBox-side admin view look like? Visibility of all households, device status, any alerts or errors. This informs the support conversation in Section 6.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="decision-box green" style="margin-top: 18px;">
+      <div class="db-label green">After the demo</div>
+      <div class="db-content">
+        <ul>
+          <li>What is still outstanding before the build is pilot-ready?</li>
+          <li>What does each party need to contribute to close the gap?</li>
+          <li>What is the realistic date for a pilot-ready build?</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── PRICING ── -->
+  <div class="section" id="commercial">
+    <div class="section-header">
+      <span class="sec-badge sb-coral"><span class="dot"></span>Pricing</span>
+      <span class="section-title">Pricing — Agreeing the Numbers</span>
+      <span class="section-time">~25 min</span>
+    </div>
+
+    <div class="context-note">
+      Hannes committed to a formal rate card by <strong>Friday 13 March</strong>. Today is about walking through those numbers together and confirming the structure so both parties can plan accurately.
+    </div>
+
+    <div class="discussion">
+      <div class="discussion-header">
+        <span class="dh-icon">💰</span>
+        <span class="dh-title">Per-household fee</span>
+        <span class="dh-badge dh-today">Confirm today</span>
+      </div>
+      <div class="discussion-body">
+        <p class="pre-context">
+          On 9 March, Hannes indicated a figure of around <strong>R20 per extension or household</strong>, pending the Boston discussions on better home-use pricing. Today we need to confirm the actual number and understand exactly what it covers.
+        </p>
+        <div class="q-label">To agree</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What is the confirmed monthly fee per household — and is this per extension or per household?
+              <span class="sub">If a household has two devices (e.g. two children), how does that affect the cost?</span>
+            </span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Is a phone number (DID) included in that fee, or is it a separate charge?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Is there a minimum monthly commitment regardless of active household count?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">How does pricing change at volume — what are the thresholds and rates at 50, 500, and 2,000 households?</span>
+          </li>
+        </ul>
+        <div class="decision-box">
+          <div class="db-label">Agreed today</div>
+          <div class="db-content">Monthly cost per household (all-in): <span class="dl-blank" style="display:block;height:28px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:6px;"></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="discussion">
+      <div class="discussion-header">
+        <span class="dh-icon">📞</span>
+        <span class="dh-title">Per-minute voice rates</span>
+        <span class="dh-badge dh-today">Confirm today</span>
+      </div>
+      <div class="discussion-body">
+        <p class="pre-context">
+          On 9 March, Hannes referenced the <strong>dataphone.co.za</strong> model — prepaid minute bundles, top up when depleted, no over-usage billing. The approach makes sense for TickeyBox. Today we need the actual rates so both parties can structure the product pricing correctly.
+        </p>
+        <div class="q-label">To agree</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What is the per-minute rate for landline calls? For mobile calls?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Emergency numbers (10111, 10177, 112) — are these passed through at no charge?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">TickeyBox-to-TickeyBox is confirmed as internally routed at R0 — does this apply across all SnapTel-hosted numbers or specifically within the TickeyBox reseller account?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot mint">Q</span>
+            <span class="q-text">For the prepaid credit pool at the reseller level — how does this work operationally? Single shared pool or per-household?</span>
+          </li>
+        </ul>
+        <div class="decision-box">
+          <div class="db-label">Agreed today</div>
+          <div class="db-content">
+            Landline rate: <span class="dl-blank" style="display:block;height:24px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:4px;margin-bottom:10px;"></span>
+            Mobile rate: <span class="dl-blank" style="display:block;height:24px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:4px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── TECHNICAL ── -->
+  <div class="section" id="technical">
+    <div class="section-header">
+      <span class="sec-badge sb-mint"><span class="dot"></span>Technical</span>
+      <span class="section-title">Technical — Provisioning &amp; Architecture</span>
+      <span class="section-time">~20 min</span>
+    </div>
+
+    <div class="discussion">
+      <div class="discussion-header">
+        <span class="dh-icon">📶</span>
+        <span class="dh-title">WiFi provisioning — what did Boston say?</span>
+        <span class="dh-badge dh-today">Critical path</span>
+      </div>
+      <div class="discussion-body">
+        <p class="pre-context">
+          The current provisioning flow handles SIP credentials automatically over a LAN cable — which works cleanly. The open question from the last call was whether WiFi credentials (SSID and password) can be pushed to the GHP611W via provisioning config, so a parent doesn't need to permanently cable the device or touch any admin interface. Hannes committed to raising this with the core PBX team in Boston. He was back by 19 March, so we're expecting an answer today.
+        </p>
+        <div class="q-label">To resolve</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Can WiFi credentials be pushed to the GHP611W via provisioning config, triggered by the parent entering their SSID and password in the app?
+              <span class="sub">If yes — what's the technical flow? If no — what's the recommended alternative for getting a WiFi-only setup working?</span>
+            </span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What does the complete provisioning sequence look like step-by-step from the moment the parent plugs in the device to the moment it's making calls?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot mint">Q</span>
+            <span class="q-text">Can we walk through a live provisioning of a test device today?</span>
+          </li>
+        </ul>
+        <div class="decision-box">
+          <div class="db-label">Agreed today</div>
+          <div class="db-content">
+            WiFi provisioning approach for the pilot: <span class="dl-blank" style="display:block;height:28px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:6px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="discussion">
+      <div class="discussion-header">
+        <span class="dh-icon">📱</span>
+        <span class="dh-title">Device activation flow — QR code and phone number assignment</span>
+        <span class="dh-badge dh-discuss">Discuss</span>
+      </div>
+      <div class="discussion-body">
+        <p class="pre-context">
+          The target setup experience is: parent unboxes device, plugs in LAN, opens app, scans QR code on device, and the device is registered and ready — no web admin UI, no manual SIP credential entry. How close is the current build to this, and what's needed to close the gap?
+        </p>
+        <div class="q-label">To align on</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Is there a QR code-based device claiming flow in the current build? Walk through it in the demo.</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">When the app scans the QR code, what happens on the backend? How is the extension created and the phone number assigned?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Is number (DID) allocation immediate via API, or does it require a step from SnapTel's side?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot mint">Q</span>
+            <span class="q-text">If a parent gets a new router or their WiFi password changes — what is the re-provisioning process?</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="discussion">
+      <div class="discussion-header">
+        <span class="dh-icon">🔌</span>
+        <span class="dh-title">API — confirming what TickeyBox can drive independently</span>
+        <span class="dh-badge dh-walkthru">Walk through</span>
+      </div>
+      <div class="discussion-body">
+        <p class="pre-context">
+          Full API access and webhooks were confirmed on the last call. Today is about confirming the practical scope — specifically what TickeyBox can do without needing to raise a request with SnapTel.
+        </p>
+        <div class="q-label">To confirm</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-dot mint">Q</span>
+            <span class="q-text">Can we walk through the key API endpoints today: create extension, assign DID, update dial plan rules, retrieve call logs, push provisioning config?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot mint">Q</span>
+            <span class="q-text">Which webhook events are live: call started, call ended (with duration), call failed, device registered, device offline, low credit balance?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Are there any operations that currently require a manual step from SnapTel? If so, what's the plan to automate them before pilot?</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── COMMERCIAL TERMS ── -->
+  <div class="section" id="legal">
+    <div class="section-header">
+      <span class="sec-badge sb-coral"><span class="dot"></span>Foundations</span>
+      <span class="section-title">Commercial Foundations</span>
+      <span class="section-time">~20 min</span>
+    </div>
+
+    <div class="context-note">
+      Before going live with paying customers, both parties benefit from getting a few commercial basics in writing. This isn't adversarial — it's the kind of clarity that makes a partnership work well over time. This section covers ownership, data, and the structure of the agreement.
+    </div>
+
+    <div class="discussion">
+      <div class="discussion-header">
+        <span class="dh-icon">📂</span>
+        <span class="dh-title">Ownership and data — getting the foundations right</span>
+        <span class="dh-badge dh-today">Agree before pilot</span>
+      </div>
+      <div class="discussion-body">
+        <p class="pre-context">
+          Tiaan has built the app and backend as part of the SnapTel ecosystem. The commercial terms of that arrangement — who owns what, and how data is managed — haven't been formally discussed yet. Getting these agreed now, in a spirit of long-term partnership, protects both sides.
+        </p>
+        <div class="q-label">To agree</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What is the ownership arrangement for the TickeyBox-facing app and backend that Tiaan has built? Is this a licensed platform, a bespoke build, or something else?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Data portability: TickeyBox's household records, child profiles, device registry, and call history — can these be exported in a standard format if ever needed?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What are the notice terms if either party needs to exit the arrangement — and what transition support would be provided during that window?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot mint">Q</span>
+            <span class="q-text">What is the right commercial vehicle for this relationship — a reseller agreement, a white-label platform agreement, or something tailored? What does SnapTel typically use with partners at this stage?</span>
+          </li>
+        </ul>
+        <div class="decision-box">
+          <div class="db-label">Agreed today</div>
+          <div class="db-content">
+            Commercial arrangement type: <span class="dl-blank" style="display:block;height:28px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:6px;margin-bottom:10px;"></span>
+            Data portability: <span class="dl-blank" style="display:block;height:28px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:6px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── SLA ── -->
+  <div class="section" id="sla">
+    <div class="section-header">
+      <span class="sec-badge sb-coral"><span class="dot"></span>Operations</span>
+      <span class="section-title">Support &amp; SLA</span>
+      <span class="section-time">~15 min</span>
+    </div>
+
+    <div class="context-note">
+      This was deferred from the last call. Hannes confirmed on 9 March that a formal SLA structure would be part of the commercial arrangement, noting that home-use support would be priced and structured differently from a standard business reseller SLA. Today we get into the specifics.
+    </div>
+
+    <div class="discussion">
+      <div class="discussion-header">
+        <span class="dh-icon">🛡</span>
+        <span class="dh-title">SLA structure and pricing</span>
+        <span class="dh-badge dh-today">Agree today</span>
+      </div>
+      <div class="discussion-body">
+        <div class="q-label">To agree</div>
+        <ul class="q-list">
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What are the defined response times by severity?
+              <span class="sub">P1: all households affected — target response? P2: single household down? P3: feature issue, calls working? P4: general query or config request?</span>
+            </span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">Who are the named contacts at SnapTel for each severity level? TickeyBox needs at least two contacts — not just Tiaan — so there's always cover.
+              <span class="sub">Get names and contact details (phone + email) today.</span>
+            </span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What uptime is the platform committed to? And what does SnapTel do in the event of a breach?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">How is support raised — email, WhatsApp, ticketing system? Is P1 handled outside of business hours?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot">Q</span>
+            <span class="q-text">What is the monthly SLA fee, and how does it scale with household count?</span>
+          </li>
+          <li class="q-item">
+            <span class="q-dot mint">Q</span>
+            <span class="q-text">For the April pilot — same SLA, or a lighter pilot-phase arrangement?</span>
+          </li>
+        </ul>
+        <div class="decision-box">
+          <div class="db-label">Agreed today</div>
+          <div class="db-content">
+            P1 response time: <span class="dl-blank" style="display:block;height:24px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:4px;margin-bottom:10px;"></span>
+            Named escalation contacts: <span class="dl-blank" style="display:block;height:24px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:4px;margin-bottom:10px;"></span>
+            Monthly SLA fee: <span class="dl-blank" style="display:block;height:24px;border-bottom:1.5px dashed rgba(8,17,63,0.15);margin-top:4px;"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ── DECISIONS ── -->
+  <div class="section" id="decisions">
+    <div class="section-header">
+      <span class="sec-badge sb-mint"><span class="dot"></span>Close-out</span>
+      <span class="section-title">Decisions &amp; Actions</span>
+      <span class="section-time">~15 min</span>
+    </div>
+
+    <div class="context-note">
+      Last 15 minutes. Fill in the decision log together. Anything left blank needs a named owner and a hard date before anyone leaves.
+    </div>
+
+    <div class="decision-log">
+      <h3>Agreed today</h3>
+      <div class="dl-sub">If a box is blank at the end of the session, it needs a date and an owner before we close.</div>
+
+      <div class="dl-item">
+        <div class="dl-num">1</div>
+        <div class="dl-body">
+          <strong>Monthly fee per household (PBX + DID, all-in)</strong>
+          <span>The confirmed number both parties are working from.</span>
+          <span class="dl-blank"></span>
+        </div>
+      </div>
+      <div class="dl-item">
+        <div class="dl-num">2</div>
+        <div class="dl-body">
+          <strong>Per-minute rates — landline, mobile, emergency</strong>
+          <span>Confirmed rates for all call types relevant to TickeyBox.</span>
+          <span class="dl-blank"></span>
+        </div>
+      </div>
+      <div class="dl-item">
+        <div class="dl-num">3</div>
+        <div class="dl-body">
+          <strong>WiFi provisioning approach for the April pilot</strong>
+          <span>Confirmed method. Pilot-ready for a non-technical parent? Yes / workaround agreed / still to resolve.</span>
+          <span class="dl-blank"></span>
+        </div>
+      </div>
+      <div class="dl-item">
+        <div class="dl-num y">4</div>
+        <div class="dl-body">
+          <strong>Commercial arrangement — ownership and data portability</strong>
+          <span>Type of agreement, ownership of what was built, and data portability confirmed.</span>
+          <span class="dl-blank"></span>
+        </div>
+      </div>
+      <div class="dl-item">
+        <div class="dl-num m">5</div>
+        <div class="dl-body">
+          <strong>SLA — P1 response time, named contacts, monthly fee</strong>
+          <span>Agreed and documented. Both parties have the contact details they need.</span>
+          <span class="dl-blank"></span>
+        </div>
+      </div>
+      <div class="dl-item">
+        <div class="dl-num m">6</div>
+        <div class="dl-body">
+          <strong>Build completion — gap list and pilot-ready date</strong>
+          <span>What remains, who is responsible, and by when. Both parties aligned on the date.</span>
+          <span class="dl-blank"></span>
+        </div>
+      </div>
+      <div class="dl-item">
+        <div class="dl-num m">7</div>
+        <div class="dl-body">
+          <strong>April pilot — green light or adjusted timeline?</strong>
+          <span>Based on everything discussed today: April confirmed / pilot shifted to a new date / more information needed.</span>
+          <span class="dl-blank"></span>
+        </div>
+      </div>
+    </div>
+
+    <ul class="action-list">
+      <li class="action-item">
+        <div class="a-num coral">1</div>
+        <div class="a-body">
+          <strong>SnapTel to provide written commercial proposal</strong>
+          <span>Covering: confirmed per-household rate, per-minute rates, DID cost, minimum fees, volume tiers, SLA tier and monthly fee. Written document that both parties sign off on.</span>
+        </div>
+        <div class="a-owner ow-h">Hannes</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num">2</div>
+        <div class="a-body">
+          <strong>Ownership and data terms — draft for review</strong>
+          <span>Whatever is agreed today gets drafted as a written clause or addendum. Both parties review before the pilot goes live.</span>
+        </div>
+        <div class="a-owner ow-a">Both</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num">3</div>
+        <div class="a-body">
+          <strong>Tiaan: WiFi provisioning — confirmed approach with date</strong>
+          <span>If confirmed possible from Boston: deliver the capability with a date. If a workaround is needed: document the setup steps for pilot households, agreed by both parties.</span>
+        </div>
+        <div class="a-owner ow-t">Tiaan</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num coral">4</div>
+        <div class="a-body">
+          <strong>Tiaan: build gap list and pilot-ready date in writing</strong>
+          <span>Written list of what still needs to be done, with owner and date per item. Shared with Matt by end of this week.</span>
+        </div>
+        <div class="a-owner ow-t">Tiaan</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num">5</div>
+        <div class="a-body">
+          <strong>Both: confirm April pilot go/no-go date</strong>
+          <span>Based on the build gap list and WiFi provisioning outcome, agree a hard go/no-go date. If a slip to May is more realistic, better to confirm that now.</span>
+        </div>
+        <div class="a-owner ow-a">Both</div>
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- ── PARKING LOT ── -->
+  <div class="section" id="parking">
+    <div class="section-header">
+      <span class="sec-badge sb-yellow"><span class="dot"></span>Post-pilot</span>
+      <span class="section-title">Parking Lot — Post-Pilot Conversations</span>
+    </div>
+
+    <div class="parking-lot">
+      <h3>🅿 Not for today</h3>
+      <div class="pl-sub">
+        The items below are genuinely important but premature to resolve before we have a live product and real usage data. The right time to have these conversations is after the pilot — once we know the product works, users love it, and the commercial opportunity is clearer for everyone. We're noting them here so they don't get lost, but they're not on today's agenda.
+      </div>
+      <div class="pl-item">
+        <strong>Longer-term commercial partnership structure</strong><br>
+        Hannes mentioned the idea of a deeper commercial arrangement — possibly including equity or a more formal revenue-sharing model — as the relationship matures. This is a conversation worth having once the pilot has proven demand and the product is operating at scale. No need to define terms before we've launched.
+      </div>
+      <div class="pl-item">
+        <strong>Volume-based commercial renegotiation</strong><br>
+        As household numbers grow, the commercial terms will naturally evolve. A checkpoint at 500 households or 12 months of operation makes sense — revisit pricing, SLA scope, and the shape of the partnership at that point.
+      </div>
+      <div class="pl-item">
+        <strong>Product roadmap alignment — Year 2</strong><br>
+        There are likely features and capabilities (messaging, group calls, parental notifications, desktop app) that become relevant post-pilot. The right time to align on what SnapTel builds vs what TickeyBox builds is once we have clear signal from pilot users on what matters most.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav a');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
