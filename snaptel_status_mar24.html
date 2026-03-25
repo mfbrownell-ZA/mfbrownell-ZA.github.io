@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TickeyBox + SnapTel | Status Update — March 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral:   #FF6E61;
+    --yellow:  #FFEE6B;
+    --mint:    #B3E6C9;
+    --navy:    #08113F;
+    --canvas:  #FFFAF0;
+    --surface: #FFFFFF;
+    --muted:   #F3F0E8;
+    --border:  rgba(8,17,63,0.1);
+    --danger:  #E63946;
+    --warn:    #F4A261;
+    --success: #2A9D8F;
+    --r:       18px;
+    --shadow:  0 4px 20px rgba(8,17,63,0.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    background: var(--canvas);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--navy);
+    padding: 0 32px;
+    display: flex; align-items: center; gap: 0;
+    overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-logo {
+    font-family: 'Bungee', cursive; font-size: 13px; color: var(--coral);
+    white-space: nowrap; padding: 14px 20px 14px 0;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: 4px; flex-shrink: 0;
+  }
+  .nav a {
+    color: rgba(255,250,240,0.6); text-decoration: none;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.3px;
+    padding: 14px 13px; white-space: nowrap; transition: color 0.15s; flex-shrink: 0;
+  }
+  .nav a:hover { color: var(--canvas); }
+
+  /* ── HEADER ── */
+  .header { background: var(--navy); color: var(--canvas); padding: 48px 40px 40px; }
+  .header-inner { max-width: 980px; margin: 0 auto; }
+  .header-eyebrow {
+    font-family: 'Poppins', sans-serif; font-size: 11px; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--coral); margin-bottom: 10px;
+  }
+  .header h1 { font-family: 'Bungee', cursive; font-size: 28px; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .header .subtitle {
+    font-family: 'Poppins', sans-serif; font-size: 15px; font-weight: 500;
+    opacity: 0.75; margin-bottom: 28px;
+  }
+  .header-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .meta-pill {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px; padding: 7px 13px; font-size: 13px;
+    display: flex; gap: 8px;
+  }
+  .meta-pill strong { color: var(--yellow); font-weight: 600; }
+  .intent-strip {
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 18px 22px;
+  }
+  .intent-strip p { font-size: 14px; color: rgba(255,250,240,0.75); line-height: 1.7; }
+  .intent-strip strong { color: var(--canvas); }
+
+  /* ── MAIN ── */
+  .main { max-width: 980px; margin: 0 auto; padding: 48px 40px 80px; }
+
+  /* ── STATS BANNER ── */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-bottom: 52px;
+  }
+  .stat-card {
+    background: var(--navy); border-radius: var(--r);
+    padding: 20px 22px; text-align: center;
+  }
+  .stat-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(255,250,240,0.45); margin-bottom: 8px;
+  }
+  .stat-value {
+    font-family: 'Bungee', cursive; font-size: 22px; color: var(--canvas); margin-bottom: 4px;
+  }
+  .stat-value.coral { color: var(--coral); }
+  .stat-value.yellow { color: var(--yellow); }
+  .stat-value.mint { color: var(--mint); }
+  .stat-sub { font-size: 11px; color: rgba(255,250,240,0.4); line-height: 1.4; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 60px; scroll-margin-top: 60px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px; padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
+  }
+  .sec-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px 4px 8px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; flex-shrink: 0;
+  }
+  .sec-badge .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .sb-coral  { background: rgba(255,110,97,0.12); color: #c0392b; }
+  .sb-coral .dot  { background: var(--coral); }
+  .sb-mint   { background: rgba(42,157,143,0.1); color: var(--success); }
+  .sb-mint .dot   { background: var(--success); }
+  .sb-yellow { background: rgba(255,238,107,0.25); color: #7a6800; }
+  .sb-yellow .dot { background: #d4aa00; }
+  .sb-navy   { background: rgba(8,17,63,0.08); color: var(--navy); }
+  .sb-navy .dot   { background: var(--navy); }
+  .section-title { font-family: 'Poppins', sans-serif; font-size: 18px; font-weight: 700; }
+
+  /* ── BADGE (inline) ── */
+  .badge {
+    display: inline-flex; align-items: center;
+    padding: 2px 9px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px;
+  }
+  .b-green  { background: rgba(42,157,143,0.12); color: var(--success); }
+  .b-yellow { background: rgba(255,238,107,0.3); color: #8a7200; }
+  .b-red    { background: rgba(230,57,70,0.1); color: var(--danger); }
+  .b-navy   { background: rgba(8,17,63,0.08); color: var(--navy); }
+  .b-coral  { background: rgba(255,110,97,0.12); color: #c0392b; }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface); border-radius: var(--r);
+    padding: 22px 24px; box-shadow: var(--shadow);
+    border: 1px solid var(--border); margin-bottom: 14px;
+  }
+  .card-title {
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 14px;
+    margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
+  }
+  .card p { font-size: 13.5px; color: rgba(8,17,63,0.7); line-height: 1.65; }
+  .card ul { padding-left: 18px; margin-top: 6px; }
+  .card ul li { font-size: 13.5px; color: rgba(8,17,63,0.7); line-height: 1.6; margin-bottom: 3px; }
+
+  /* ── DECIDED GRID ── */
+  .decided-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px;
+  }
+  .decided-item {
+    background: var(--surface); border-radius: 14px;
+    padding: 16px 18px; box-shadow: var(--shadow); border: 1px solid var(--border);
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .di-check {
+    width: 26px; height: 26px; border-radius: 8px; background: var(--success);
+    color: white; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .di-body strong { display: block; font-weight: 700; font-size: 13.5px; margin-bottom: 2px; }
+  .di-body span { font-size: 12.5px; color: rgba(8,17,63,0.55); line-height: 1.5; }
+
+  /* ── PHASE TIMELINE ── */
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .phase-row {
+    display: grid; grid-template-columns: 120px auto 1fr;
+    gap: 0; align-items: stretch; min-height: 90px;
+  }
+  .phase-when {
+    padding: 16px 16px 16px 0; text-align: right;
+    font-family: 'Poppins', sans-serif; font-weight: 700;
+    font-size: 12px; color: rgba(8,17,63,0.4);
+    line-height: 1.4; padding-top: 18px;
+  }
+  .phase-line {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 18px;
+  }
+  .phase-dot {
+    width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0;
+    margin-top: 18px;
+  }
+  .phase-dot.done   { background: var(--success); }
+  .phase-dot.active { background: var(--coral); box-shadow: 0 0 0 4px rgba(255,110,97,0.2); }
+  .phase-dot.next   { background: var(--yellow); }
+  .phase-dot.future { background: rgba(8,17,63,0.15); }
+  .phase-connector {
+    flex: 1; width: 2px; background: var(--border); margin-top: 4px;
+  }
+  .phase-body {
+    background: var(--surface); border-radius: var(--r);
+    padding: 16px 20px; border: 1px solid var(--border);
+    box-shadow: var(--shadow); margin-bottom: 10px; flex: 1;
+  }
+  .phase-body.active-phase {
+    border-color: var(--coral); background: rgba(255,110,97,0.03);
+  }
+  .phase-body strong {
+    display: block; font-weight: 700; font-size: 14px;
+    margin-bottom: 6px; color: var(--navy);
+  }
+  .phase-body p { font-size: 13px; color: rgba(8,17,63,0.6); line-height: 1.6; }
+  .phase-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+
+  /* ── FLOW STEPS ── */
+  .flow { display: flex; flex-direction: column; gap: 0; }
+  .flow-step {
+    display: flex; gap: 14px; align-items: flex-start; position: relative;
+  }
+  .flow-step:not(:last-child)::after {
+    content: ''; position: absolute;
+    left: 15px; top: 32px; bottom: -10px;
+    width: 2px; background: var(--border);
+  }
+  .flow-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--navy); color: var(--canvas);
+    font-family: 'Bungee', cursive; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1; position: relative;
+  }
+  .flow-num.coral { background: var(--coral); }
+  .flow-num.mint  { background: var(--success); }
+  .flow-num.yellow { background: #c9a800; color: white; }
+  .flow-body {
+    background: var(--surface); border-radius: 12px;
+    padding: 13px 18px; box-shadow: var(--shadow);
+    border: 1px solid var(--border); margin-bottom: 10px; flex: 1;
+  }
+  .flow-body strong { display: block; font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+  .flow-body p { font-size: 13px; color: rgba(8,17,63,0.6); line-height: 1.55; margin-bottom: 6px; }
+  .flow-body p:last-child { margin-bottom: 0; }
+  .flow-note {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: rgba(255,238,107,0.15); border: 1px solid rgba(255,238,107,0.4);
+    border-radius: 8px; padding: 4px 10px;
+    font-size: 12px; font-weight: 600; color: #8a7200;
+  }
+  .flow-note.coral {
+    background: rgba(255,110,97,0.08); border-color: rgba(255,110,97,0.25);
+    color: #c0392b;
+  }
+  .flow-note.mint {
+    background: rgba(42,157,143,0.08); border-color: rgba(42,157,143,0.25);
+    color: var(--success);
+  }
+
+  /* ── FEATURE CHECKLIST ── */
+  .feature-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;
+  }
+  .feature-item {
+    background: var(--surface); border-radius: 12px;
+    padding: 13px 16px; box-shadow: var(--shadow); border: 1px solid var(--border);
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .fi-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .fi-body strong { display: block; font-size: 13.5px; font-weight: 700; margin-bottom: 1px; }
+  .fi-body span { font-size: 12px; color: rgba(8,17,63,0.5); line-height: 1.4; }
+
+  /* ── BILLING LAYOUT ── */
+  .billing-grid {
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px;
+  }
+  .billing-card {
+    background: var(--surface); border-radius: var(--r);
+    padding: 18px 20px; box-shadow: var(--shadow); border: 1px solid var(--border);
+  }
+  .billing-card .bc-label {
+    font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: rgba(8,17,63,0.4); margin-bottom: 6px;
+  }
+  .billing-card .bc-main {
+    font-family: 'Bungee', cursive; font-size: 20px; color: var(--navy); margin-bottom: 4px;
+  }
+  .billing-card .bc-sub { font-size: 12px; color: rgba(8,17,63,0.5); line-height: 1.5; }
+  .billing-card.highlight { background: var(--navy); }
+  .billing-card.highlight .bc-label { color: rgba(255,250,240,0.4); }
+  .billing-card.highlight .bc-main { color: var(--yellow); }
+  .billing-card.highlight .bc-sub { color: rgba(255,250,240,0.5); }
+
+  /* ── ACTION ITEMS ── */
+  .action-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .action-item {
+    background: var(--surface); border-radius: 14px;
+    padding: 15px 20px; box-shadow: var(--shadow); border: 1px solid var(--border);
+    display: grid; grid-template-columns: auto 1fr auto;
+    align-items: start; gap: 14px;
+  }
+  .a-num {
+    width: 28px; height: 28px; background: var(--navy); color: var(--canvas);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-family: 'Bungee', cursive; font-size: 13px; flex-shrink: 0;
+  }
+  .a-num.coral  { background: var(--coral); }
+  .a-num.mint   { background: var(--success); }
+  .a-num.yellow { background: #c9a800; }
+  .a-body strong { display: block; font-weight: 700; font-size: 14px; margin-bottom: 2px; }
+  .a-body span { font-size: 13px; color: rgba(8,17,63,0.6); line-height: 1.5; }
+  .a-owner {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+  }
+  .ow-s { background: rgba(255,238,107,0.3); color: #8a7200; }
+  .ow-m { background: rgba(255,110,97,0.12); color: #c0392b; }
+  .ow-a { background: rgba(8,17,63,0.08); color: var(--navy); }
+
+  /* ── CONTEXT STRIP ── */
+  .context-strip {
+    background: var(--muted); border-left: 3px solid rgba(8,17,63,0.2);
+    border-radius: 0 10px 10px 0;
+    padding: 12px 16px; font-size: 13px;
+    color: rgba(8,17,63,0.6); margin-bottom: 18px; line-height: 1.6;
+  }
+  .context-strip strong { color: var(--navy); }
+
+  /* ── NEXT STEPS BLOCK ── */
+  .next-block {
+    background: var(--navy); border-radius: var(--r);
+    padding: 28px 30px; margin-bottom: 14px;
+  }
+  .next-block h3 {
+    font-family: 'Bungee', cursive; font-size: 18px;
+    color: var(--canvas); margin-bottom: 4px;
+  }
+  .next-block .nb-sub {
+    font-size: 13px; color: rgba(255,250,240,0.45); margin-bottom: 22px;
+  }
+  .nb-item {
+    background: rgba(255,255,255,0.06); border-radius: 12px;
+    padding: 13px 16px; margin-bottom: 8px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .nb-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--coral); flex-shrink: 0; margin-top: 6px;
+  }
+  .nb-dot.yellow { background: var(--yellow); }
+  .nb-dot.mint   { background: var(--mint); }
+  .nb-item span { font-size: 13.5px; color: rgba(255,250,240,0.8); line-height: 1.55; }
+  .nb-item strong { color: var(--canvas); }
+
+  /* ── PARKING LOT ── */
+  .parking-lot {
+    background: var(--muted); border: 2px dashed rgba(8,17,63,0.15);
+    border-radius: var(--r); padding: 26px 28px; margin-bottom: 14px;
+  }
+  .parking-lot h3 {
+    font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 15px;
+    color: var(--navy); margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .parking-lot .pl-sub {
+    font-size: 13px; color: rgba(8,17,63,0.5); margin-bottom: 16px; line-height: 1.6;
+  }
+  .pl-item {
+    background: var(--surface); border-radius: 12px;
+    padding: 13px 16px; margin-bottom: 8px;
+    font-size: 13.5px; color: rgba(8,17,63,0.65);
+    border: 1px solid var(--border); line-height: 1.55;
+  }
+  .pl-item strong { color: var(--navy); font-weight: 700; }
+
+  @media (max-width: 700px) {
+    .header, .main { padding: 24px 20px; }
+    .stats-row { grid-template-columns: 1fr 1fr; }
+    .decided-grid, .feature-grid, .billing-grid { grid-template-columns: 1fr; }
+    .phase-row { grid-template-columns: 80px auto 1fr; }
+    .action-item { grid-template-columns: auto 1fr; }
+    .a-owner { grid-column: 2; }
+    .nav { padding: 0 16px; }
+    .nav a { padding: 14px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">TICKEYBOX</div>
+  <a href="#traction">Traction</a>
+  <a href="#agreed">What's agreed</a>
+  <a href="#app">App status</a>
+  <a href="#provisioning">Provisioning</a>
+  <a href="#billing">Billing</a>
+  <a href="#timeline">Timeline</a>
+  <a href="#actions">Actions</a>
+  <a href="#parking">Parking lot</a>
+</nav>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="header-eyebrow">Post-Workshop Status</div>
+    <h1>TickeyBox + SnapTel</h1>
+    <div class="subtitle">March 24, 2026 &nbsp;·&nbsp; Where we are and what's next</div>
+    <div class="header-meta">
+      <div class="meta-pill"><strong>Workshop</strong> 24 March 2026</div>
+      <div class="meta-pill"><strong>Attendees</strong> Matt · Hannes · Tiaan</div>
+      <div class="meta-pill"><strong>Next checkpoint</strong> Tuesday 7 April, 08:30</div>
+      <div class="meta-pill"><strong>Comms</strong> Telegram group</div>
+    </div>
+    <div class="intent-strip">
+      <p>
+        The March 24 session covered a lot of ground — architecture, pricing, billing, provisioning, and the app build. This document captures what was agreed, where things currently sit, and who's doing what before we meet again on April 7. The goal remains the same: <strong>get to a working dogfood experience as quickly as possible, then into a live paid pilot.</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STATS STRIP -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">Waitlist</div>
+      <div class="stat-value coral">325</div>
+      <div class="stat-sub">Households — all organic. 70% Western Cape, 30% Gauteng.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Pilot cohort</div>
+      <div class="stat-value yellow">40</div>
+      <div class="stat-sub">Households confirmed for paid pilot. Ready to go.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Dogfood group</div>
+      <div class="stat-value mint">8</div>
+      <div class="stat-sub">Local households. Phones in hand. Waiting on app build.</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Next milestone</div>
+      <div class="stat-value">7 Apr</div>
+      <div class="stat-sub">Web interface + test environment live. Progress review.</div>
+    </div>
+  </div>
+
+  <!-- SECTION: TRACTION -->
+  <div class="section" id="traction">
+    <div class="section-header">
+      <div class="sec-badge sb-mint"><div class="dot"></div> Traction</div>
+      <div class="section-title">Where TickeyBox Stands Right Now</div>
+    </div>
+
+    <div class="context-strip">
+      All growth to date has been organic — no paid acquisition, no influencer activity. The 325-household waitlist is the product of a monthly community newsletter and word-of-mouth sharing.
+    </div>
+
+    <div class="card">
+      <div class="card-title">📋 The waitlist is growing in pods, not one-by-ones</div>
+      <p>People are signing up in friendship groups of 5–10 households. A single WhatsApp share on 23 March added 20 households in a day. The driver is almost always the same: someone discovers TickeyBox-to-TickeyBox calls are free, then pulls their friend group in so they can call each other. The network effect is already happening before the product exists.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">🌍 International demand is appearing</div>
+      <p>More than five separate inbound enquiries have come from parents asking whether grandparents in the UK or Australia can get a TickeyBox — primarily divorced families wanting the remote parent to have a simple, safe way to call. As confirmed in the workshop, TickeyBox-to-TickeyBox calls work across any endpoint globally. International device sales are possible; the subscription pricing would reflect the local market. This is not a short-term priority, but it's worth noting the demand is organic and unsolicited.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📦 Hardware and supply chain is in good shape</div>
+      <p>TickeyBox is now an official reseller through <strong>First Distribution</strong>. 8 Grandstream GHP610WE units are in hand for the dogfood group. Grandstream are supporting the pilot hardware order (~50 units), with a backup supply route available. The 1,000-unit branded order — with custom TickeyBox colours, logo, and packaging — is in early discussions. Grandstream have confirmed they'll produce a custom run at 1,000 units. That order requires an 8–10 week lead time from placement, which sets the go/no-go timing for full launch.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">💡 Why the Tin Can comparison matters</div>
+      <p>Tin Can (Seattle) is the proof of concept for this model globally. They're on their 5th batch drop — 10,000 units selling out weekly, now at 50,000+ across their network. Their model is simple: batch orders, 10-week delivery windows, and free device-to-device calls as the viral mechanic. TickeyBox is building the South African version of this, with the advantage of a live VoIP infrastructure partnership and a distribution setup that's already moving.</p>
+    </div>
+  </div>
+
+  <!-- SECTION: WHAT'S AGREED -->
+  <div class="section" id="agreed">
+    <div class="section-header">
+      <div class="sec-badge sb-mint"><div class="dot"></div> Confirmed</div>
+      <div class="section-title">What Was Agreed at the Workshop</div>
+    </div>
+
+    <div class="context-strip">
+      The following were discussed and confirmed on 24 March. These are the foundations the build is now based on.
+    </div>
+
+    <div class="decided-grid">
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>Web-first approach</strong>
+          <span>No App Store submission for now — a progressive web app avoids 2+ week review delays and gets us to dogfooding faster. Native mobile app comes later, once the core experience is proven.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>TickeyBox-to-TickeyBox free — globally</strong>
+          <span>Confirmed works between any two TickeyBox endpoints anywhere in the world. This is the core network mechanic and the viral engine. Already live in the build.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>R30/month per endpoint — all-inclusive</strong>
+          <span>Single SnapTel invoice covering PBX + voice infrastructure. SnapTel manages the back-to-back relationship with DataFon. One interface, one price, regardless of underlying moving parts.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>Prepaid minutes — monthly packages</strong>
+          <span>50, 100, and 200-minute bundles. Minutes expire monthly (breakage is normal and expected). Voice invoice comes from DataFon directly to TickeyBox. TickeyBox manages end-user minute packages and top-ups.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>PayFast + Zoho Books for billing</strong>
+          <span>PayFast handles recurring subscription debits and retry logic. A webhook fires on each payment, triggering Zoho Books to generate and send the invoice. Manual dunning process at this stage — acceptable for pilot scale.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>Number allocation via DataFon (061 prefix)</strong>
+          <span>Numbers assigned at account creation based on the customer's address. TickeyBox customers don't choose their number. No Johannesburg numbers available currently — Western Cape pilot works fine with this.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>Emergency routing — location-based</strong>
+          <span>First-in-Africa approach: app captures the household address at signup and uses it to route emergency calls to the correct regional centre. All national emergency numbers are mapped. Address is a required field at onboarding.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>TickeyBox domain → SnapTel DNS</strong>
+          <span>tickeybox.co.za DNS to be pointed to SnapTel's name servers. Domain registrar stays with TickeyBox — only the DNS records change. Straightforward, no migration of the domain itself.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>R1 trial charge for dogfood onboarding</strong>
+          <span>Charging R1 at account creation establishes the billing relationship from day one. Means that when the pilot goes live and real billing starts, the payment infrastructure is already verified. Smart approach for a first cohort.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>Failed payments: manual suspension via reseller portal</strong>
+          <span>When a payment fails, SnapTel suspends the PBX from the reseller portal. TickeyBox handles the customer communication. Re-activation on payment. Manual process is fine at pilot scale — build the automation later.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>No international external calling</strong>
+          <span>External international calls excluded (fraud risk). International TickeyBox-to-TickeyBox calls remain free — that's a different routing path with no PSTN exposure. Agreed this distinction is clear and workable.</span>
+        </div>
+      </div>
+      <div class="decided-item">
+        <div class="di-check">✓</div>
+        <div class="di-body">
+          <strong>Transcription as an optional toggle</strong>
+          <span>Transcription of calls is available and toggleable per household. Keep it — it's a useful parental oversight feature and it's already built. Can be surfaced or deprioritised in the UI as needed.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: APP STATUS -->
+  <div class="section" id="app">
+    <div class="section-header">
+      <div class="sec-badge sb-yellow"><div class="dot"></div> In Build</div>
+      <div class="section-title">App Build — Current State</div>
+    </div>
+
+    <div class="context-strip">
+      The core system is functional. The work remaining before April 7 is the parent-facing web interface — the visual layer that sits on top of working infrastructure. The back end is not the blocker; the front end is.
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Inbound and outbound calling</strong>
+          <span>Fully operational. Tested and working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Whitelist and blacklist</strong>
+          <span>Default: all numbers blocked. Whitelist-only. Blacklist for explicit blocks. Working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Quiet hours / call scheduling</strong>
+          <span>Multiple time slot support. After-hours rules. Emergency overrides. Working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Multiple parent access with roles</strong>
+          <span>Multiple parents per household. Role management. Working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Multiple TickeyBoxes per household</strong>
+          <span>One household, many devices. Each managed independently. Working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Call logs with audio</strong>
+          <span>Full call history pulled from SnapTel. Audio file access per call. Working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Emergency contact overrides</strong>
+          <span>Certain numbers override all quiet-hour and whitelist rules. Working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">✅</div>
+        <div class="fi-body">
+          <strong>Transcription toggle</strong>
+          <span>Call transcription on/off at household level. Extension-level transcription available. Working.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">🔄</div>
+        <div class="fi-body">
+          <strong>Parent-friendly web UI</strong>
+          <span>Infrastructure works. Visual redesign in progress. Target: April 7. This is the primary outstanding item.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">🔄</div>
+        <div class="fi-body">
+          <strong>Minute package management</strong>
+          <span>Top-up, upgrade, downgrade, and balance display. To be built alongside the billing integration.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">⏳</div>
+        <div class="fi-body">
+          <strong>PayFast + Zoho billing integration</strong>
+          <span>Not needed for dogfood phase. Required before paid pilot goes live. Matt setting up PayFast and Zoho accounts.</span>
+        </div>
+      </div>
+      <div class="feature-item">
+        <div class="fi-icon">⏳</div>
+        <div class="fi-body">
+          <strong>Auto-provisioning flow</strong>
+          <span>Manual provisioning used during dogfood. Auto-flow (Grandstream Cloud API) to be tested and built during dogfood period.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="border-left: 4px solid var(--coral);">
+      <div class="card-title">⚠️ Provisioning for dogfood will be manual — and that's fine</div>
+      <p>For the initial 8–10 dogfood households, the TickeyBox team will physically be present or on a call during setup. This means provisioning complexity doesn't block dogfooding. What we learn from that hands-on setup will directly inform the auto-provisioning design. The target state for pilot launch is a clean, guided provisioning flow — but we don't need to solve it before dogfooding starts.</p>
+    </div>
+  </div>
+
+  <!-- SECTION: PROVISIONING FLOW -->
+  <div class="section" id="provisioning">
+    <div class="section-header">
+      <div class="sec-badge sb-coral"><div class="dot"></div> To Test</div>
+      <div class="section-title">Device Provisioning — The Agreed Approach</div>
+    </div>
+
+    <div class="context-strip">
+      This is the most technically uncertain part of the setup. The goal is a process that a parent with no technical background can complete without needing to call anyone. We're not there yet — but we have a clear path to test.
+    </div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-body">
+          <strong>Warehouse pre-configuration</strong>
+          <p>When an order comes in, there's a 3–4 day window before the phone needs to ship. In that window, TickeyBox creates the household record in the system, assigns a number (from DataFon, 061 prefix based on the registered address), and generates the FQDN for the PBX segment. The phone's MAC address is registered against this household. SIP credentials are ready before the box leaves the warehouse.</p>
+          <span class="flow-note mint">Pre-ship, no customer involvement</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-body">
+          <strong>Parent unboxes and plugs in via LAN</strong>
+          <p>Parent opens the box, plugs the phone into power and into the router via a LAN cable (a yellow cable is included in the box — make it obvious). The phone boots, contacts the provisioning server, and pulls its config. At this point the phone is live on the network. SIP registration happens automatically. The parent doesn't touch any settings.</p>
+          <span class="flow-note mint">LAN cable included in box. One plug, one cable.</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num coral">3</div>
+        <div class="flow-body">
+          <strong>WiFi setup via Grandstream Cloud API</strong>
+          <p>The open question. The plan is to use the Grandstream Cloud portal API to push WiFi credentials to the phone remotely — the parent enters their home network name and password in the TickeyBox app, and it gets injected into the phone config without them needing to access any admin interface. This needs to be tested. Tiaan is taking ownership of this test.</p>
+          <span class="flow-note">Needs testing — Grandstream Cloud API</span>
+          <span class="flow-note coral" style="margin-left:6px;">Critical path for consumer-ready setup</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num mint">4</div>
+        <div class="flow-body">
+          <strong>Parent unplugs LAN cable — phone works on WiFi</strong>
+          <p>Once WiFi credentials are pushed and verified, the parent unplugs the LAN cable. The phone reconnects via WiFi, re-registers with the PBX, and is fully operational. From the parent's perspective: plug in, wait, follow one screen in the app, unplug the cable. That's it.</p>
+          <span class="flow-note mint">Target end state — subject to WiFi API test result</span>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">5</div>
+        <div class="flow-body">
+          <strong>Fallback: manual WiFi setup during dogfood</strong>
+          <p>If the Grandstream Cloud API approach doesn't work cleanly, the fallback for the dogfood phase is manual setup — TickeyBox walks each household through the WiFi configuration step. This is fine for 8–10 households. The learning from those sessions will inform whether we need an alternative technical approach before the 40-household pilot.</p>
+          <span class="flow-note">Dogfood fallback only — not acceptable for pilot scale</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: BILLING -->
+  <div class="section" id="billing">
+    <div class="section-header">
+      <div class="sec-badge sb-navy"><div class="dot"></div> Agreed</div>
+      <div class="section-title">Pricing and Billing Structure</div>
+    </div>
+
+    <div class="context-strip">
+      The pricing model is confirmed. The billing infrastructure (PayFast + Zoho) is being set up by Matt. SnapTel invoices TickeyBox monthly. TickeyBox handles all end-customer billing.
+    </div>
+
+    <div class="billing-grid">
+      <div class="billing-card highlight">
+        <div class="bc-label">SnapTel → TickeyBox</div>
+        <div class="bc-main">R30</div>
+        <div class="bc-sub">Per endpoint per month. All-inclusive. PBX + DataFon voice. Single SnapTel invoice. Voice invoice from DataFon separately.</div>
+      </div>
+      <div class="billing-card">
+        <div class="bc-label">TickeyBox → Customer (hardware)</div>
+        <div class="bc-main">R1,699</div>
+        <div class="bc-sub">GHP610WE, once-off. Includes power adapter, LAN cable, setup guide. Custom branded at 1,000-unit order.</div>
+      </div>
+      <div class="billing-card">
+        <div class="bc-label">TickeyBox → Customer (subscription)</div>
+        <div class="bc-main">R119/mo</div>
+        <div class="bc-sub">Monthly via PayFast recurring. Parent app, whitelist controls, TickeyBox-to-TickeyBox free calls, quiet hours.</div>
+      </div>
+    </div>
+
+    <div class="billing-grid">
+      <div class="billing-card">
+        <div class="bc-label">Minutes — Starter</div>
+        <div class="bc-main">50 min</div>
+        <div class="bc-sub">Entry-level prepaid package. Expires monthly. External landline and mobile calls included.</div>
+      </div>
+      <div class="billing-card">
+        <div class="bc-label">Minutes — Standard</div>
+        <div class="bc-main">100 min</div>
+        <div class="bc-sub">Most common expected package. Good for a household making regular external calls.</div>
+      </div>
+      <div class="billing-card">
+        <div class="bc-label">Minutes — Plus</div>
+        <div class="bc-main">200 min</div>
+        <div class="bc-sub">High-usage households. Upgrade/downgrade available through the parent app.</div>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-num">1</div>
+        <div class="flow-body">
+          <strong>Customer subscribes via the TickeyBox web app</strong>
+          <p>Account creation → address entry (for number allocation and emergency routing) → hardware bundle selection → PayFast recurring subscription set up. R1 charge at signup establishes the billing relationship.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">2</div>
+        <div class="flow-body">
+          <strong>PayFast debits monthly on the subscription renewal date</strong>
+          <p>PayFast handles the recurring charge and all retry logic. Standard payment failure rate in SA is 7–8% — PayFast attempts 3 times before flagging as failed. TickeyBox receives a webhook notification on each payment event.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">3</div>
+        <div class="flow-body">
+          <strong>Webhook fires → Zoho Books generates invoice</strong>
+          <p>On successful payment, a webhook from PayFast triggers Zoho Books to create and send the customer invoice. Invoices are stored in Zoho. Upgrades and downgrades to minute packages also trigger the same flow.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num coral">4</div>
+        <div class="flow-body">
+          <strong>Failed payment: manual suspension</strong>
+          <p>If a payment fails after retries, TickeyBox is notified. Tiaan/Hannes manually suspends the PBX from the SnapTel reseller portal. TickeyBox handles the customer communication. Reactivation happens once the payment clears. This is manual for now — automation comes later as scale demands it.</p>
+          <span class="flow-note coral">Manual at pilot scale — acceptable</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: TIMELINE -->
+  <div class="section" id="timeline">
+    <div class="section-header">
+      <div class="sec-badge sb-yellow"><div class="dot"></div> Timeline</div>
+      <div class="section-title">Getting to Pilot — Phase by Phase</div>
+    </div>
+
+    <div class="timeline">
+      <div class="phase-row">
+        <div class="phase-when">Now →<br>7 Apr</div>
+        <div class="phase-line">
+          <div class="phase-dot active"></div>
+          <div class="phase-connector"></div>
+        </div>
+        <div class="phase-body active-phase">
+          <strong>Build completion and test access</strong>
+          <p>SnapTel completing the parent-facing web UI redesign. Tiaan deploying the current build to a test environment and sharing login details with Matt. Easter falls in this window — acknowledged, not an excuse. The April 7 meeting is the review point.</p>
+          <div class="phase-tags">
+            <span class="badge b-coral">Tiaan: web UI</span>
+            <span class="badge b-coral">Tiaan: test env deploy</span>
+            <span class="badge b-navy">Matt: PayFast setup</span>
+            <span class="badge b-navy">Matt: Zoho Books</span>
+          </div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-when">7 Apr</div>
+        <div class="phase-line">
+          <div class="phase-dot next"></div>
+          <div class="phase-connector"></div>
+        </div>
+        <div class="phase-body">
+          <strong>April 7 review — go/no-go for dogfood</strong>
+          <p>Matt logs in and reviews the build. If the web interface is in good enough shape for a friendly user to navigate, dogfooding starts immediately. Phones ship to the 8 local households. TickeyBox is present for initial setup. We begin learning from real usage.</p>
+          <div class="phase-tags">
+            <span class="badge b-yellow">Decision point</span>
+            <span class="badge b-navy">08:30 Tuesday</span>
+          </div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-when">Mid Apr</div>
+        <div class="phase-line">
+          <div class="phase-dot next"></div>
+          <div class="phase-connector"></div>
+        </div>
+        <div class="phase-body">
+          <strong>Dogfood phase — 8 local households</strong>
+          <p>Free devices. Friendly users who'll give honest feedback. Focus is on: does the onboarding work, do calls sound good, does the whitelist behave correctly, does the quiet-hours logic work in a real home. Also: test the Grandstream Cloud API for WiFi provisioning. Document every setup issue.</p>
+          <div class="phase-tags">
+            <span class="badge b-navy">Provisioning testing</span>
+            <span class="badge b-navy">UX feedback</span>
+            <span class="badge b-navy">Call quality</span>
+          </div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-when">End Apr /<br>Start May</div>
+        <div class="phase-line">
+          <div class="phase-dot future"></div>
+          <div class="phase-connector"></div>
+        </div>
+        <div class="phase-body">
+          <strong>Paid pilot — 40 households</strong>
+          <p>Paying customers, mostly Western Cape with a few in Johannesburg. Billing infrastructure fully live. This is the first real test of the full stack: ordering, provisioning, billing, calling, and support. The goal is 4 weeks of live data that tells us whether the model works and the product is ready to scale.</p>
+          <div class="phase-tags">
+            <span class="badge b-yellow">Billing live</span>
+            <span class="badge b-yellow">Self-serve provisioning</span>
+            <span class="badge b-yellow">40 paying households</span>
+          </div>
+        </div>
+      </div>
+      <div class="phase-row">
+        <div class="phase-when">~July</div>
+        <div class="phase-line">
+          <div class="phase-dot future"></div>
+        </div>
+        <div class="phase-body">
+          <strong>Full launch — 1,000-unit branded order</strong>
+          <p>The hardware decision point. The 1,000-unit Grandstream order (custom branded) has an 8–10 week production lead time. This means the go/no-go decision on ordering needs to happen during the pilot — not after it ends. If pilot data is positive by mid-May, the order goes in and units arrive in July. This is the step that moves TickeyBox from pilot product to commercial product.</p>
+          <div class="phase-tags">
+            <span class="badge b-navy">Decision during pilot</span>
+            <span class="badge b-navy">8–10 wk lead time</span>
+            <span class="badge b-navy">Custom branding</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: ACTIONS -->
+  <div class="section" id="actions">
+    <div class="section-header">
+      <div class="sec-badge sb-coral"><div class="dot"></div> Actions</div>
+      <div class="section-title">Who's Doing What</div>
+    </div>
+
+    <div class="context-strip">
+      Everything before April 7. These are the items that unlock the next phase.
+    </div>
+
+    <ul class="action-list">
+      <li class="action-item">
+        <div class="a-num coral">1</div>
+        <div class="a-body">
+          <strong>Deploy current build to test environment</strong>
+          <span>Tiaan to push the current system to a test URL and send Matt login details. Matt logs in, navigates the build, and gives feedback ahead of the April 7 session. This is the first real view of what's been built from TickeyBox's side.</span>
+        </div>
+        <div class="a-owner ow-s">Tiaan</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num coral">2</div>
+        <div class="a-body">
+          <strong>Complete the parent-facing web UI redesign</strong>
+          <span>The underlying system is built. The visual layer — the interface a parent actually sees — needs to be clean enough for a non-technical user to navigate. This is the primary build task before April 7. Web-only for now; no app store submission.</span>
+        </div>
+        <div class="a-owner ow-s">Tiaan</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num coral">3</div>
+        <div class="a-body">
+          <strong>Test Grandstream Cloud API for WiFi provisioning</strong>
+          <span>The proposed flow: parent enters home WiFi credentials in the TickeyBox app → API pushes credentials to the phone config → phone connects to WiFi automatically after LAN cable is removed. This needs a practical test with a GHP610WE unit. Tiaan is taking ownership of this test. Outcome needed before the paid pilot provisioning flow can be finalised.</span>
+        </div>
+        <div class="a-owner ow-s">Tiaan</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num">4</div>
+        <div class="a-body">
+          <strong>Set up PayFast merchant account</strong>
+          <span>Apply for and activate PayFast merchant account. Required for recurring subscription billing. 3% transaction fee. Set up subscription plans (R119/month, R1 trial, minute packages). Integrate PayFast webhooks for payment notifications.</span>
+        </div>
+        <div class="a-owner ow-m">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num">5</div>
+        <div class="a-body">
+          <strong>Set up Zoho Books</strong>
+          <span>Configure Zoho Books as the invoicing system. Connect the PayFast webhook to trigger invoice generation on each successful payment. Set up customer records, invoice templates, and the minute package catalogue. Invoicing goes to customers automatically from here.</span>
+        </div>
+        <div class="a-owner ow-m">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num">6</div>
+        <div class="a-body">
+          <strong>Investec business banking</strong>
+          <span>Open the TickeyBox Investec business account. Required for PayFast settlement and for SnapTel/DataFon invoice payments. Straightforward but needs to be done.</span>
+        </div>
+        <div class="a-owner ow-m">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num">7</div>
+        <div class="a-body">
+          <strong>Point tickeybox.co.za DNS to SnapTel name servers</strong>
+          <span>Matt updates the DNS records at the registrar to point to SnapTel's name servers. Domain registrar doesn't move. This enables SnapTel to manage the subdomain structure for the app and PBX. Quick change, just needs to happen.</span>
+        </div>
+        <div class="a-owner ow-m">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num mint">8</div>
+        <div class="a-body">
+          <strong>Source Grandstream phones for provisioning testing</strong>
+          <span>Matt to have additional GHP610WE units available for the provisioning test with Tiaan. The 8 dogfood units are in hand — at least one dedicated to provisioning workflow testing before they're shipped to households.</span>
+        </div>
+        <div class="a-owner ow-m">Matt</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num mint">9</div>
+        <div class="a-body">
+          <strong>Telegram group — ongoing comms</strong>
+          <span>Telegram group created at the meeting. This is the day-to-day communication channel between Matt, Hannes, and Tiaan. Faster than email for quick questions, decisions, and updates. No WhatsApp — Telegram agreed as the channel.</span>
+        </div>
+        <div class="a-owner ow-a">Done ✓</div>
+      </li>
+      <li class="action-item">
+        <div class="a-num mint">10</div>
+        <div class="a-body">
+          <strong>April 7 review meeting — 08:30 Tuesday</strong>
+          <span>Progress review against the items above. If the build is in a good state, dogfooding starts from that week. If not, a frank conversation about what needs to happen and by when. This meeting is the forcing function — it should be treated as a hard deadline on both sides.</span>
+        </div>
+        <div class="a-owner ow-a">Both</div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SECTION: NEXT STEP FOCUS -->
+  <div class="section">
+    <div class="next-block">
+      <h3>The Priority Between Now and April 7</h3>
+      <div class="nb-sub">Two things unlock everything else</div>
+      <div class="nb-item">
+        <div class="nb-dot coral"></div>
+        <span><strong>Get the web interface to a state where a parent can navigate it.</strong> It doesn't need to be beautiful. It needs to work without hand-holding. Whitelist, quiet hours, contacts, call log. That's the core. If a parent can do those four things unassisted, dogfooding can start.</span>
+      </div>
+      <div class="nb-item">
+        <div class="nb-dot yellow"></div>
+        <span><strong>Get Matt into the test environment.</strong> The best feedback on what's missing will come from Matt walking through the app with fresh eyes. The sooner the test login is shared, the sooner useful iteration can happen — even ahead of the April 7 session.</span>
+      </div>
+      <div class="nb-item">
+        <div class="nb-dot mint"></div>
+        <span>Everything else — billing integration, auto-provisioning, minute package management, SLA structure — comes after dogfooding starts. The dogfood phase is where we learn what actually matters to a real parent. Don't over-build before that.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: PARKING LOT -->
+  <div class="section" id="parking">
+    <div class="section-header">
+      <div class="sec-badge sb-navy"><div class="dot"></div> Deferred</div>
+      <div class="section-title">Parking Lot — Post-Pilot Conversations</div>
+    </div>
+
+    <div class="parking-lot">
+      <h3>🅿 Items to revisit once the pilot is running</h3>
+      <div class="pl-sub">The following came up during the workshop but were deliberately set aside. They're not urgent now — and trying to resolve them before the pilot would slow things down. We'll pick these up once there's live traction to anchor the conversation.</div>
+
+      <div class="pl-item">
+        <strong>Long-term commercial structure between TickeyBox and SnapTel.</strong> Hannes mentioned the possibility of a deeper commercial arrangement as scale grows. This is a conversation worth having — but at the right time, with real numbers on the table. Post-pilot is the right moment.
+      </div>
+      <div class="pl-item">
+        <strong>SLA for ongoing support and uptime.</strong> Hannes confirmed a formal SLA structure is possible and makes sense as the customer base grows. The shape of it — response times, escalation paths, pricing — is better designed once we understand what the real support load looks like. Pilot data will tell us that.
+      </div>
+      <div class="pl-item">
+        <strong>Native mobile app.</strong> Web-first for now. Once the web experience is proven and stable, the native app is the natural next step. The Snapdial dialer is available as a soft phone option in the interim for any parent who specifically wants the app on their phone.
+      </div>
+      <div class="pl-item">
+        <strong>International market expansion.</strong> Device-to-device calls work globally already. A proper international offering — particularly for the UK and Australian expat market — would require adapted subscription pricing and potentially a separate entity structure. Worth exploring, not worth prioritising now.
+      </div>
+      <div class="pl-item">
+        <strong>CRM and customer management tooling.</strong> Zoho Books handles invoicing. PayFast handles billing. A proper CRM for managing households at scale will be needed — but not at 40 households. This can be a lightweight build later and doesn't need to be a priority now.
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
