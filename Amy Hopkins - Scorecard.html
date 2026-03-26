@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amy Hopkins — Head of Marketing Scorecard</title>
+<style>
+  :root {
+    --pink: #E91E8C;
+    --pink-light: #fce4f3;
+    --pink-mid: #f7aad9;
+    --dark: #1a1a2e;
+    --grey-dark: #2d2d2d;
+    --grey: #6b7280;
+    --grey-light: #f3f4f6;
+    --border: #e5e7eb;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --white: #ffffff;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8f9fa;
+    color: var(--grey-dark);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    padding: 40px 32px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: var(--pink);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .header-inner { max-width: 900px; margin: 0 auto; position: relative; }
+  .jem-logo {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--pink); margin-bottom: 16px;
+  }
+  .header h1 { font-size: 28px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .header .role-tag { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+  .header-meta { display: flex; gap: 24px; flex-wrap: wrap; }
+  .meta-item { font-size: 12px; color: rgba(255,255,255,0.55); }
+  .meta-item strong { color: rgba(255,255,255,0.85); display: block; font-size: 13px; margin-bottom: 1px; }
+
+  /* SCORE HERO */
+  .score-hero { background: var(--white); border-bottom: 1px solid var(--border); }
+  .score-hero-inner {
+    max-width: 900px; margin: 0 auto; padding: 28px 32px;
+    display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+  }
+  .score-circle {
+    width: 96px; height: 96px; border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; flex-shrink: 0; border: 4px solid;
+  }
+  .score-circle.pass-strong { border-color: var(--green); background: var(--green-light); }
+  .score-circle .score-num { font-size: 28px; font-weight: 800; line-height: 1; }
+  .score-circle.pass-strong .score-num { color: var(--green); }
+  .score-circle .score-denom { font-size: 11px; color: var(--grey); font-weight: 500; }
+  .score-summary { flex: 1; min-width: 200px; }
+  .score-summary h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+  .score-summary .band {
+    display: inline-block; padding: 3px 10px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; margin-bottom: 10px;
+    background: var(--green-light); color: var(--green);
+  }
+  .score-summary p { font-size: 13px; color: var(--grey); line-height: 1.5; }
+  .score-breakdown { display: flex; gap: 12px; flex-wrap: wrap; }
+  .score-mini {
+    text-align: center; background: var(--grey-light);
+    border-radius: 10px; padding: 10px 14px; min-width: 90px;
+  }
+  .score-mini .sm-val { font-size: 20px; font-weight: 800; line-height: 1; margin-bottom: 2px; }
+  .score-mini .sm-label { font-size: 10px; color: var(--grey); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* NOTICE BANNER */
+  .notice-banner {
+    background: var(--blue-light); border-left: 4px solid var(--blue);
+    padding: 12px 20px; margin-bottom: 20px; border-radius: 0 8px 8px 0;
+    font-size: 12.5px; color: #1e40af;
+  }
+  .notice-banner strong { font-weight: 700; }
+
+  /* MAIN */
+  .main { max-width: 900px; margin: 0 auto; padding: 32px 32px 64px; }
+  .section { margin-bottom: 32px; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 2px solid var(--border);
+  }
+  .section-badge {
+    background: var(--dark); color: var(--white); font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px;
+  }
+  .section-title { font-size: 16px; font-weight: 700; flex: 1; }
+  .section-total { font-size: 13px; font-weight: 700; color: var(--grey); }
+  .section-total span { font-size: 18px; color: var(--grey-dark); }
+
+  /* DIM CARD */
+  .dim-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 18px 20px; margin-bottom: 12px;
+  }
+  .dim-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+  .dim-title { font-size: 13px; font-weight: 700; color: var(--grey-dark); }
+  .dim-code { font-size: 11px; color: var(--grey); font-weight: 500; margin-top: 1px; }
+  .score-pill { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+  .score-dot {
+    width: 32px; height: 32px; border-radius: 50%; display: flex;
+    align-items: center; justify-content: center; font-size: 15px; font-weight: 800; flex-shrink: 0;
+  }
+  .score-dot.s5 { background: var(--green-light); color: var(--green); }
+  .score-dot.s4 { background: #dcfce7; color: #16a34a; }
+  .score-dot.s3 { background: var(--amber-light); color: var(--amber); }
+  .score-dot.s2 { background: #ffedd5; color: #ea580c; }
+  .score-dot.s1 { background: var(--red-light); color: var(--red); }
+
+  .score-bar-wrap { margin-bottom: 12px; }
+  .score-bar-bg { background: var(--grey-light); border-radius: 4px; height: 6px; width: 100%; }
+  .score-bar-fill { height: 6px; border-radius: 4px; }
+  .score-bar-fill.s5 { background: var(--green); }
+  .score-bar-fill.s4 { background: #16a34a; }
+  .score-bar-fill.s3 { background: var(--amber); }
+  .score-bar-fill.s2 { background: #ea580c; }
+  .score-bar-fill.s1 { background: var(--red); }
+
+  .anchor-label { font-size: 12px; color: var(--grey); font-style: italic; margin-bottom: 10px; }
+  .anchor-label strong { color: var(--grey-dark); font-style: normal; }
+
+  .evidence-block {
+    background: var(--grey-light); border-left: 3px solid var(--pink);
+    border-radius: 0 8px 8px 0; padding: 10px 14px; font-size: 12.5px;
+    color: #374151; line-height: 1.5;
+  }
+  .evidence-block .ev-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--pink); margin-bottom: 4px;
+  }
+  .deliverable-note {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--blue-light); color: var(--blue); border-radius: 4px;
+    font-size: 10px; font-weight: 700; padding: 2px 6px; margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* RED FLAGS */
+  .redflags-card {
+    background: #fff8f8; border: 1px solid #fecaca;
+    border-radius: 12px; padding: 16px 20px; margin-bottom: 12px;
+  }
+  .redflags-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); margin-bottom: 10px; }
+  .flag-item { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 6px; font-size: 12.5px; }
+  .flag-icon {
+    width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0;
+    margin-top: 1px; display: flex; align-items: center; justify-content: center; font-size: 10px;
+  }
+  .flag-icon.triggered { background: var(--red); color: white; }
+  .flag-icon.clear { background: var(--green-light); color: var(--green); border: 1px solid #a7f3d0; }
+  .flag-text { color: #374151; line-height: 1.4; }
+  .flag-text.triggered { color: var(--red); font-weight: 600; }
+
+  /* WEIGHTED SUMMARY */
+  .summary-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
+  .summary-card table { width: 100%; border-collapse: collapse; }
+  .summary-card th {
+    background: var(--grey-light); font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.07em; color: var(--grey); padding: 10px 16px; text-align: left;
+  }
+  .summary-card td { padding: 12px 16px; font-size: 13px; border-top: 1px solid var(--border); }
+  .summary-card tr:last-child td { background: var(--dark); color: var(--white); font-weight: 700; }
+  .wtd-score { font-weight: 700; font-size: 15px; }
+  .wtd-score.good { color: var(--green); }
+  .wtd-score.mid { color: var(--amber); }
+  .wtd-score.low { color: var(--red); }
+
+  /* DISQUALIFIERS */
+  .dq-card { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; margin-bottom: 24px; }
+  .dq-card h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--grey); margin-bottom: 14px; }
+
+  /* RECOMMENDATION */
+  .rec-card { border-radius: 12px; padding: 24px; margin-bottom: 24px; background: var(--white); border: 2px solid var(--green); }
+  .rec-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--green); margin-bottom: 8px; }
+  .rec-verdict { font-size: 22px; font-weight: 800; color: var(--grey-dark); margin-bottom: 12px; }
+  .rec-body { font-size: 13.5px; color: #374151; line-height: 1.65; }
+  .rec-body p { margin-bottom: 10px; }
+  .rec-body p:last-child { margin-bottom: 0; }
+  .gaps-list { background: var(--grey-light); border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
+  .gaps-list h4 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--grey); margin-bottom: 8px; }
+  .gaps-list li { font-size: 13px; color: #374151; margin-bottom: 6px; margin-left: 16px; line-height: 1.5; }
+
+  /* COMP GRID */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; margin-bottom: 12px; }
+
+  /* DIVIDERS */
+  .seg-divider { display: flex; align-items: center; gap: 12px; margin: 36px 0 20px; }
+  .seg-divider::before, .seg-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .seg-divider-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey); white-space: nowrap; }
+
+  .footer { text-align: center; font-size: 11px; color: var(--grey); margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); }
+
+  @media (max-width: 600px) {
+    .header { padding: 28px 20px; }
+    .score-hero-inner, .main { padding: 20px; }
+    .header h1 { font-size: 22px; }
+    .score-hero-inner { flex-direction: column; align-items: flex-start; }
+    .comp-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="jem-logo">Jem · Head of Marketing · Candidate Assessment</div>
+    <h1>Amy Hopkins</h1>
+    <div class="role-tag">Head of Marketing — Capability Workshop</div>
+    <div class="header-meta">
+      <div class="meta-item"><strong>Date</strong>26 March 2026</div>
+      <div class="meta-item"><strong>Format</strong>In-Person Working Session · 09:00–12:30</div>
+      <div class="meta-item"><strong>Assessor</strong>Matt (Founder)</div>
+      <div class="meta-item"><strong>Scored Against</strong>Transcript + Actual Deliverables</div>
+    </div>
+  </div>
+</div>
+
+<!-- SCORE HERO -->
+<div class="score-hero">
+  <div class="score-hero-inner">
+    <div class="score-circle pass-strong">
+      <span class="score-num">77</span>
+      <span class="score-denom">/100</span>
+    </div>
+    <div class="score-summary">
+      <h2>Amy Hopkins</h2>
+      <div class="band">Pass — Proceed to Final Stage</div>
+      <p>Deliverables reviewed against transcript. Scores revised upward across Securex and brand tracker. Strong narrative instinct, genuine AI fluency as a practitioner, well-structured commercial thinking. Primary gap remains hard commercial metrics language and AI systems-level depth. No disqualifiers. Recommend proceeding to Caroline's behavioural interview.</p>
+    </div>
+    <div class="score-breakdown">
+      <div class="score-mini">
+        <div class="sm-val" style="color:var(--amber)">15</div>
+        <div class="sm-label">AMA<br>/20</div>
+      </div>
+      <div class="score-mini">
+        <div class="sm-val" style="color:#16a34a">15</div>
+        <div class="sm-label">Brand<br>Tracker /20</div>
+      </div>
+      <div class="score-mini">
+        <div class="sm-val" style="color:#16a34a">21</div>
+        <div class="sm-label">Securex<br>/25</div>
+      </div>
+      <div class="score-mini">
+        <div class="sm-val" style="color:var(--amber)">22</div>
+        <div class="sm-label">Core<br>Comp /30</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+<div class="notice-banner">
+  <strong>Note on scoring methodology:</strong> Scores were assessed first from the workshop transcript, then revised after reviewing Amy's actual deliverables (Brand Health Tracker deck and Securex presentation). The Securex work in particular is materially stronger in written form than the verbal summary suggested — it includes a 12-step pre-event plan, 6-step engagement flow, lead tiering, and retargeting strategy. Several scores were revised upward as a result.
+</div>
+
+<!-- SEGMENT 1 -->
+<div class="seg-divider"><span class="seg-divider-label">Segment 1 · AMA &amp; Role Interrogation · 09:00–09:45</span></div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-badge">S1</span>
+    <span class="section-title">AMA / Role Interrogation</span>
+    <span class="section-total"><span>15</span> / 20</span>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">1.1 · Quality of Questions Asked</div><div class="dim-code">Commercial depth, probing the model, not just the mission</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> Probes commercial model, challenges assumptions, asks what's not working. Shows hard thinking about the category.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Transcript</div>
+      Amy asked specifically about the sales team's most urgent 3–6 month need, probing the ABM shift to dream 200 and how marketing would support it. She independently conducted a mystery shop of Jem as a prospective client — received the PDF response, noticed the 200 vs 500 employee inconsistency in live sales materials and raised it directly: <em>"I noticed the pitch said 200 people plus, whereas this says 500."</em> Matt confirmed it was an error needing correction. Also probed sales objections unprompted: <em>"What are your biggest challenges from a sales perspective? What is the reason not to take Jem?"</em> and asked about the CFO blocker / HR champion dynamic.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">1.2 · Understanding of Dual-Sided Market</div><div class="dim-code">Buyer vs user distinction, trust asymmetry, B2B2C structure</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> Frames dual-sided dynamic clearly. Probes how Jem handles message divergence and trust-building per audience.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Transcript</div>
+      Amy demonstrated real-world empathy for the deskless worker segment before the session — she spoke to a nail technician about how they receive payslips and access leave: <em>"It's incredible to me how manual and slow the process is and frustrating for them."</em> She probed whether HR teams fear being downsized because of Jem and asked about CEO multi-threading. She understood the free HR → EWA monetisation model immediately. Her brand tracker audience slides (Audience 1: HR/Ops/Finance/CEO; Audience 2: Frontline workers) reflect this dual-sided understanding in her actual output.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">1.3 · Stage Awareness and Founder Dynamics</div><div class="dim-code">Build vs manage orientation, resource constraints, role clarity</div></div>
+      <div class="score-pill"><div class="score-dot s3">3</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s3" style="width:60%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 3:</strong> Shows awareness of early-stage constraints. Asks sensible questions about priorities and what exists today. Doesn't fully probe founder relationship or failure mode.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Transcript</div>
+      Amy asked about team structure (Dan, content creator), website platform, tooling, and channels — all sensible early-stage questions. She absorbed the Dan situation (managed exit incoming) without flinching. However, she did not ask what failure looks like in 6 months, did not probe the founder's involvement post-hire, and did not explicitly name the "build" orientation of the role. She later said she wants to be surrounded by more AI-fluent people to grow — framing the role partly as a development opportunity rather than pure ownership.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">1.4 · Intellectual Confidence Without Arrogance</div><div class="dim-code">Holds own in a founder room, challenges without performing</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> Challenges at least one assumption. Pushes back cleanly without being combative.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Transcript</div>
+      Amy raised the website platform fragmentation problem independently and pushed a clear POV on Instagram dead space: <em>"If the brand is present somewhere it should be present — otherwise it should be shut down."</em> She raised the Framer vs Webflow debate with personal preference. The mystery shop was the clearest signal — she did it on her own initiative, found a real error, and raised it directly. She has independent opinions and expresses them without grandstanding.
+    </div>
+  </div>
+
+  <div class="redflags-card">
+    <div class="redflags-title">Segment 1 Red Flags</div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Only asked about culture, team, and growth trajectory — no commercial depth</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Framed the role as brand and comms only, not revenue-adjacent</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">No awareness of the dual-sided market structure</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Performed enthusiasm rather than genuine curiosity</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Questions felt rehearsed with no adaptation or follow-up</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Did not ask a single uncomfortable question</div></div>
+    <p style="font-size:12px;color:var(--green);font-weight:600;margin-top:8px;">No red flags triggered in Segment 1.</p>
+  </div>
+</div>
+
+
+<!-- SEGMENT 2 -->
+<div class="seg-divider"><span class="seg-divider-label">Segment 2 · Brand Health Tracker · 10:00–11:00</span></div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-badge">S2</span>
+    <span class="section-title">Brand Health Tracker</span>
+    <span class="section-total"><span>15</span> / 20</span>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">2.1 · Audience Segmentation and Frame</div><div class="dim-code">Distinct audiences, distinct methods, access and language constraints</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> Clear segmentation, credible methodology per audience. Addresses WhatsApp channel constraint practically.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable</div>
+      <div class="deliverable-note">From Deck</div>
+      Slide 3 shows a clean three-column layout: Target Audience 1 (HR/Ops/Finance/CEO — decision-makers), Target Audience 2 (Frontline workers — daily users), Target Audience 3 (External/market). Each with explicit "Why their voice matters" and "What we want to learn" rationale. Survey 2 (existing users) is correctly calibrated for WhatsApp — short, tap-based, binary/trinary scales, 10 questions max. Rollout slide explicitly separates: WhatsApp triggered message for workers ("Tell us what you think of Jem — 2 mins"), email + Typeform for clients, LinkedIn polls for external.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">2.2 · Metric Design and Signal Quality</div><div class="dim-code">Signal vs noise, commercial outcome connection, attribute tracking</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> Strong metric design. Ties brand metrics to pipeline or retention signals. Flags where data will be messy.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable — Revised Upward</div>
+      <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+      The attribute perception question <em>was</em> in the deck (Survey 3: "Which of the following best describes Jem? HR tool / Operations tool / Payroll tool / Employee app / Not sure") — missed in the verbal presentation. The client survey includes the switching question: "If Jem was no longer available, what would you do instead?" — an excellent churn-signal question. Core metrics slide explicitly tracks: trust, ease of use, perceived value, product understanding. How Insights Are Used section connects brand data to: marketing → messaging, product → UX fixes, sales → objection handling, customer success → onboarding. That's a clear commercial feedback loop. Closing slide: "The tracker doesn't end at data collection. Its value lies in how it feeds directly into product, marketing and commercial decisions."
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">2.3 · Channel Fit and Methodology Practicality</div><div class="dim-code">WhatsApp-native, lean execution, right cadence, tools named</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> WhatsApp-native methodology, email for B2B, realistic cadence, clear cost structure implied.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable</div>
+      <div class="deliverable-note">From Deck</div>
+      Rollout slide: WhatsApp (frontline, direct broadcast, peak usage timing), email + Typeform/Google Forms (clients), LinkedIn polls + forms (external). Annual deep-dive + optional quarterly pulse. Incentive mechanics per audience calibrated correctly: premium prize draw + early report access for clients (appeals to senior audience, exclusivity); airtime/data/grocery vouchers/Jem swag for workers (immediate, tangible, relevant); travel/business experience for LinkedIn (drives reach, feels like thought leadership).
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">2.4 · Present-Back Clarity and Structure</div><div class="dim-code">Led by insight not process, handles challenge, names trade-offs</div></div>
+      <div class="score-pill"><div class="score-dot s3">3</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s3" style="width:60%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 3:</strong> Well-structured, clear, covers key components. Does not consistently lead with insight over process.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence</div>
+      The deck is well-designed, on-brand, and logically structured (why → audiences → questions → distribution → synthesis). The closing statement ("The tracker doesn't end at data collection") is a strong CMO-level frame. However the verbal present-back was methodical rather than insight-led — she walked through sections rather than leading with a sharp POV. She acknowledged going "too product heavy" and not enough on brand attributes. The deck itself is stronger than the verbal delivery suggested. Does not yet pre-empt trade-offs or lead with the most important finding first.
+    </div>
+  </div>
+
+  <div class="redflags-card">
+    <div class="redflags-title">Segment 2 Red Flags</div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Single tracker with no audience segmentation</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Focused on social metrics or brand awareness only</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">No WhatsApp-native methodology for deskless segment</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Proposed a research agency model</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">No connection between brand metrics and commercial outcomes</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Could not answer a follow-up challenge without losing the thread</div></div>
+    <p style="font-size:12px;color:var(--green);font-weight:600;margin-top:8px;">No red flags triggered in Segment 2.</p>
+  </div>
+</div>
+
+
+<!-- SEGMENT 3 -->
+<div class="seg-divider"><span class="seg-divider-label">Segment 3 · Securex Event Strategy · 11:20–12:30</span></div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-badge">S3</span>
+    <span class="section-title">Securex Event Strategy — Time &amp; Attendance</span>
+    <span class="section-total"><span>21</span> / 25</span>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">3.1 · Pre-Event Strategy</div><div class="dim-code">Campaign not logistics, segmented outreach, reason to attend, pre-booked meetings</div></div>
+      <div class="score-pill"><div class="score-dot s5">5</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s5" style="width:100%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 5:</strong> Builds a pre-event campaign that makes attending feel like a missed opportunity. Specific channels, specific messages, specific targets, specific metric (meetings booked pre-show).</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable — Revised Upward</div>
+      <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+      The pre-event planning slide has 12 explicit, sequenced steps — from internal goal alignment, target list building, event message creation, social teaser campaign, VIP drinks planning, RSVP as lead capture (with a qualification question built into the form), sales outreach coordination, WhatsApp bot sponsorship, competition tease, stand journey prep, team pitch training, and pre-event success measures. Specific messaging written: <em>"Still tracking staff manually? Not for long."</em> and <em>"We've been working on something for ops-heavy teams…"</em> Core message: <em>"Take control of your workforce — in real time."</em> Pre-event success metrics: RSVPs, meetings booked, content engagement, launch awareness. This is a complete pre-event campaign, not a checklist.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">3.2 · Messaging and Positioning for Time &amp; Attendance</div><div class="dim-code">Problem-led, buyer-specific, platform connection, architecture not feature dump</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> Strong problem-led message tied to a specific buyer pain. Connects T&amp;A to Jem's differentiation. Repeatable in one sentence.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable — Revised Upward</div>
+      <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+      Slide 2 explicitly repositions: <em>"Position Jem as a real operational solution, not just an HR tool."</em> Core pre-event message: <em>"Take control of your workforce — in real time."</em> Supporting angles: reduce admin, improve accountability, know what's happening on-site. Stand visual hooks: "Do you know where your guards are right now?" and "Still using paper registers?" Talk topic: "Where security operations lose time and money." The closing statement on Securex: "Turning Securex into a full-funnel growth engine — driving demand, capturing insight, and converting it into pipeline." Still missing a fully articulated message architecture that explicitly bridges T&amp;A to the broader Jem platform — the positioning exists but doesn't yet have a one-page architecture.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">3.3 · At-Stand Approach and Engagement Mechanics</div><div class="dim-code">Experience design, qualification built in, role clarity, lead capture</div></div>
+      <div class="score-pill"><div class="score-dot s5">5</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s5" style="width:100%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 5:</strong> Designs a stand experience that filters for quality leads automatically, creates a memorable interaction, WhatsApp-first capture from first touchpoint.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable — Revised Upward</div>
+      <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+      The stand execution slide is exceptional. Six-step engagement flow: Hook (direct question) → Qualify ("Do you manage staff or sites?") → Engage (survey) → Demo (60-second walkthrough: missed shift / late arrival / incorrect reporting use cases) → Capture (QR/WhatsApp, tag lead quality) → Convert (book demo / invite to talk / enter competition). Survey positioned as "Help us benchmark the security industry" — smart repositioning that makes it feel like industry research, not lead gen. Team role split: 1 hook/engager, 1-2 demo leads, 1 lead capture/ops — with alignment on same pitch and same flow. Competition mechanic tiered: survey = entry, talk = double, demo = bonus. Premium swag only after engagement, not on arrival.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">3.4 · Post-Event Follow-Up and Pipeline Conversion</div><div class="dim-code">Lead tiering, 48-hour SLA, nurture sequence, content engine</div></div>
+      <div class="score-pill"><div class="score-dot s4">4</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 4:</strong> Full follow-up sequence per lead tier, conversion metrics assigned, 30-day nurture plan for cold leads, feedback loop into CRM.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable — Revised Upward</div>
+      <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+      Post-event slide includes: Lead follow-up within 48 hours with explicit tiering — Hot (demo-ready: book demos immediately), Warm (send product + value follow-up), Survey-only (thank you + competition confirmation). Channel: email + WhatsApp. Four-step nurture sequence: thank you + report → product walkthrough → case study → demo CTA. Content engine: talk clips, demo videos, "What we heard at Securex" posts, 2–4 week social window. PR angle: "Jem unveils new Time &amp; Attendance solution at Securex." Client expansion outreach. Retargeting ads. "Missed us at Securex?" campaign. Webinar. Internal sharing session. This is a complete post-event system. Retargeting and "Missed us at Securex" campaign are additions that go beyond what most candidates would have included.
+    </div>
+  </div>
+
+  <div class="dim-card">
+    <div class="dim-header">
+      <div><div class="dim-title">3.5 · Success Measures and Commercial Accountability</div><div class="dim-code">Pipeline not footfall, ROI against R120k spend, primary metric named</div></div>
+      <div class="score-pill"><div class="score-dot s3">3</div></div>
+    </div>
+    <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s3" style="width:60%"></div></div></div>
+    <div class="anchor-label"><strong>Anchor 3:</strong> Names pipeline value or demos booked as the metric. Some connection to ROI. Doesn't calculate break-even against event cost.</div>
+    <div class="evidence-block">
+      <div class="ev-label">Evidence from Deliverable — Partially Revised</div>
+      <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+      Slide 2 success definition: "Generate high-quality, qualified leads / Create meaningful conversations / Capture real industry data / Build a pipeline for post-event conversion / Establish Jem as a credible player in workforce operations." Closing statement: "Turning Securex into a full-funnel growth engine." Pipeline language is present and the thinking is correct. However, no specific KPI numbers are set — no demos booked target, no pipeline value goal, no ROI calculation against the R120k stand investment. The language is right but the rigour of a hard metric is missing. The "success" framing is directionally strong but stops short of being commercially accountable.
+    </div>
+  </div>
+
+  <div class="redflags-card">
+    <div class="redflags-title">Segment 3 Red Flags</div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Treated Securex as a logistics exercise, not a campaign</div></div>
+    <div class="flag-item"><div class="flag-icon triggered">!</div><div class="flag-text triggered">Success defined without a hard commercial metric — no demos booked target, no pipeline value, no ROI calculation vs R120k spend</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">No pre-event outreach strategy beyond social posts</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Post-event follow-up was an afterthought or one email</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">No specific message developed for Time &amp; Attendance</div></div>
+    <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text">Over-invested in stand design, under-invested in pipeline thinking</div></div>
+    <p style="font-size:12px;color:var(--amber);font-weight:600;margin-top:8px;">1 flag triggered: pipeline language present but no hard commercial metric or ROI calculation.</p>
+  </div>
+</div>
+
+
+<!-- CORE COMPETENCIES -->
+<div class="seg-divider"><span class="seg-divider-label">Core Competencies · Assessed Across Full Session</span></div>
+
+<div class="section">
+  <div class="section-header">
+    <span class="section-badge">CC</span>
+    <span class="section-title">Core Competencies</span>
+    <span class="section-total"><span>22</span> / 30</span>
+  </div>
+
+  <div class="comp-grid">
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <div><div class="dim-title">C1 · AI Fluency</div><div class="dim-code">Active workflow, not future aspiration</div></div>
+        <div class="score-pill"><div class="score-dot s3">3</div></div>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s3" style="width:60%"></div></div></div>
+      <div class="evidence-block">
+        <div class="ev-label">Evidence</div>
+        Uses ChatGPT (with Jem context loaded) and Claude. Described a clear sparring workflow: brief in, challenge back, refine, extract. Building Gold to Gravel platform via AI agent. Listens to the AI Brief podcast. Said she <em>"couldn't do the work without it."</em> The quality of both decks produced in 40–45 minutes reflects genuine AI-assisted output speed. However, also said: <em>"There is still a lot of growth for me in this space — I'm not a background tech person"</em> and expressed wanting to learn from the Jem team's AI systems. She uses AI tools fluently; she does not yet build AI workflows or think AI-first at the systems level the JD describes.
+      </div>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <div><div class="dim-title">C2 · Commercial Literacy</div><div class="dim-code">Pipeline language, CAC/LTV, ROI orientation</div></div>
+        <div class="score-pill"><div class="score-dot s4">4</div></div>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+      <div class="evidence-block">
+        <div class="ev-label">Evidence — Revised Upward</div>
+        <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+        The Securex deck's commercial framing is consistent and strong: <em>"Turn one event into months of pipeline, insight, and growth."</em> <em>"Turning Securex into a full-funnel growth engine."</em> She probed sales objections, understood the EWA monetisation model immediately, connected event strategy to pipeline, and linked the brand tracker to retention/expansion revenue. Her Securex lead tiering (hot/warm/survey-only) shows pipeline thinking. The one remaining gap is the absence of hard metric targets — she talks correctly about pipeline without setting a specific number.
+      </div>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <div><div class="dim-title">C3 · Narrative Quality</div><div class="dim-code">Differentiated story, audience-specific, CFO-repeatable</div></div>
+        <div class="score-pill"><div class="score-dot s4">4</div></div>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+      <div class="evidence-block">
+        <div class="ev-label">Evidence</div>
+        The documentary video concept Amy presented unprompted — Night Watch / Underground / Production Line, with a "Jem Moment" embedded in each — is the strongest narrative signal of the day. Voiceover script: <em>"Frontline workers keep our economy running... often underserved, dealing with financial pressure and systems that slow them down. Jem changes that. Built for the workforce that keeps business moving."</em> This was not asked for. She also identified Workers Day as an untapped PR moment and made a 15-second video mock-up in Nana Banana to demonstrate it. The Securex framing ("operational solution, not just an HR tool") and brand tracker closer ("The tracker doesn't end at data collection") both show narrative concision.
+      </div>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <div><div class="dim-title">C4 · Presence &amp; Stage Confidence</div><div class="dim-code">Commands room, handles challenge, can picture at Securex</div></div>
+        <div class="score-pill"><div class="score-dot s4">4</div></div>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+      <div class="evidence-block">
+        <div class="ev-label">Evidence</div>
+        Presented twice with prepared Canva decks and handled follow-up questions clearly. Comfortable across a 3-hour session that mixed context-setting, two working exercises, and an unplanned video concept presentation. Confirmed stage confidence explicitly: <em>"I'm very comfortable with events and speaking."</em> Organising team for the Fresh Conference (multi-agency, Johannesburg, includes awards ceremony) is relevant live experience. Would carry credibly on a Securex stage or in a CFO room. Not yet at the level of commanding a room of 500 — but closer to 4 than 3.
+      </div>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <div><div class="dim-title">C5 · Strategic Depth</div><div class="dim-code">Systems thinking, trade-off naming, sequencing logic</div></div>
+        <div class="score-pill"><div class="score-dot s4">4</div></div>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s4" style="width:80%"></div></div></div>
+      <div class="evidence-block">
+        <div class="ev-label">Evidence — Revised Upward</div>
+        <div class="deliverable-note">Score Updated After Reviewing Deck</div>
+        The 12-step pre-event planning sequence (Securex deck) shows systems-level thinking — each step flows logically from the previous, dependencies are acknowledged, and success measures are tied to execution steps. The brand tracker's "How insights are used" section (marketing → messaging, product → UX, sales → objection handling, CS → onboarding) shows data-as-system thinking. She connected Securex back to dream 200 ABM in the session. Starting both exercises with "why are we doing this" is consistent strategic discipline. The gap: she named fewer explicit trade-offs than a strong 5 would, and her sequencing logic was implicit rather than stated.
+      </div>
+    </div>
+
+    <div class="dim-card">
+      <div class="dim-header">
+        <div><div class="dim-title">C6 · Builder Mentality</div><div class="dim-code">Built without structure, owns not delegates, resource-constrained experience</div></div>
+        <div class="score-pill"><div class="score-dot s3">3</div></div>
+      </div>
+      <div class="score-bar-wrap"><div class="score-bar-bg"><div class="score-bar-fill s3" style="width:60%"></div></div></div>
+      <div class="evidence-block">
+        <div class="ev-label">Evidence</div>
+        Amy has built: a women's running crew (Vitality-sponsored), a beginner cycling crew, a recipe book (full shoot/layout/production), and is actively building Gold to Gravel (gravel cycling platform for women, AI-agent assisted). She has run contract/consulting work independently. These are genuine builds — personal and professional. The spontaneous Workers Day video concept with a 15-second mock-up produced inside the session is builder behaviour. However, she has not built a B2B marketing function from zero under resource constraint, and she framed the Jem role partly as a place to grow into AI systems thinking rather than arriving with them already built.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- SCORING SUMMARY -->
+<div class="seg-divider"><span class="seg-divider-label">Weighted Scoring Summary</span></div>
+
+<div class="summary-card">
+  <table>
+    <thead>
+      <tr>
+        <th>Section</th>
+        <th>Raw Score</th>
+        <th>Max</th>
+        <th>%</th>
+        <th>Weight</th>
+        <th>Weighted</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Segment 1: AMA / Role Interrogation</td>
+        <td><strong>15</strong></td>
+        <td>20</td>
+        <td>75%</td>
+        <td>15%</td>
+        <td class="wtd-score mid">11.3</td>
+      </tr>
+      <tr>
+        <td>Segment 2: Brand Health Tracker</td>
+        <td><strong>15</strong></td>
+        <td>20</td>
+        <td>75%</td>
+        <td>20%</td>
+        <td class="wtd-score good">15.0</td>
+      </tr>
+      <tr>
+        <td>Segment 3: Securex Event Strategy</td>
+        <td><strong>21</strong></td>
+        <td>25</td>
+        <td>84%</td>
+        <td>25%</td>
+        <td class="wtd-score good">21.0</td>
+      </tr>
+      <tr>
+        <td>Core Competencies</td>
+        <td><strong>22</strong></td>
+        <td>30</td>
+        <td>73%</td>
+        <td>40%</td>
+        <td class="wtd-score mid">29.3</td>
+      </tr>
+      <tr>
+        <td><strong>WEIGHTED TOTAL</strong></td>
+        <td><strong>73</strong></td>
+        <td>95</td>
+        <td>—</td>
+        <td>100%</td>
+        <td style="color:white;font-size:18px;font-weight:800;">77 / 100</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div style="background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:24px;">
+  <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--grey);margin-bottom:12px;">Score Band Reference</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;">
+    <div style="flex:1;min-width:100px;padding:10px 12px;border-radius:8px;background:var(--green-light);text-align:center;">
+      <div style="font-size:12px;font-weight:700;color:var(--green);">85–100</div>
+      <div style="font-size:11px;color:var(--green);">Strong Pass</div>
+    </div>
+    <div style="flex:1;min-width:100px;padding:10px 12px;border-radius:8px;background:var(--green-light);border:2px solid var(--green);text-align:center;">
+      <div style="font-size:12px;font-weight:700;color:var(--green);">70–84 → Amy: 77</div>
+      <div style="font-size:11px;color:var(--green);">Pass — Final Stage</div>
+    </div>
+    <div style="flex:1;min-width:100px;padding:10px 12px;border-radius:8px;background:#fff7ed;text-align:center;">
+      <div style="font-size:12px;font-weight:700;color:#ea580c;">55–69</div>
+      <div style="font-size:11px;color:#ea580c;">Conditional</div>
+    </div>
+    <div style="flex:1;min-width:100px;padding:10px 12px;border-radius:8px;background:var(--red-light);text-align:center;">
+      <div style="font-size:12px;font-weight:700;color:var(--red);">Below 55</div>
+      <div style="font-size:11px;color:var(--red);">No Hire</div>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--grey);margin-top:10px;">Amy scores 77 — solidly inside the Pass band. Proceed to Caroline's behavioural interview. Gaps to resolve are specific and testable, not fundamental.</p>
+</div>
+
+
+<!-- DISQUALIFIERS -->
+<div class="seg-divider"><span class="seg-divider-label">Non-Negotiable Disqualifiers</span></div>
+
+<div class="dq-card">
+  <h3>Auto No-Hire Checks — Regardless of Overall Score</h3>
+  <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text"><strong>AI Fluency scored 1 or 2:</strong> Not triggered. Amy scored 3 — active daily user, strong tool output, does not yet build AI systems.</div></div>
+  <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text"><strong>Commercial Literacy scored 1:</strong> Not triggered. Amy scored 4 — pipeline language consistent, missing hard targets.</div></div>
+  <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text"><strong>No evidence of having built anything:</strong> Not triggered. Running crew (Vitality-sponsored), recipe book, Gold to Gravel platform in progress, Workers Day video concept produced unprompted in the session.</div></div>
+  <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text"><strong>Three or more segment red flags:</strong> Not triggered. One flag across the full workshop (Securex success metrics).</div></div>
+  <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text"><strong>Presence/Confidence scored 1 or 2:</strong> Not triggered. Amy scored 4 — confident, clear, holds the room across 3 hours.</div></div>
+  <div class="flag-item"><div class="flag-icon clear">✓</div><div class="flag-text"><strong>Entire career in large corporates/agencies:</strong> Not triggered, but borderline. Publicis Group background is significant. Offset by independent contracting and personal project builds. Probe further in behavioural interview.</div></div>
+  <p style="font-size:12px;font-weight:700;color:var(--green);margin-top:12px;">No disqualifiers triggered. Process continues.</p>
+</div>
+
+
+<!-- FINAL RECOMMENDATION -->
+<div class="seg-divider"><span class="seg-divider-label">Final Recommendation</span></div>
+
+<div class="rec-card">
+  <div class="rec-label">Recommendation</div>
+  <div class="rec-verdict">Pass — Proceed to Caroline's Behavioural Interview</div>
+  <div class="rec-body">
+    <p>The deliverables materially changed this assessment. The Securex deck is the work of someone who thinks in campaigns, not logistics — a 12-step pre-event plan, a 6-step stand engagement flow with qualification built in, lead tiering, retargeting, a "Missed us at Securex" campaign, and a closing frame that explicitly positions the event as a full-funnel pipeline engine. That output, produced in 45 minutes, is not accidental.</p>
+    <p>The Workers Day documentary concept — unasked for, presented at the end of a 3-hour session with a 15-second video mock-up she built on the day — is the best single piece of work from the session. Night Watch, Underground, Production Line, with a "Jem Moment" embedded in each. A voiceover script that lands the dual-sided value in two sentences. A PR angle Jem has never used. That is narrative thinking. It is the kind of instinct that, in the right role, becomes a brand platform.</p>
+    <p>The gaps are specific and honest. She does not yet set hard commercial metrics — she talks correctly about pipeline without naming a number, and frames event success in directional terms rather than accountable ones. Her AI fluency is practitioner-level, not systems-level; she uses tools excellently but she is not yet building automations or thinking about how to replace headcount with agents. And her career has been shaped by agencies and large organisations more than scrappy operator environments.</p>
+    <p>None of these are disqualifying. They are the gaps you would close in a well-structured 90-day onboarding with clear commercial targets and access to the AI tooling the team has already built. The question for Caroline's session is whether the posture is right — does she arrive as an owner or a learner?</p>
+  </div>
+  <div class="gaps-list">
+    <h4>Questions to Resolve in Behavioural Interview</h4>
+    <ul>
+      <li><strong>Commercial metric ownership:</strong> Has she ever owned a pipeline number, a CAC target, or a revenue-attributed metric? If so, what was it, how did she track it, and did she hit it?</li>
+      <li><strong>AI systems vs AI tools:</strong> Describe the last workflow she built — not used — with AI. What does it do, how does it run, what did it cost to build? Look for specificity, not aspiration.</li>
+      <li><strong>Builder under constraint:</strong> Ask for a time she had to build a marketing function with no agency, no template, and no budget. Not a project. A function.</li>
+      <li><strong>Ownership posture:</strong> She mentioned wanting to learn from Jem's AI systems. Probe: is she coming to lead from day one, or is there a ramp period required? The answer matters at this stage.</li>
+      <li><strong>Agency experience as a risk:</strong> Most of her career has been inside structures that absorbed risk on her behalf. Ask her directly: what is the hardest decision she's made without a safety net?</li>
+    </ul>
+  </div>
+</div>
+
+<div class="footer">
+  Jem Head of Marketing · Candidate Scorecard v1.1 · Amy Hopkins · 26 March 2026<br>
+  Scored against workshop transcript + Brand Health Tracker deck + Securex presentation. For internal use only.
+</div>
+
+</div><!-- /main -->
+</body>
+</html>
