@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TickeyBox — App Feedback & Ideal State</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--coral:#FF6E61;--navy:#08113F;--canvas:#FFFAF0;--mint:#B3E6C9;--yellow:#FFEE6B;--white:#fff;--border:rgba(8,17,63,.1);--muted:rgba(8,17,63,.45);--success:#2A9D8F;--warn:#F59E0B;--danger:#E63946;--info:#3B82F6;--purple:#7C3AED;--bg:#F0EDE5;--r:16px;--sh:0 4px 20px rgba(8,17,63,.08)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;font-size:15px;color:var(--navy);background:var(--bg);-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--navy);display:flex;align-items:center;padding:0 20px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Bungee',cursive;font-size:12px;color:var(--coral);white-space:nowrap;padding:14px 16px 14px 0;border-right:1px solid rgba(255,255,255,.1);margin-right:4px;flex-shrink:0}
+.nav a{color:rgba(255,250,240,.5);text-decoration:none;font-size:12px;font-weight:600;letter-spacing:.4px;padding:14px 12px;white-space:nowrap;flex-shrink:0;transition:color .15s}
+.nav a:hover{color:var(--canvas)}
+
+/* HEADER */
+.hdr{background:var(--navy);color:var(--canvas);padding:48px 40px 40px}
+.hdr-inner{max-width:1060px;margin:0 auto}
+.eyebrow{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--coral);margin-bottom:10px}
+.hdr h1{font-family:'Bungee',cursive;font-size:clamp(20px,3.5vw,30px);margin-bottom:8px}
+.hdr p{font-size:14px;opacity:.65;max-width:560px;line-height:1.6;margin-bottom:28px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:6px 13px;font-size:12px;display:flex;gap:7px;align-items:center}
+.pill strong{color:var(--yellow);font-weight:600}
+
+/* MAIN LAYOUT */
+.main{max-width:1060px;margin:0 auto;padding:40px 24px 80px}
+
+/* INTRO GRID */
+.intro-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:40px}
+@media(max-width:640px){.intro-grid{grid-template-columns:1fr}}
+.icard{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;box-shadow:var(--sh)}
+.icard.full{grid-column:1/-1}
+.icard h3{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+.icard p,.icard li{font-size:13px;line-height:1.65;color:rgba(8,17,63,.78)}
+.icard ul{padding-left:16px}.icard li{margin-bottom:3px}
+
+/* PHASE HEADER */
+.phase-hdr{display:flex;align-items:center;gap:14px;margin:52px 0 20px;padding-bottom:14px;border-bottom:2px solid var(--border)}
+.phase-badge{font-family:'Bungee',cursive;font-size:12px;letter-spacing:1px;padding:5px 13px;border-radius:8px;flex-shrink:0}
+.pb-p1{background:var(--danger);color:#fff}.pb-p2{background:var(--warn);color:#fff}.pb-p3{background:var(--info);color:#fff}.pb-screen{background:var(--navy);color:#fff}
+.phase-hdr h2{font-family:'Poppins',sans-serif;font-size:17px;font-weight:700}
+.phase-hdr .cnt{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted);flex-shrink:0}
+
+/* ISSUE CARD */
+.issue{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:22px 26px;margin-bottom:14px;box-shadow:var(--sh)}
+.issue.decision{border-color:rgba(124,58,237,.3)}
+.issue-hdr{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.inum{font-family:'Bungee',cursive;font-size:11px;color:rgba(8,17,63,.28);padding-top:2px;flex-shrink:0;min-width:26px}
+.ititle{font-family:'Poppins',sans-serif;font-size:15px;font-weight:700;flex:1;min-width:0}
+.badges{display:flex;gap:5px;flex-wrap:wrap;flex-shrink:0}
+.b{font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 8px;border-radius:5px}
+.b-p1{background:rgba(230,57,70,.12);color:var(--danger)}
+.b-p2{background:rgba(245,158,11,.12);color:#B45309}
+.b-p3{background:rgba(59,130,246,.12);color:#1D4ED8}
+.b-copy{background:rgba(139,92,246,.1);color:#6D28D9}
+.b-ux{background:rgba(16,185,129,.1);color:#065F46}
+.b-ia{background:rgba(245,158,11,.1);color:#92400E}
+.b-safe{background:rgba(230,57,70,.1);color:var(--danger)}
+.b-lay{background:rgba(59,130,246,.1);color:#1E40AF}
+.b-dec{background:rgba(124,58,237,.1);color:var(--purple)}
+.b-new{background:rgba(42,157,143,.12);color:var(--success);font-size:9px}
+.scr-lbl{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
+.prob{background:rgba(230,57,70,.05);border-left:3px solid var(--danger);border-radius:0 8px 8px 0;padding:11px 14px;margin-bottom:12px;font-size:13px;line-height:1.6;color:rgba(8,17,63,.82)}
+.dec-block{background:rgba(124,58,237,.05);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;padding:11px 14px;margin-bottom:12px;font-size:13px;line-height:1.6;color:rgba(8,17,63,.82)}
+.fix{background:rgba(42,157,143,.06);border-left:3px solid var(--success);border-radius:0 8px 8px 0;padding:11px 14px;font-size:13px;line-height:1.6;color:rgba(8,17,63,.82)}
+.fix strong,.prob strong,.dec-block strong{color:var(--navy)}
+code{background:rgba(8,17,63,.07);border-radius:4px;padding:1px 5px;font-size:12px;font-family:'Inter',monospace}
+
+/* BEFORE / AFTER */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:520px){.ba{grid-template-columns:1fr}}
+.ba-col{border-radius:8px;padding:10px 12px}
+.ba-col.bef{background:rgba(230,57,70,.07);border:1px solid rgba(230,57,70,.2)}
+.ba-col.aft{background:rgba(42,157,143,.07);border:1px solid rgba(42,157,143,.2)}
+.ba-col.scen{background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.2)}
+.ba-lbl{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:5px}
+.ba-col.bef .ba-lbl{color:var(--danger)}.ba-col.aft .ba-lbl{color:var(--success)}.ba-col.scen .ba-lbl{color:var(--purple)}
+.ba-col code{background:none;padding:0;font-size:12px;line-height:1.7;display:block;white-space:pre-wrap;word-break:break-word;border-radius:0}
+.ba-col.bef code{color:rgba(8,17,63,.65)}.ba-col.aft code{color:var(--navy);font-weight:500}.ba-col.scen code{color:rgba(124,58,237,.85)}
+
+/* SUMMARY TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:var(--r);box-shadow:var(--sh)}
+table{width:100%;border-collapse:collapse;background:var(--white);font-size:12px}
+thead tr{background:var(--navy);color:var(--canvas)}
+thead th{padding:11px 14px;text-align:left;font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:nth-child(even){background:rgba(8,17,63,.02)}
+tbody tr.drow{background:rgba(124,58,237,.03)}
+td{padding:10px 14px;vertical-align:top}
+td.num{font-weight:700;color:rgba(8,17,63,.35);font-size:11px;white-space:nowrap}
+td.scr{font-weight:500;white-space:nowrap;font-size:12px}
+td.ttl{line-height:1.4;font-size:12px}
+td.sts{color:rgba(8,17,63,.3);font-style:italic;white-space:nowrap}
+.tb{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:2px 6px;border-radius:4px;vertical-align:middle;margin:1px}
+.tb-p1{background:rgba(230,57,70,.12);color:var(--danger)}
+.tb-p2{background:rgba(245,158,11,.12);color:#B45309}
+.tb-p3{background:rgba(59,130,246,.12);color:#1D4ED8}
+.tb-copy{background:rgba(139,92,246,.1);color:#6D28D9}
+.tb-ux{background:rgba(16,185,129,.1);color:#065F46}
+.tb-ia{background:rgba(245,158,11,.1);color:#92400E}
+.tb-safe{background:rgba(230,57,70,.1);color:var(--danger)}
+.tb-lay{background:rgba(59,130,246,.1);color:#1E40AF}
+.tb-dec{background:rgba(124,58,237,.1);color:var(--purple)}
+.tb-new{background:rgba(42,157,143,.12);color:var(--success)}
+
+/* ── PHONE MOCKUPS ── */
+.gallery{display:flex;gap:28px;overflow-x:auto;padding-bottom:20px;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:rgba(8,17,63,.15) transparent;align-items:flex-start}
+.gallery::-webkit-scrollbar{height:3px}.gallery::-webkit-scrollbar-thumb{background:rgba(8,17,63,.15);border-radius:2px}
+.punit{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:14px;width:240px}
+.plabel{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-align:center}
+.pissues{font-size:11px;color:var(--coral);font-weight:600;text-align:center}
+.pframe{width:240px;background:#0D0D1A;border-radius:40px;padding:12px 9px 16px;box-shadow:0 20px 60px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.06)}
+.pscreen{background:var(--canvas);border-radius:32px;overflow:hidden;display:flex;flex-direction:column}
+.sbar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 2px;font-size:10px;font-weight:700;color:var(--navy);flex-shrink:0}
+.sbar.inv{background:var(--navy);color:var(--canvas)}
+.appnav{background:var(--navy);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.anlogo{font-family:'Bungee',cursive;font-size:11px;color:var(--canvas);display:flex;align-items:center;gap:5px}
+.anlogo .dot{width:18px;height:18px;background:var(--coral);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:9px}
+.anback{font-size:11px;font-weight:600;color:var(--coral)}
+.anmenu{font-size:14px;color:rgba(255,250,240,.55)}
+.sbody{flex:1;padding:14px 14px 0;overflow:hidden}
+.stitle{font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.ssub{font-size:10px;color:var(--muted);margin-bottom:12px;line-height:1.45}
+.scard{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:10px 12px;margin-bottom:8px;box-shadow:0 1px 4px rgba(8,17,63,.05)}
+.dname{font-family:'Poppins',sans-serif;font-size:12px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.dmeta{font-size:10px;color:var(--muted);margin-bottom:7px}
+.spill{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px}
+.sp-on{background:rgba(34,197,94,.12);color:#16A34A}
+.sp-off{background:rgba(8,17,63,.07);color:rgba(8,17,63,.4)}
+.spill::before{content:'●';font-size:5px}
+.sfield{background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:11px;color:rgba(8,17,63,.45);margin-bottom:7px;width:100%;font-family:'Inter',sans-serif}
+.sfield.filled{color:var(--navy)}
+.sfield.hint{font-size:10px;color:rgba(8,17,63,.3);font-style:italic}
+.sbtn{display:flex;align-items:center;justify-content:center;border-radius:10px;font-family:'Poppins',sans-serif;font-weight:700;font-size:11px;padding:9px;width:100%;border:none;cursor:pointer;margin-bottom:6px}
+.sbtn-pri{background:var(--coral);color:white}
+.sbtn-sec{background:transparent;color:var(--coral);border:1.5px solid var(--coral)}
+.sbtn-ghost{background:transparent;color:var(--muted);font-size:10px;border:1px solid var(--border)}
+.slink{font-size:10px;color:var(--muted);text-align:center;display:block;margin-top:6px}
+.sfg{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:10px}
+.stile{background:var(--white);border:1px solid var(--border);border-radius:11px;padding:10px 9px;box-shadow:0 1px 4px rgba(8,17,63,.05)}
+.ticon{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;margin-bottom:6px}
+.ic-coral{background:var(--coral)}.ic-navy{background:var(--navy)}.ic-blue{background:rgba(59,130,246,.15)}.ic-grey{background:rgba(8,17,63,.08)}
+.tname{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:var(--navy)}
+.tsub{font-size:9px;color:var(--muted);line-height:1.3}
+.srow{display:flex;align-items:flex-start;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
+.srow:last-of-type{border-bottom:none}
+.savatar{width:28px;height:28px;background:rgba(255,110,97,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.sname{font-size:11px;font-weight:600;color:var(--navy)}
+.smeta{font-size:9px;color:var(--muted)}
+.stime{font-size:9px;color:var(--muted);flex-shrink:0;text-align:right}
+.slink-small{font-size:10px;color:var(--coral);font-weight:600}
+.sviewall{display:block;text-align:center;font-size:10px;font-weight:600;color:var(--coral);padding:7px 0 2px}
+.stogrow{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;padding:8px 0;border-bottom:1px solid var(--border)}
+.stogrow:last-of-type{border-bottom:none}
+.stog-lbl{font-size:11px;font-weight:600;color:var(--navy);margin-bottom:1px}
+.stog-sub{font-size:9px;color:var(--muted);line-height:1.35}
+.stog{width:32px;height:19px;border-radius:10px;flex-shrink:0;position:relative;margin-top:2px}
+.stog.on{background:var(--coral)}.stog.off{background:rgba(8,17,63,.15)}
+.stog::after{content:'';width:13px;height:13px;background:white;border-radius:50%;position:absolute;top:3px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.stog.on::after{right:3px}.stog.off::after{left:3px}
+.sinfo{background:rgba(8,17,63,.04);border-radius:8px;padding:8px 10px;font-size:10px;color:var(--muted);line-height:1.45;margin-bottom:10px}
+.shome{height:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.shome::after{content:'';display:block;width:80px;height:3px;background:rgba(8,17,63,.15);border-radius:2px}
+.contact-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:9px 11px;margin-bottom:7px}
+.cc-top{display:flex;align-items:center;gap:7px;margin-bottom:6px}
+.cav{width:28px;height:28px;background:var(--navy);border-radius:50%;font-family:'Poppins',sans-serif;font-weight:700;font-size:11px;color:var(--canvas);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cname{font-size:11px;font-weight:600;color:var(--navy)}
+.cnum{font-size:10px;color:var(--muted)}
+.cperms{display:flex;gap:5px;flex-wrap:wrap}
+.cperm{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:600;padding:2px 6px;border-radius:20px;background:rgba(42,157,143,.1);color:var(--success)}
+.cperm::before{content:'✓';font-size:8px}
+.modal-overlay{background:var(--navy);padding:12px 14px;border-radius:11px 11px 0 0;margin:0 -14px}
+.modal-title{font-family:'Poppins',sans-serif;font-size:13px;font-weight:700;color:var(--canvas);margin-bottom:0}
+.dir-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(42,157,143,.1);border:1px solid rgba(42,157,143,.2);border-radius:20px;padding:4px 10px;font-size:10px;font-weight:700;color:var(--success);margin:10px 0 8px}
+.drow-item{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:11px}
+.drow-item:last-of-type{border-bottom:none}
+.dk{color:var(--muted)}.dv{font-weight:600;color:var(--navy)}
+.prog-steps{display:flex;align-items:center;justify-content:center;gap:0;padding:8px 14px 4px;flex-shrink:0}
+.pdot{width:7px;height:7px;border-radius:50%;background:var(--border)}
+.pdot.active{background:var(--coral);width:16px;border-radius:3px}
+.pdot.done{background:var(--success)}
+.pline{flex:1;height:2px;background:var(--border);max-width:24px}
+.pline.done{background:var(--success)}
+.region-opt{background:var(--white);border:1.5px solid var(--border);border-radius:11px;padding:10px 12px;margin-bottom:7px}
+.region-opt.sel{border-color:var(--coral);background:rgba(255,110,97,.04)}
+.rname{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:var(--navy);display:flex;justify-content:space-between;margin-bottom:2px}
+.rcheck{color:var(--coral)}
+.rprov{font-size:9px;color:var(--muted);line-height:1.35}
+.rica-block{background:rgba(255,110,97,.05);border:1px solid rgba(255,110,97,.2);border-radius:10px;padding:10px 12px;margin-bottom:8px}
+.ricah{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;color:var(--navy);margin-bottom:2px}
+.ricas{font-size:10px;color:var(--muted);line-height:1.4;margin-bottom:7px}
+.upload-btn{display:flex;align-items:center;gap:5px;background:var(--white);border:1.5px dashed rgba(8,17,63,.18);border-radius:7px;padding:6px 10px;font-size:10px;color:var(--coral);font-weight:600}
+.logo-lockup{display:flex;flex-direction:column;align-items:center;gap:6px;margin-bottom:20px}
+.licon{width:44px;height:44px;background:var(--coral);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.lword{font-family:'Bungee',cursive;font-size:15px;letter-spacing:2px;color:var(--navy)}
+.wtitle{font-family:'Poppins',sans-serif;font-size:16px;font-weight:700;color:var(--navy);margin-bottom:4px}
+.wsub{font-size:11px;color:var(--muted);line-height:1.45;margin-bottom:18px;max-width:180px;text-align:center}
+.flabel{font-size:10px;font-weight:600;color:var(--muted);margin-bottom:3px;letter-spacing:.3px}
+.summ-section{margin-top:56px;padding-top:28px;border-top:2px solid var(--border)}
+.summ-section h2{font-family:'Bungee',cursive;font-size:18px;color:var(--navy);margin-bottom:4px}
+.summ-section p{font-size:13px;color:var(--muted);margin-bottom:20px}
+.gallery-section{margin-bottom:36px}
+.gal-hdr{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.notice{background:rgba(124,58,237,.07);border:1px solid rgba(124,58,237,.2);border-radius:10px;padding:10px 14px;font-size:12px;color:rgba(8,17,63,.75);margin-bottom:20px;line-height:1.55}
+.notice strong{color:var(--purple)}
+@media(max-width:640px){.hdr{padding:32px 18px 28px}.main{padding:28px 14px 60px}.issue{padding:18px 16px}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">TICKEYBOX</div>
+  <a href="#overview">Overview</a>
+  <a href="#screens">Screens</a>
+  <a href="#p1">P1 — Critical</a>
+  <a href="#p2">P2 — Important</a>
+  <a href="#p3">P3 — Polish</a>
+  <a href="#summary">Summary</a>
+</nav>
+
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="eyebrow">Snaptel Dev Team · App Feedback + Ideal State</div>
+    <h1>UI, Copy & UX Feedback</h1>
+    <p>Combined review of the demo app ahead of the 50-household pilot. Includes ideal state screen mockups as visual reference alongside each section. Focus: language, information architecture, UX flow, safety defaults. Brand colour pass is separate.</p>
+    <div class="pills">
+      <div class="pill"><span>Date</span><strong>27 March 2026</strong></div>
+      <div class="pill"><span>App</span><strong>tickeyboxdemo.snaptel.io</strong></div>
+      <div class="pill"><span>Issues</span><strong>37 identified</strong></div>
+      <div class="pill"><span>Audience</span><strong>Parents (non-technical)</strong></div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+<!-- OVERVIEW -->
+<section id="overview" style="margin-top:36px">
+  <div class="intro-grid">
+    <div class="icard">
+      <h3>Scope</h3>
+      <ul>
+        <li><strong>In scope:</strong> Copy, labels, IA, UX flow, safety defaults, parent-facing language</li>
+        <li><strong>Out of scope:</strong> Brand colours, logo, typography</li>
+        <li><strong>Not flagged:</strong> Emergency contacts UI, transcriptions — both stubbed. Emergency contacts spec is defined below (#12) for when they are built.</li>
+        <li><strong>Priority logic:</strong> P1 = fix before pilot. P2 = fix before broad rollout. P3 = polish.</li>
+      </ul>
+    </div>
+    <div class="icard">
+      <h3>What's Working</h3>
+      <ul>
+        <li>End-to-end flow functional (create → pay → provision → manage)</li>
+        <li>Contacts list with inbound/outbound control</li>
+        <li>Quiet Hours and Weekly Schedule (inc. per-day time pickers)</li>
+        <li>Minutes purchase via PayFast (recurring + one-time)</li>
+        <li>Multi-account switching</li>
+        <li>Call log and call details modal</li>
+      </ul>
+    </div>
+    <div class="icard full">
+      <h3>Naming Convention — Agreed Standard</h3>
+      <p style="margin-bottom:12px">Use <strong>"TickeyBox"</strong> as the noun for the physical device. Use <strong>plain language for all actions and states</strong>. User-inputted names (e.g. "Matt's Phone") are shown as-is — do not flag these as dev issues. Test: would a non-technical parent understand it in under 2 seconds?</p>
+      <div class="ba">
+        <div class="ba-col bef"><div class="ba-lbl">Avoid</div><code>Create New TickeyBox
+TickeyBox's
+Device Pairing
+Manage ›
+Inbound / Outbound
+Offline Message
+Household</code></div>
+        <div class="ba-col aft"><div class="ba-lbl">Use Instead</div><code>Add a New Phone
+Your TickeyBoxes
+Set up your phone
+Open ›
+Can call in / Can call out
+Message callers hear
+Family Account</code></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCREENS GALLERY -->
+<section id="screens">
+  <div class="phase-hdr">
+    <span class="phase-badge pb-screen">Visual Reference</span>
+    <h2>Ideal State — Screen Mockups</h2>
+    <span class="cnt">9 screens</span>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:24px">What the app should look and feel like once P1 and P2 feedback is applied. These are design intent mockups — copy, flow, and IA. Scroll right to see all screens. Issue numbers referenced in the label below each phone.</p>
+
+  <!-- ROW 1: Auth + Dashboard -->
+  <div class="gallery-section">
+    <div class="gal-hdr">Auth &amp; Dashboard</div>
+    <div class="gallery">
+
+      <!-- Login -->
+      <div class="punit">
+        <div class="plabel">Sign In</div>
+        <div class="pissues">Issues #1, #27</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="sbody" style="display:flex;flex-direction:column;align-items:center;padding:20px 14px 0;text-align:center">
+            <div class="logo-lockup"><div class="licon">📞</div><div class="lword">TICKEYBOX</div></div>
+            <div class="wtitle">Welcome back</div>
+            <div class="wsub">Sign in to manage your child's phone.</div>
+            <div style="width:100%;text-align:left">
+              <div class="flabel">Email address</div>
+              <div class="sfield" style="margin-bottom:8px">parent@email.com</div>
+              <div class="flabel">Password</div>
+              <div class="sfield" style="margin-bottom:10px">••••••••</div>
+              <button class="sbtn sbtn-pri">Sign in</button>
+              <button class="sbtn sbtn-sec">Create your account</button>
+              <span class="slink">Forgot your password?</span>
+            </div>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- RICA -->
+      <div class="punit">
+        <div class="plabel">RICA Verification</div>
+        <div class="pissues">Issues #15, #29</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="prog-steps"><div class="pdot done"></div><div class="pline done"></div><div class="pdot active"></div><div class="pline"></div><div class="pdot"></div></div>
+          <div class="sbody">
+            <div class="stitle">One quick legal step</div>
+            <div class="ssub">South African law requires phone providers to verify account holders. Once-off, takes under a minute. Your account is already active.</div>
+            <div class="rica-block">
+              <div class="ricah">ID document</div>
+              <div class="ricas">SA ID, passport, or driver's licence (PDF, JPG, PNG)</div>
+              <div class="upload-btn">📎 Upload ID →</div>
+            </div>
+            <div class="rica-block">
+              <div class="ricah">Proof of address</div>
+              <div class="ricas">Utility bill or bank statement, last 3 months (PDF, JPG, PNG)</div>
+              <div class="upload-btn">📎 Upload proof →</div>
+            </div>
+            <button class="sbtn sbtn-pri" style="margin-top:6px">Continue to dashboard →</button>
+            <button class="sbtn sbtn-ghost">I'll do this later</button>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- Dashboard -->
+      <div class="punit">
+        <div class="plabel">Your TickeyBoxes</div>
+        <div class="pissues">Issues #2, #3, #22, #24, #25, #28, #29</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar inv"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="appnav"><div class="anlogo"><div class="dot">📞</div>TICKEYBOX</div><div class="anmenu">≡</div></div>
+          <div class="sbody">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;margin-top:2px">
+              <div class="stitle" style="margin:0">Your TickeyBoxes</div>
+              <button class="sbtn sbtn-pri" style="width:auto;padding:5px 10px;font-size:10px;margin:0">+ Add a Phone</button>
+            </div>
+            <div class="scard">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:3px">
+                <div class="dname">Matt's Phone</div>
+                <span class="spill sp-on">Online</span>
+              </div>
+              <div class="dmeta">1 contact added · Calls: Allowed</div>
+              <div style="display:flex;justify-content:flex-end"><button class="sbtn sbtn-pri" style="width:auto;padding:4px 10px;font-size:10px;margin:0">Open ›</button></div>
+            </div>
+            <div class="scard" style="opacity:.6">
+              <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:3px">
+                <div class="dname">Liam's Phone</div>
+                <span class="spill sp-off">Offline</span>
+              </div>
+              <div class="dmeta">3 contacts · Quiet hours on</div>
+              <div style="display:flex;justify-content:flex-end"><button class="sbtn sbtn-pri" style="width:auto;padding:4px 10px;font-size:10px;margin:0">Open ›</button></div>
+            </div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin:10px 0 6px">Recent Calls</div>
+            <div class="scard" style="padding:4px 12px">
+              <div class="srow"><div class="savatar">📞</div><div style="flex:1"><div class="sname">Gogo</div><div class="smeta">Matt's Phone · Incoming</div></div><div class="stime">Just now<br><span class="slink-small">View</span></div></div>
+              <div class="srow"><div class="savatar">📞</div><div style="flex:1"><div class="sname">Liam Brownell</div><div class="smeta">Liam's Phone · Outgoing</div></div><div class="stime">4m ago<br><span class="slink-small">View</span></div></div>
+              <a class="sviewall">View all call records →</a>
+            </div>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- Phone overview -->
+      <div class="punit">
+        <div class="plabel">Matt's Phone</div>
+        <div class="pissues">Issues #8, #9, #19, #20, #23, #26</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar inv"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="appnav"><div class="anback">‹ My Phones</div><div class="anmenu">≡</div></div>
+          <div class="sbody">
+            <div style="display:flex;align-items:center;gap:7px;margin-bottom:2px;margin-top:4px">
+              <div class="stitle" style="margin:0">Matt's Phone</div>
+              <span class="spill sp-on">Online</span>
+            </div>
+            <div class="ssub">+27 21 879 3762</div>
+            <div class="sfg">
+              <div class="stile"><div class="ticon ic-coral">👥</div><div class="tname">Contacts</div><div class="tsub">1 added</div></div>
+              <div class="stile"><div class="ticon ic-navy" style="color:white">🕐</div><div class="tname">Call Hours</div><div class="tsub">Quiet hours &amp; schedule</div></div>
+              <div class="stile"><div class="ticon ic-blue">📋</div><div class="tname">Call History</div><div class="tsub">Recent calls</div></div>
+              <div class="stile"><div class="ticon ic-grey">⚙️</div><div class="tname">Settings</div><div class="tsub">Phone settings</div></div>
+            </div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Recent Calls</div>
+            <div class="scard" style="padding:4px 12px">
+              <div class="srow"><div class="savatar">📞</div><div style="flex:1"><div class="sname">Gogo</div><div class="smeta">Incoming · 0:11</div></div><div class="stime">Just now<br><span class="slink-small">View</span></div></div>
+              <div class="srow"><div class="savatar">📞</div><div style="flex:1"><div class="sname">Gogo</div><div class="smeta">Incoming · 0:08</div></div><div class="stime">1m ago<br><span class="slink-small">View</span></div></div>
+              <a class="sviewall">View all call records →</a>
+            </div>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROW 2: Setup Wizard -->
+  <div class="gallery-section">
+    <div class="gal-hdr">Setup Wizard — Add a New Phone</div>
+    <div class="gallery">
+
+      <!-- Step 1 Region -->
+      <div class="punit">
+        <div class="plabel">Step 1 — Where You're Based</div>
+        <div class="pissues">Issue #5 (Decision)</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="prog-steps"><div class="pdot active"></div><div class="pline"></div><div class="pdot"></div><div class="pline"></div><div class="pdot"></div></div>
+          <div class="sbody">
+            <div class="stitle">Add a New Phone</div>
+            <div class="ssub">Step 1 of 3 · Where are you based? This helps us assign the nearest number.</div>
+            <div class="region-opt sel">
+              <div class="rname">Northern SA <span class="rcheck">✓</span></div>
+              <div class="rprov">Gauteng, Limpopo, North West, Mpumalanga, Free State</div>
+            </div>
+            <div class="region-opt">
+              <div class="rname">Southern SA</div>
+              <div class="rprov">Western Cape, Eastern Cape, Northern Cape, KwaZulu-Natal</div>
+            </div>
+            <button class="sbtn sbtn-pri" style="margin-top:14px">Continue →</button>
+            <div class="notice" style="margin-top:10px;font-size:10px"><strong>Note:</strong> If Snaptel confirms no latency impact between regions, remove this step entirely — auto-assign to Johannesburg PBX.</div>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- Step 2 Device -->
+      <div class="punit">
+        <div class="plabel">Step 2 — Phone Setup</div>
+        <div class="pissues">Issues #4, #6</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="prog-steps"><div class="pdot done"></div><div class="pline done"></div><div class="pdot active"></div><div class="pline"></div><div class="pdot"></div></div>
+          <div class="sbody">
+            <div class="stitle">Do you have your TickeyBox phone with you?</div>
+            <div class="ssub">We'll set it up automatically — you just need the sticker on the back.</div>
+            <div class="scard">
+              <div style="font-size:11px;font-weight:600;color:var(--navy);margin-bottom:3px">📦 I have my phone</div>
+              <div style="font-size:10px;color:var(--muted);line-height:1.35;margin-bottom:8px">Scan the QR code on the sticker or enter the 6-digit code. We'll configure it automatically.</div>
+              <button class="sbtn sbtn-pri" style="font-size:10px;padding:7px">Scan QR code</button>
+            </div>
+            <div class="scard" style="background:rgba(8,17,63,.03)">
+              <div style="font-size:11px;font-weight:600;color:var(--navy);margin-bottom:3px">⏳ No phone yet? No problem.</div>
+              <div style="font-size:10px;color:var(--muted);line-height:1.35;margin-bottom:8px">You can set up your phone any time from your dashboard.</div>
+              <button class="sbtn sbtn-ghost" style="font-size:10px;padding:7px">Set up later</button>
+            </div>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- Step 3 Review -->
+      <div class="punit">
+        <div class="plabel">Step 3 — Review &amp; Start</div>
+        <div class="pissues">Issues #3, #7</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="prog-steps"><div class="pdot done"></div><div class="pline done"></div><div class="pdot done"></div><div class="pline done"></div><div class="pdot active"></div></div>
+          <div class="sbody">
+            <div class="stitle">Almost done</div>
+            <div class="ssub">Give your phone a name, then confirm payment.</div>
+            <div class="flabel">Phone name</div>
+            <div class="sfield filled" style="margin-bottom:10px">Matt's Phone</div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Summary</div>
+            <div class="scard" style="padding:0">
+              <div style="display:flex;justify-content:space-between;padding:7px 11px;border-bottom:1px solid var(--border);font-size:11px"><span style="color:var(--muted)">Family Account</span><span style="font-weight:600">Tiaan's Family</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 11px;border-bottom:1px solid var(--border);font-size:11px"><span style="color:var(--muted)">Plan</span><span style="font-weight:600">Standard · R99/mo</span></div>
+              <div style="display:flex;justify-content:space-between;padding:7px 11px;font-size:11px"><span style="color:var(--muted)">Phone model</span><span style="font-weight:600">Grandstream GXP2135</span></div>
+            </div>
+            <button class="sbtn sbtn-pri" style="margin-top:12px">Pay R99 and start →</button>
+            <button class="sbtn sbtn-ghost" style="font-size:10px">← Go back</button>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROW 3: Contacts + Quiet Hours + Call History -->
+  <div class="gallery-section">
+    <div class="gal-hdr">Phone Management &amp; Call History</div>
+    <div class="gallery">
+
+      <!-- Contacts -->
+      <div class="punit">
+        <div class="plabel">Contacts</div>
+        <div class="pissues">Issues #10, #11, #28</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar inv"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="appnav"><div class="anback">‹ Matt's Phone</div><button class="sbtn sbtn-pri" style="width:auto;padding:4px 9px;font-size:9px;margin:0">+ Add</button></div>
+          <div class="sbody">
+            <div class="stitle" style="margin-top:4px">Who can Matt call?</div>
+            <div class="ssub">Add the people your child should be able to reach. Up to 20 contacts. SA numbers only (e.g. 072 555 0101).</div>
+            <div class="contact-card">
+              <div class="cc-top"><div class="cav">G</div><div><div class="cname">Gogo</div><div class="cnum">072 555 0101</div></div></div>
+              <div class="cperms"><span class="cperm">Can call this phone</span><span class="cperm">Matt can call</span></div>
+            </div>
+            <div class="contact-card">
+              <div class="cc-top"><div class="cav">L</div><div><div class="cname">Liam Brownell</div><div class="cnum">083 383 6382</div></div></div>
+              <div class="cperms"><span class="cperm">Can call this phone</span><span class="cperm">Matt can call</span></div>
+            </div>
+            <button class="sbtn sbtn-pri" style="margin-top:6px">+ Add a contact</button>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- Add Contact Form -->
+      <div class="punit">
+        <div class="plabel">Add Contact — Ideal State</div>
+        <div class="pissues">Issues #10, #11</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar inv"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="appnav"><div class="anback">‹ Contacts</div><div class="anmenu">≡</div></div>
+          <div class="sbody">
+            <div class="stitle" style="margin-top:4px">Add a contact</div>
+            <div class="ssub">SA numbers only — enter starting with 0, no +27.</div>
+            <div class="flabel">Name</div>
+            <div class="sfield hint" style="margin-bottom:10px">e.g. Gogo</div>
+            <div class="flabel">Phone number</div>
+            <div class="sfield hint" style="margin-bottom:3px">e.g. 072 555 0101</div>
+            <div style="font-size:9px;color:var(--muted);margin-bottom:12px">10 digits, starting with 0. SA numbers only.</div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--muted);margin-bottom:7px">Call permissions</div>
+            <div class="stogrow">
+              <div><div class="stog-lbl">Can call this phone</div><div class="stog-sub">They can ring Matt's phone</div></div>
+              <div class="stog on"></div>
+            </div>
+            <div class="stogrow" style="margin-bottom:12px">
+              <div><div class="stog-lbl">Matt can call them</div><div class="stog-sub">Matt can dial this number</div></div>
+              <div class="stog on"></div>
+            </div>
+            <div style="background:rgba(230,57,70,.05);border-left:3px solid var(--danger);border-radius:0 6px 6px 0;padding:7px 10px;margin-bottom:10px;font-size:9px;color:rgba(8,17,63,.7);line-height:1.4"><strong style="color:var(--danger)">Current bug:</strong> Permissions are checkboxes defaulting to OFF. A parent who doesn't scroll sees a silent failure — contact added with no permissions.</div>
+            <button class="sbtn sbtn-pri">Save contact</button>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- Quiet Hours -->
+      <div class="punit">
+        <div class="plabel">Quiet Hours</div>
+        <div class="pissues">Issues #16, #17, #18</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar inv"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="appnav"><div class="anback">‹ Matt's Phone</div><div class="anmenu">≡</div></div>
+          <div class="sbody">
+            <div class="stitle" style="margin-top:4px">Quiet Hours</div>
+            <div class="sinfo">When quiet hours are on, callers hear a message instead of the phone ringing. Matt can't make or receive calls during this time.</div>
+            <div class="stogrow"><div><div class="stog-lbl">Quiet hours</div><div class="stog-sub">Currently on</div></div><div class="stog on"></div></div>
+            <div style="display:flex;gap:8px;margin:10px 0">
+              <div style="flex:1"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:3px">From</div><div style="background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:13px;font-weight:700">21:00</div></div>
+              <div style="flex:1"><div style="font-size:9px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:3px">To</div><div style="background:var(--white);border:1.5px solid var(--border);border-radius:8px;padding:7px 10px;font-size:13px;font-weight:700">06:30</div></div>
+            </div>
+            <div class="stogrow" style="background:rgba(42,157,143,.06);border-radius:8px;padding:8px 10px;border:1px solid rgba(42,157,143,.15);margin-bottom:8px">
+              <div><div class="stog-lbl" style="color:var(--success)">Emergency calls always get through</div><div class="stog-sub">Contacts marked as emergency can always reach this phone</div></div>
+              <div class="stog on"></div>
+            </div>
+            <div class="flabel">Message callers hear</div>
+            <div class="sfield" style="font-size:10px;color:rgba(8,17,63,.55);height:44px;line-height:1.4">Sorry, this phone isn't taking calls right now. Please try again later.</div>
+            <button class="sbtn sbtn-pri" style="margin-top:8px">Save changes</button>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+      <!-- Call Log -->
+      <div class="punit">
+        <div class="plabel">Call History</div>
+        <div class="pissues">Issues #29, #37</div>
+        <div class="pframe"><div class="pscreen">
+          <div class="sbar inv"><span>16:08</span><span>●●●▓▓</span></div>
+          <div class="appnav"><div class="anback">‹ Matt's Phone</div><div class="anmenu">≡</div></div>
+          <div class="sbody">
+            <div class="stitle" style="margin-top:4px">Call History</div>
+            <div class="ssub">All calls to and from Matt's Phone.</div>
+            <div class="srow"><div class="savatar" style="background:rgba(42,157,143,.1)">📞</div><div style="flex:1"><div class="sname">Gogo</div><div class="smeta">Incoming · 0:11</div></div><div class="stime">Just now<br><span class="slink-small">View ›</span></div></div>
+            <div class="srow"><div class="savatar" style="background:rgba(42,157,143,.1)">📞</div><div style="flex:1"><div class="sname">Gogo</div><div class="smeta">Incoming · 0:08</div></div><div class="stime">1m ago<br><span class="slink-small">View ›</span></div></div>
+            <div class="srow"><div class="savatar" style="background:rgba(59,130,246,.1)">📞</div><div style="flex:1"><div class="sname">Liam Brownell</div><div class="smeta">Outgoing · 2:34</div></div><div class="stime">Yesterday<br><span class="slink-small">View ›</span></div></div>
+            <div class="srow"><div class="savatar" style="background:rgba(8,17,63,.06)">📞</div><div style="flex:1"><div class="sname" style="font-size:10px;color:var(--muted)">+27 71 355 4311</div><div class="smeta">Incoming · Not in contacts</div></div><div class="stime" style="font-size:9px">Mon<br><span class="slink-small">View ›</span></div></div>
+            <!-- Call details modal inset -->
+            <div style="margin-top:10px;border-radius:10px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.15)">
+              <div class="modal-overlay"><div style="display:flex;align-items:center;justify-content:space-between"><div class="modal-title">Call Details</div><div style="font-size:11px;color:rgba(255,250,240,.5)">✕</div></div></div>
+              <div style="background:var(--white);padding:10px 14px">
+                <div class="dir-badge">← Incoming call</div>
+                <div class="drow-item"><span class="dk">From</span><span class="dv">Gogo</span></div>
+                <div class="drow-item"><span class="dk">To</span><span class="dv">Matt's Phone</span></div>
+                <div class="drow-item"><span class="dk">Duration</span><span class="dv">0:11</span></div>
+                <div class="drow-item"><span class="dk">Status</span><span class="dv" style="color:var(--success)">Completed</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="shome"></div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ P1 ISSUES ══════════════ -->
+<section id="p1">
+<div class="phase-hdr"><span class="phase-badge pb-p1">P1</span><h2>Fix Before Pilot Goes Live</h2><span class="cnt">21 issues</span></div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#1</span><span class="ititle">Login screen has no welcome heading or context</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Login</div>
+  <div class="prob">Only a logo icon, two fields, and a button. No heading, tagline, or welcome message. Parents opening for the first time have no orientation.</div>
+  <div class="fix">Add heading and tagline above the form.
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>[Logo icon only]
+[Email field]
+[Password field]</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>[Logo: icon + TICKEYBOX wordmark]
+Welcome back
+Sign in to manage your child's phone.
+[Email] [Password]</code></div></div>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#2</span><span class="ititle">"TickeyBox's" used as a section heading throughout</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screens: Dashboard, TickeyBox list, hamburger menu</div>
+  <div class="prob">"TickeyBox's" reads as a possessive, not a plural. Appears on the dashboard card, list page header, hamburger menu title, and "View TickeyBox's ›" link. Looks like a bug.</div>
+  <div class="fix">
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>TickeyBox's — 3
+View TickeyBox's ›</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Your TickeyBoxes — 3
+View your phones ›</code></div></div>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#3</span><span class="ititle">"Device Pairing" button — wrong language for a parent</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: TickeyBox list</div>
+  <div class="prob">"DEVICE PAIRING" is technical VoIP/hardware language. This is the primary CTA to add a new phone.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>DEVICE PAIRING</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>+ Add a Phone</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#4</span><span class="ititle">"Create New TickeyBox" — wizard title</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: Setup wizard (all steps)</div>
+  <div class="prob">Using the brand name as the thing being "created" implies parents are manufacturing the product, not adding a phone to their account.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Create New TickeyBox</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Add a New Phone</code></div></div></div>
+</div>
+
+<div class="issue decision">
+  <div class="issue-hdr"><span class="inum">#5</span><span class="ititle">Step 1: Region selector — decision required from Snaptel</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-dec">Decision</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screen: Setup wizard — Step 1</div>
+  <div class="dec-block"><strong>Question for Snaptel:</strong> Does the choice of PBX region (Johannesburg vs Cape Town) affect call quality or latency for end users in the other region? The answer determines which scenario applies.</div>
+  <div class="fix"><strong>Scenario A — No meaningful latency difference (preferred):</strong> Remove the region step entirely. Auto-assign all pilot households to Johannesburg. Wizard becomes 2 steps.<br><br><strong>Scenario B — Latency matters:</strong> Keep the step but replace city names with geographic regions and plain-language descriptions. Remove all mention of snaptel.io or "Available" tags.
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current (Scenario B)</div><code>Johannesburg - South Africa
+South Africa · snaptel.io
+Available
+
+Cape Town - South Africa
+South Africa · snaptel.io
+Available</code></div><div class="ba-col scen"><div class="ba-lbl">Scenario B — Simplified</div><code>Northern SA
+Gauteng, Limpopo, North West,
+Mpumalanga, Free State
+
+Southern SA
+Western Cape, Eastern Cape,
+Northern Cape, KwaZulu-Natal</code></div></div>
+    Step title: <code>"Where are you based?"</code>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#6</span><span class="ititle">Step 2: Device pairing copy is full of IT language</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Setup wizard — Step 2</div>
+  <div class="prob">"Extension 200 will be configured for this device." Parents don't know what an extension is. Skip message is also wordy and technical.</div>
+  <div class="fix">
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Device Pairing (Optional)
+Pair your desk phone now and
+we'll configure it automatically
+when your TickeyBox is ready.
+Extension 200 will be configured
+for this device.
+[SKIP DEVICE PAIRING]</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Do you have your TickeyBox
+phone with you?
+We'll set it up automatically —
+you just need the sticker on
+the back of the phone.
+[Set up later]</code></div></div>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#7</span><span class="ititle">Step 3: Summary labels use internal terminology</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: Setup wizard — Step 3 (Review &amp; Create)</div>
+  <div class="prob">"Household" is a data model concept. "Region" is not useful to the parent at review time. Body copy says "enter a name for your TickeyBox" — inconsistent with "Add a New Phone".</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current labels</div><code>Household
+Region
+Plan
+Device Pairing</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Family Account
+[Remove or show city only]
+Plan
+Phone model</code></div></div>
+  Body copy: <code>"...enter a name for your phone, then complete the R99/month payment to get started."</code></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#8</span><span class="ititle">"FQDN (Read Only)" visible in Settings</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screen: TickeyBox Settings — General</div>
+  <div class="prob">FQDN (Fully Qualified Domain Name) appears prominently under General Settings with "Domain cannot be changed after creation" — will alarm any parent who sees it.</div>
+  <div class="fix"><strong>Remove from parent-facing UI entirely.</strong> Move behind an "Advanced" collapsible or into admin/support tooling only.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#9</span><span class="ititle">"Danger Zone" — delete button too prominent</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-ux">UX</span><span class="b b-safe">Safety</span></div></div>
+  <div class="scr-lbl">Screen: TickeyBox Settings — bottom of page</div>
+  <div class="prob">A large red "DELETE TICKEYBOX" button in a red-bordered "Danger Zone" box sits in the main settings scroll. Parents scrolling through routine settings land on a destructive, irreversible action with no friction.</div>
+  <div class="fix"><strong>Remove the red Danger Zone block from the settings scroll.</strong> Replace with a low-visibility grey text link at the very bottom: <code>"Remove this phone from your account →"</code>. Must open a confirmation modal requiring the parent to type the phone name before deletion proceeds.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#10</span><span class="ititle">Contacts: "Inbound / Outbound" are VoIP terms</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screens: Contacts list, Contact detail, Add Contact form</div>
+  <div class="prob">"Inbound ✓ Outbound ✓" is telephony engineering language. A parent needs to understand who can call whom.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Inbound ✓
+Outbound ✓</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Can call this phone ✓
+Matt can call them ✓</code></div></div>
+  In the Add Contact form, relabel the toggles to match: <code>"Can call this phone"</code> and <code>"[Child's name] can call them"</code>.
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#11</span><span class="ititle">Contact form — unnecessary fields, split name, and a critical permissions default bug</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-safe">Safety</span><span class="b b-ia">IA</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Add New Contact (confirmed from screenshot)</div>
+  <div class="prob">
+    <strong>Confirmed fields on current form:</strong> First Name * | Last Name | Email | Phone * | ▶ Address Information (Optional, collapsible) | Notes | Call Permissions: ☐ Allow Inbound Calls / ☐ Allow Outbound Calls<br><br>
+    Three problems:<br>
+    <strong>1. Unnecessary fields:</strong> Last Name, Email, Address Information, and Notes have no function on a child's phone contact. They add friction and look like a corporate CRM.<br>
+    <strong>2. Split name:</strong> "First Name" + "Last Name" is wrong for this product. A parent adds "Gogo", not "Gogo" + surname. One "Name" field only.<br>
+    <strong>3. Critical — Call Permissions default to OFF (unchecked checkboxes):</strong> The Call Permissions section sits at the bottom of the form, below a large Notes textarea. Any parent who fills in the name and number and saves without scrolling to the bottom will create a contact that can neither call in nor call out — silently broken. This is a functional bug disguised as a UX issue.
+  </div>
+  <div class="fix">
+    <strong>Strip the form to four elements only:</strong>
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current (confirmed)</div><code>First Name *
+Last Name
+Email
+Phone *
+▶ Address Information (Optional)
+Notes [large textarea]
+
+Call Permissions
+☐ Allow Inbound Calls
+☐ Allow Outbound Calls
+[checkboxes — unchecked by default]</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Name *
+[placeholder: e.g. Gogo]
+
+Phone number *
+[placeholder: e.g. 072 555 0101]
+[hint below: SA numbers only,
+10 digits, starting with 0]
+
+Can call this phone   [toggle: ON]
+Matt can call them    [toggle: ON]
+
+[Save contact]</code></div></div>
+    <strong>Permissions change:</strong> Replace checkboxes with toggles. Default both to <strong>ON</strong>. A parent explicitly turning one off is a deliberate choice. A parent not finding the checkboxes is a silent failure that breaks the product's core function.<br><br>
+    <strong>Number validation on save:</strong> Reject any number that does not match a 10-digit SA format starting with 0 (mobile: 06x/07x/08x, landline: 01x/02x/03x/04x/05x). Reject +27 prefix and any international format. Inline error: <code>"Please enter a South African number starting with 0, e.g. 072 555 0101."</code><br><br>
+    <strong>Contact limit:</strong> Cap at 20 contacts per phone. When limit is reached, disable "+ Add a contact" and show: <code>"You've reached the 20-contact limit. Remove a contact to add a new one."</code>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#12</span><span class="ititle">Emergency Contacts — spec for when feature is built</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-new">New</span><span class="b b-ia">IA</span><span class="b b-safe">Safety</span></div></div>
+  <div class="scr-lbl">Screen: Emergency Contacts (currently "coming soon")</div>
+  <div class="prob">Emergency Contacts are currently stubbed ("coming soon"). The feature needs a clear spec before it is built so the implementation matches the intended product behaviour. Currently emergency contacts and the main contact list are not differentiated in the UI.</div>
+  <div class="fix">
+    <strong>Product spec for Emergency Contacts:</strong><br><br>
+    — Maximum <strong>3 emergency contacts</strong> per phone.<br>
+    — Emergency contacts are a <strong>separate list</strong> from the main contact list (max 20).<br>
+    — Emergency contacts <strong>override quiet hours and weekly schedule</strong> — their calls always ring through regardless of time restrictions.<br>
+    — Emergency contacts use the <strong>same SA number format rules</strong> as regular contacts (10 digits, starting with 0, no +27, no international).<br>
+    — The "Emergency calls always get through" toggle in Quiet Hours (see #17) is the runtime control for this. It should default ON.<br><br>
+    <strong>UI spec:</strong> Emergency Contacts should appear as a separate tile/section in the phone management screen, clearly distinct from Contacts. Recommended copy:
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Emergency contacts
+feature coming soon!</code></div><div class="ba-col aft"><div class="ba-lbl">When built</div><code>Emergency Contacts
+Up to 3 people who can always
+reach this phone — even during
+quiet hours.
+[max 3, same number format rules]</code></div></div>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#13</span><span class="ititle">"API Tokens" in the hamburger menu</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screen: Hamburger / side menu</div>
+  <div class="prob">"API Tokens" appears as a top-level menu item alongside Profile and Log Out. This is a developer integration tool. Parents will not know what it is.</div>
+  <div class="fix"><strong>Remove from parent-facing navigation entirely.</strong> Move to admin/developer tooling only.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#14</span><span class="ititle">"Household" language used throughout</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screens: Navigation menu, Settings, Account settings, Setup wizard summary</div>
+  <div class="prob">"Household" is an internal data model term. Also labelled "Team Settings" on the settings page — a B2B concept that is wrong for a parent product.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Household
+Household Settings
+Create New Household
+Household Owner / Member
+Team Settings</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Family Account
+Account Settings
+Add Another Account
+Account Owner / Family Member
+Account Settings</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#15</span><span class="ititle">RICA documents required but not explained — and in the wrong place</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span><span class="b b-ux">UX</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screen: Account Settings (formerly Team Settings)</div>
+  <div class="prob">RICA compliance is a legal requirement — but currently appears as an optional-seeming upload in the middle of Account Settings with no explanation of why it is needed. Parents will either ignore it (compliance risk) or be alarmed (trust risk).</div>
+  <div class="fix">
+    <strong>Move RICA collection to the account creation flow</strong> — surfaced after payment, before the dashboard is fully accessible. Not buried in settings.<br><br>
+    <strong>Recommended copy:</strong>
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Documents
+Update or replace household
+documents.
+
+ID Document
+Upload a valid ID document
+(PDF, JPG, PNG) - Max 10MB
+
+Proof of Address
+Upload proof of address</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended (in onboarding)</div><code>One quick legal step
+South African law requires phone
+providers to verify account
+holders. Once-off. Your account
+is already active.
+
+ID document
+SA ID, passport, or driver's
+licence (PDF, JPG, PNG)
+[Upload ID →]
+
+Proof of address
+Utility bill or bank statement,
+last 3 months (PDF, JPG, PNG)
+[Upload proof →]
+
+[Continue]  [I'll do this later]</code></div></div>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#16</span><span class="ititle">Quiet Hours: "Offline Message" label is wrong context</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: Quiet Hours settings</div>
+  <div class="prob">"Offline Message — Custom message to play when the system is currently offline, goodbye!" sounds like a server outage, not a deliberate parental control. Default text "This system is currently offline, goodbye!" reinforces the wrong mental model.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Offline Message
+Custom message to play when
+the system is currently offline,
+goodbye!</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Message callers hear
+during quiet hours
+What callers will hear when calls
+are turned off. Leave blank to use
+the default.</code></div></div>
+  Default message: <code>"Sorry, this phone isn't taking calls right now. Please try again later."</code>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#17</span><span class="ititle">Emergency calls toggle defaults to OFF — safety risk</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-safe">Safety</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Quiet Hours settings</div>
+  <div class="prob">"Allow Emergency Calls" is disabled by default. Any parent enabling Quiet Hours silently blocks emergency calls unless they find and enable this toggle. A child in an emergency during quiet hours will hear a dead line.</div>
+  <div class="fix"><strong>Change default state to ON immediately.</strong>
+    <div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Allow Emergency Calls
+Allow emergency contacts to bypass
+[toggle: OFF — default]</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Emergency calls always get through
+Contacts marked as emergency can
+always reach this phone, even
+during quiet hours.
+[toggle: ON — default]</code></div></div>
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#18</span><span class="ititle">Weekly Schedule: "Answer Message" — wrong language and duplicate field</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Weekly Schedule settings</div>
+  <div class="prob">Two issues: (1) "Answer Message — Custom message to play when connecting callers during business hours" is PBX language wrong for a child's phone. (2) Both Quiet Hours and Weekly Schedule ask the parent to set a message. Parents shouldn't write the same message twice.</div>
+  <div class="fix"><strong>Issue 1:</strong><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Answer Message
+Custom message to play when
+connecting callers during
+business hours</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Greeting message
+What callers hear when this phone
+is accepting calls.</code></div></div>
+    <strong>Issue 2 — Decision for Snaptel:</strong> Should Quiet Hours and Weekly Schedule share a single caller message field? If the message is the same in both contexts, consolidate to one "Caller message" in a top-level settings section. Confirm with Snaptel whether the two messages serve genuinely different technical purposes.
+  </div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#19</span><span class="ititle">Plans &amp; Billing: plan benefits include unbuilt features</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: TickeyBox Settings — Plans &amp; Billing</div>
+  <div class="prob">Standard Plan lists "Transcripts &amp; emergency features" as active inclusions. Both are stubbed. Listing them as active benefits will damage trust when parents find "coming soon" screens.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>✓ Unlimited TickeyBox-to-
+  TickeyBox calls
+✓ Contacts
+✓ Quiet Hours
+✓ Transcripts & emergency features</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>✓ Free calls between
+  TickeyBox phones
+✓ Approved contacts list
+✓ Quiet hours & call schedules
+✓ Call history</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#20</span><span class="ititle">Provisioning screen has no clear success state</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Post-payment provisioning</div>
+  <div class="prob">After payment, the parent sees a "Provisioning..." badge and a static banner for 1-2 minutes with no feedback on progress. Parents sitting with nothing will refresh or abandon.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">During provisioning</div><code>[Badge: Provisioning...]
+Your TickeyBox is being
+provisioned. This usually takes
+1-2 minutes.</code></div><div class="ba-col aft"><div class="ba-lbl">On completion</div><code>[Badge: Active — green]
+Matt's Phone is ready!
+Start by adding the people
+your child can call.
+[Add your first contact →]</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#21</span><span class="ititle">Device pairing entry point appears in two places</span><div class="badges"><span class="b b-p1">P1</span><span class="b b-new">New</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screens: TickeyBox list (top CTA) AND main navigation menu</div>
+  <div class="prob">Adding a phone appears as a primary button on the TickeyBox list page AND as a separate entry in the hamburger nav. A parent navigating via the menu may reach "Create New Household" — a different wizard that also includes RICA — creating two overlapping flows.</div>
+  <div class="fix"><strong>Consolidate to a single entry point:</strong> the list page CTA ("+ Add a Phone"). Remove the redundant nav-level entry. "Add Another Account" (formerly Create New Household) must be clearly distinct from "Add a Phone" — these are different actions and should never be reached from the same starting point.</div>
+</div>
+
+</section>
+
+<!-- ══════════════ P2 ISSUES ══════════════ -->
+<section id="p2">
+<div class="phase-hdr"><span class="phase-badge pb-p2">P2</span><h2>Fix Before Broad Rollout</h2><span class="cnt">9 issues</span></div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#22</span><span class="ititle">No persistent app header — parents lose orientation</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-lay">Layout</span></div></div>
+  <div class="scr-lbl">Screens: All (global)</div>
+  <div class="prob">The mobile web app has no persistent top bar identifying the product. Parents navigating deep into settings have no anchor. The only branding is a small coral icon that some screens replace with an X.</div>
+  <div class="fix">Add a minimal sticky top bar on all screens: TickeyBox wordmark on the left, menu icon on the right. 48px height. Consistent across all sub-screens.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#23</span><span class="ititle">Dashboard cards show tech metrics instead of useful info</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-ux">UX</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screen: TickeyBox list / Dashboard</div>
+  <div class="prob">Each phone card shows "Contacts: 0 · Devices: 0 · Quiet Mode: Off". "Devices: 0" is a VoIP concept (registered SIP endpoints). Not useful to parents.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>1 Contacts  0 Devices
+Quiet Mode: Off</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>1 contact added
+Phone: Online  |  Calls: Allowed</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#24</span><span class="ititle">Primary CTA colour is inconsistent across the app</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-lay">Layout</span></div></div>
+  <div class="scr-lbl">Screens: Various — Plans &amp; Billing (Buy Now), call log (View), Add Contact button</div>
+  <div class="prob">Primary action buttons are midnight navy (Add Contact, Manage), purple/indigo (Buy Now, View), and coral (PayFast). No visual hierarchy. Purple is not in the TickeyBox brand palette.</div>
+  <div class="fix">Standardise all primary CTAs to coral (<code>#FF6E61</code>). Reserve navy for secondary/neutral. Remove purple/indigo entirely — it makes different sections look like different products.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#25</span><span class="ititle">"Manage ›" button is too generic</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: TickeyBox list cards</div>
+  <div class="prob">Every card has the same "Manage ›" label regardless of the phone name. Admin dashboard language, not consumer language.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>Manage ›</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Open ›</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#26</span><span class="ititle">"← BACK TO TICKEYBOX LIST" is a primary button, not a nav action</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-ux">UX</span><span class="b b-lay">Layout</span></div></div>
+  <div class="scr-lbl">Screens: Contacts, Call history, and others</div>
+  <div class="prob">Navigation back to the phone list is implemented as a large filled button at the bottom — the same pattern used for primary actions (Save, Add Contact). Confuses action hierarchy.</div>
+  <div class="fix">Replace with standard mobile back nav: a top-left "‹ Back" text link or arrow icon in the persistent header. Reserve the bottom button slot for the primary action of each screen only.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#27</span><span class="ititle">Login: Register link has the same weight as "Forgot password?"</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-ux">UX</span><span class="b b-lay">Layout</span></div></div>
+  <div class="scr-lbl">Screen: Login</div>
+  <div class="prob">On the login screen, "Register" and "Forgot your password?" are both styled as text links with equal visual weight. For pilot households, registration is the first action — but it's visually indistinguishable from a recovery link.</div>
+  <div class="fix">Elevate "Register" to a secondary outlined button (same height as Log In). Keep "Forgot your password?" as a smaller text link below.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#28</span><span class="ititle">Empty state copy is generic</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: Contacts (empty state)</div>
+  <div class="prob">"No contacts. Get started by adding your first contact." This is a high-motivation moment — the parent has just set up the phone. Generic copy wastes it.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>No contacts
+Get started by adding your
+first contact.</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Who can [Phone Name] call?
+Add the people your child should
+be able to reach — family,
+friends, and carers.
+[+ Add First Contact]</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#29</span><span class="ititle">Call log shows raw phone numbers, not contact names</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-new">New</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Recent calls (phone overview and call history screens)</div>
+  <div class="prob">Recent calls show "27713554311 — Just now". Parents will not recognise raw E.164-format numbers. If the number exists in contacts, the name should be shown instead.</div>
+  <div class="fix"><strong>Resolve phone numbers to contact names where a match exists.</strong><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>📞 27713554311
+Just now           [View]</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>📞 Gogo
+Just now           [View ›]</code></div></div>
+  If number is not in contacts, format as: <code>+27 71 355 4311</code> with sub-label "Not in contacts".</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#30</span><span class="ititle">RICA document collection duplicated across two flows</span><div class="badges"><span class="b b-p2">P2</span><span class="b b-new">New</span><span class="b b-ia">IA</span></div></div>
+  <div class="scr-lbl">Screens: Account Settings AND Create New Household flow</div>
+  <div class="prob">RICA document uploads appear in Account Settings AND in the "Create New Household" flow — two separate places with slightly different UI. Parents can't tell if they've already submitted, or if they need to do it twice.</div>
+  <div class="fix"><strong>One collection point only.</strong> Surface RICA in initial account creation (see #15). Account Settings page shows status only: "Verified / Pending / Not yet uploaded" with option to update. Remove document upload from the "Add Another Account" flow — RICA is per account holder, not per phone.</div>
+</div>
+
+</section>
+
+<!-- ══════════════ P3 ISSUES ══════════════ -->
+<section id="p3">
+<div class="phase-hdr"><span class="phase-badge pb-p3">P3</span><h2>Polish</h2><span class="cnt">7 issues</span></div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#31</span><span class="ititle">No onboarding checklist for first-time users</span><div class="badges"><span class="b b-p3">P3</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Dashboard (first login)</div>
+  <div class="fix">A non-blocking 3-step checklist on first login: <strong>1</strong> Name your phone → <strong>2</strong> Add your first contact → <strong>3</strong> Set call hours. Mark each step complete as the parent does it. Dismissible.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#32</span><span class="ititle">Provisioning: no animated progress during the wait</span><div class="badges"><span class="b b-p3">P3</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Provisioning state</div>
+  <div class="fix">Add a step indicator during the 1-2 minute window: <code>Registering your phone → Setting up your number → Almost ready...</code> Subtle pulse animation on the status badge.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#33</span><span class="ititle">Empty states lack warmth</span><div class="badges"><span class="b b-p3">P3</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screens: Contacts, call history, dashboard</div>
+  <div class="fix">Apply TickeyBox brand illustrations to the three main empty states: no contacts, no recent calls, blank dashboard. Static assets, navy line art on cream canvas per brand spec. The "No recent calls" empty state on the phone overview currently shows a generic grey phone icon — replace with a brand illustration.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#34</span><span class="ititle">No inline help text on Quiet Hours or Weekly Schedule</span><div class="badges"><span class="b b-p3">P3</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screens: Quiet Hours, Weekly Schedule</div>
+  <div class="fix">Add subtle inline help beneath each section heading. Example: <code>"When quiet hours are on, callers hear a message instead of the phone ringing. The phone cannot make or receive calls during this time."</code> Collapsible on mobile.</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#35</span><span class="ititle">No number format validation on contact save</span><div class="badges"><span class="b b-p3">P3</span><span class="b b-ux">UX</span></div></div>
+  <div class="scr-lbl">Screen: Add / Edit Contact</div>
+  <div class="prob">A typo in a phone number means the child's call fails silently. No format validation currently exists on save.</div>
+  <div class="fix">Validate on save: 10 digits, starting with 0, South African format only. Reject +27 prefix and international numbers. Inline error: <code>"Please enter a South African number starting with 0, e.g. 072 555 0101."</code> (linked to guidance added in #11).</div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#36</span><span class="ititle">2FA settings framing sounds like an accusation</span><div class="badges"><span class="b b-p3">P3</span><span class="b b-copy">Copy</span></div></div>
+  <div class="scr-lbl">Screen: Profile — Two Factor Authentication</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>You have not enabled two factor
+authentication.
+
+When two factor authentication is
+enabled, you will be prompted for
+a secure, random token during
+authentication. You may retrieve
+this token from your phone's
+Google Authenticator application.</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>Two-step sign-in (optional)
+Not set up yet.
+
+When enabled, you'll confirm your
+identity with a code from your
+authenticator app each time you
+sign in. Adds an extra layer of
+security to your account.
+[Enable]</code></div></div></div>
+</div>
+
+<div class="issue">
+  <div class="issue-hdr"><span class="inum">#37</span><span class="ititle">Call details modal — purple header, jargon labels, raw numbers</span><div class="badges"><span class="b b-p3">P3</span><span class="b b-new">New</span><span class="b b-copy">Copy</span><span class="b b-lay">Layout</span></div></div>
+  <div class="scr-lbl">Screen: Call Details modal</div>
+  <div class="prob">Modal has a purple/indigo header (not in brand palette). "Call information and details" subtitle is redundant. "&gt;&gt; Inbound Call" badge is VoIP jargon. From/To fields show raw E.164 numbers.</div>
+  <div class="fix"><div class="ba"><div class="ba-col bef"><div class="ba-lbl">Current</div><code>[Purple header]
+Call Details
+Call information and details
+
+>> Inbound Call
+
+From    27713554311
+To      27218793762
+Duration  0:11
+Status  Completed</code></div><div class="ba-col aft"><div class="ba-lbl">Recommended</div><code>[Navy header]
+Call Details
+
+← Incoming call
+
+From    Gogo
+To      Matt's Phone
+Duration  0:11
+Status  Completed</code></div></div>
+  "Inbound" → "Incoming". "Outbound" → "Outgoing" throughout.
+  </div>
+</div>
+
+</section>
+
+<!-- ══════════════ SUMMARY TABLE ══════════════ -->
+<section id="summary" class="summ-section">
+  <h2>Summary Table</h2>
+  <p>37 issues across 3 priority levels. Add a Status column and assign to Snaptel or TB as appropriate.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>#</th><th>Screen</th><th>Issue</th><th>Type</th><th>Priority</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="scr">Login</td><td class="ttl">No welcome heading or tagline</td><td><span class="tb tb-copy">Copy</span><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">2</td><td class="scr">Dashboard</td><td class="ttl">"TickeyBox's" naming — fix plural throughout</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">3</td><td class="scr">List page</td><td class="ttl">"DEVICE PAIRING" → "+ Add a Phone"</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">4</td><td class="scr">Wizard</td><td class="ttl">"Create New TickeyBox" → "Add a New Phone"</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr class="drow"><td class="num">5</td><td class="scr">Wizard Step 1</td><td class="ttl">⚑ Region selector — Snaptel to confirm latency. Two scenarios specified.</td><td><span class="tb tb-dec">Decision</span><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">Awaiting input</td></tr>
+        <tr><td class="num">6</td><td class="scr">Wizard Step 2</td><td class="ttl">Device pairing copy — full rewrite, remove extension/SIP language</td><td><span class="tb tb-copy">Copy</span><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">7</td><td class="scr">Wizard Step 3</td><td class="ttl">Summary labels: "Household" and "Region" need fixing</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">8</td><td class="scr">Settings</td><td class="ttl">"FQDN (Read Only)" — remove from parent UI</td><td><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">9</td><td class="scr">Settings</td><td class="ttl">"Danger Zone" delete button too prominent — bury behind confirmation</td><td><span class="tb tb-ux">UX</span><span class="tb tb-safe">Safety</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">10</td><td class="scr">Contacts</td><td class="ttl">"Inbound / Outbound" → plain-language call direction labels</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">11</td><td class="scr">Add Contact form</td><td class="ttl">Strip to Name + Number. Fix: call permissions checkboxes default OFF → toggles default ON (functional bug). Max 20. SA numbers only.</td><td><span class="tb tb-safe">Safety</span><span class="tb tb-ia">IA</span><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">12</td><td class="scr">Emergency Contacts</td><td class="ttl">Spec for when built: max 3, overrides quiet hours, SA numbers only</td><td><span class="tb tb-new">New</span><span class="tb tb-ia">IA</span><span class="tb tb-safe">Safety</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">13</td><td class="scr">Nav menu</td><td class="ttl">"API Tokens" — remove from parent-facing navigation</td><td><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">14</td><td class="scr">Global</td><td class="ttl">"Household" / "Team Settings" → "Family Account" / "Account Settings" — global replace</td><td><span class="tb tb-copy">Copy</span><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">15</td><td class="scr">Acct Settings</td><td class="ttl">RICA docs — explain legal requirement, move to onboarding flow, single collection point</td><td><span class="tb tb-copy">Copy</span><span class="tb tb-ux">UX</span><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">16</td><td class="scr">Quiet Hours</td><td class="ttl">"Offline Message" → "Message callers hear during quiet hours" + default text fix</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">17</td><td class="scr">Quiet Hours</td><td class="ttl">⚠ "Allow Emergency Calls" defaults to OFF — change to ON immediately</td><td><span class="tb tb-safe">Safety</span><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">18</td><td class="scr">Weekly Schedule</td><td class="ttl">"Answer Message / business hours" rewrite + confirm if single message field is possible</td><td><span class="tb tb-copy">Copy</span><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">19</td><td class="scr">Plans &amp; Billing</td><td class="ttl">Plan benefits list includes unbuilt features — update copy</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">20</td><td class="scr">Provisioning</td><td class="ttl">No clear success state after provisioning completes</td><td><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">21</td><td class="scr">Nav / List</td><td class="ttl">Device pairing entry point in two places — consolidate to one flow</td><td><span class="tb tb-new">New</span><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p1">P1</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">22</td><td class="scr">Global</td><td class="ttl">No persistent app header — parents lose orientation</td><td><span class="tb tb-lay">Layout</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">23</td><td class="scr">Dashboard</td><td class="ttl">Cards show "Devices: 0" — replace with parent-relevant status</td><td><span class="tb tb-ux">UX</span><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">24</td><td class="scr">Various</td><td class="ttl">CTA colour inconsistent (navy/purple/coral) — standardise to coral</td><td><span class="tb tb-lay">Layout</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">25</td><td class="scr">List cards</td><td class="ttl">"Manage ›" → "Open ›"</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">26</td><td class="scr">Sub-screens</td><td class="ttl">"← BACK TO TICKEYBOX LIST" bottom button → standard back nav pattern</td><td><span class="tb tb-ux">UX</span><span class="tb tb-lay">Layout</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">27</td><td class="scr">Login</td><td class="ttl">Register link same weight as Forgot Password — elevate Register</td><td><span class="tb tb-ux">UX</span><span class="tb tb-lay">Layout</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">28</td><td class="scr">Contacts (empty)</td><td class="ttl">Empty state copy is generic — personalise with phone name</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">29</td><td class="scr">Call log</td><td class="ttl">Raw E.164 numbers shown — resolve to contact names where known</td><td><span class="tb tb-new">New</span><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">30</td><td class="scr">Settings / Onboarding</td><td class="ttl">RICA collection duplicated across two flows — consolidate to one</td><td><span class="tb tb-new">New</span><span class="tb tb-ia">IA</span></td><td><span class="tb tb-p2">P2</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">31</td><td class="scr">Dashboard (first login)</td><td class="ttl">No onboarding checklist for first-time users</td><td><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p3">P3</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">32</td><td class="scr">Provisioning</td><td class="ttl">No animated progress during the 1-2 min provisioning wait</td><td><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p3">P3</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">33</td><td class="scr">Empty states</td><td class="ttl">Empty states lack warmth — apply brand illustrations</td><td><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p3">P3</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">34</td><td class="scr">Quiet Hours / Schedule</td><td class="ttl">No inline help explaining what quiet hours do to calls</td><td><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p3">P3</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">35</td><td class="scr">Add / Edit Contact</td><td class="ttl">No number format validation on save — SA format only, 10 digits</td><td><span class="tb tb-ux">UX</span></td><td><span class="tb tb-p3">P3</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">36</td><td class="scr">Profile / 2FA</td><td class="ttl">2FA framing sounds accusatory — soften copy</td><td><span class="tb tb-copy">Copy</span></td><td><span class="tb tb-p3">P3</span></td><td class="sts">—</td></tr>
+        <tr><td class="num">37</td><td class="scr">Call Details modal</td><td class="ttl">Purple header + "Inbound Call" jargon + raw numbers — all need fixing</td><td><span class="tb tb-new">New</span><span class="tb tb-copy">Copy</span><span class="tb tb-lay">Layout</span></td><td><span class="tb tb-p3">P3</span></td><td class="sts">—</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</main>
+<div style="text-align:center;padding:40px 24px 56px;font-size:12px;color:rgba(8,17,63,.3);font-family:'Inter',sans-serif">TickeyBox · App Feedback + Ideal State · 27 March 2026 · For Snaptel Dev Team</div>
+</body>
+</html>
