@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TickeyBox — Here's What We've Built So Far</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:#E8E4DC}
+body{
+  font-family:'Inter',sans-serif;
+  font-size:15px;
+  color:#08113F;
+  background:#E8E4DC;
+  -webkit-font-smoothing:antialiased;
+  padding:32px 16px 48px;
+}
+.wrap{max-width:600px;margin:0 auto}
+
+/* ── HEADER ── */
+.hdr{
+  background:#08113F;
+  border-radius:20px 20px 0 0;
+  padding:36px 36px 32px;
+  color:#FFFAF0;
+}
+.alpha-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  background:rgba(255,110,97,.15);
+  border:1px solid rgba(255,110,97,.35);
+  border-radius:20px;
+  padding:5px 12px;
+  font-family:'Poppins',sans-serif;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#FF6E61;
+  margin-bottom:18px;
+}
+.alpha-badge::before{
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:#FF6E61;
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hdr h1{
+  font-family:'Bungee',cursive;
+  font-size:clamp(22px,5vw,30px);
+  letter-spacing:.5px;
+  line-height:1.15;
+  margin-bottom:14px;
+  color:#FFFAF0;
+}
+.hdr h1 em{color:#FF6E61;font-style:normal}
+.hdr p{
+  font-size:14px;
+  line-height:1.7;
+  color:rgba(255,250,240,.65);
+  max-width:480px;
+}
+.hdr p strong{color:rgba(255,250,240,.9)}
+
+/* ── BODY ── */
+.body{background:#FFFAF0;padding:0 36px 32px;border-radius:0 0 20px 20px}
+
+/* ── FEATURE SECTION ── */
+.feature{
+  padding:32px 0;
+  border-bottom:1px solid rgba(8,17,63,.08);
+  display:flex;
+  align-items:flex-start;
+  gap:24px;
+}
+.feature.no-border{border-bottom:none}
+.feature.flip{flex-direction:row-reverse}
+@media(max-width:520px){
+  .feature,.feature.flip{flex-direction:column;align-items:stretch}
+  .body{padding:0 20px 24px;border-radius:0 0 16px 16px}
+  .hdr{padding:28px 20px 24px}
+}
+
+/* ── PHONE FRAME ── */
+.phone{
+  flex:0 0 160px;
+  background:#1c1c1e;
+  border-radius:28px;
+  padding:9px 7px 10px;
+  box-shadow:0 12px 40px rgba(0,0,0,.3),0 4px 12px rgba(0,0,0,.18),inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+/* ── SCREEN — real app look ── */
+.screen{
+  background:#f4f4f6;
+  border-radius:22px;
+  overflow:hidden;
+  min-height:300px;
+  display:flex;
+  flex-direction:column;
+}
+
+/* Status bar */
+.r-sbar{
+  background:#fff;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:7px 10px 4px;
+  font-size:8.5px;font-weight:700;color:#1a1d36;
+  flex-shrink:0;
+}
+.r-sbar-r{font-size:7.5px;color:#6b7280;letter-spacing:-.3px}
+
+/* App top bar */
+.r-appbar{
+  background:#fff;
+  padding:5px 10px 5px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(0,0,0,.07);
+  flex-shrink:0;
+}
+.r-appicon{
+  width:20px;height:20px;
+  background:#FF6E61;
+  border-radius:4px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5px;
+  padding:3px;
+  flex-shrink:0;
+}
+.r-appicon span{border-radius:1px;display:block}
+.r-menu{font-size:12px;color:#9ca3af;line-height:1}
+
+/* Page header block (device name row) */
+.r-phdr{
+  background:#fff;
+  padding:7px 10px;
+  border-bottom:1px solid rgba(0,0,0,.07);
+  flex-shrink:0;
+}
+.r-back{font-size:7.5px;color:#4f46e5;font-weight:600;display:block;margin-bottom:3px}
+.r-devname{font-size:11px;font-weight:700;color:#1a1d36;margin-bottom:1px}
+.r-devnum{font-size:7px;color:#9ca3af}
+.r-pill-active{
+  background:#dcfce7;color:#16a34a;
+  font-size:7px;font-weight:700;
+  padding:2px 6px;border-radius:10px;
+  display:inline-flex;align-items:center;gap:2px;
+  white-space:nowrap;
+}
+.r-pill-active::before{content:'●';font-size:5px}
+.r-pill-offline{
+  background:#f3f4f6;color:#9ca3af;
+  font-size:7px;font-weight:700;
+  padding:2px 6px;border-radius:10px;
+}
+
+/* Scrollable body */
+.r-body{flex:1;padding:8px 9px 4px;overflow:hidden}
+
+/* Add contact button */
+.r-addbtn{
+  background:#1a1d36;color:#fff;
+  border-radius:6px;padding:5px 10px;
+  font-size:8px;font-weight:700;
+  display:inline-flex;align-items:center;gap:3px;
+  margin-bottom:7px;
+}
+
+/* Contact / general card */
+.r-card{
+  background:#fff;
+  border-radius:7px;
+  border:1px solid rgba(0,0,0,.08);
+  padding:7px 8px;
+  margin-bottom:5px;
+  box-shadow:0 1px 3px rgba(0,0,0,.04);
+}
+.r-lbl{font-size:6.5px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:#9ca3af;margin-bottom:1px}
+.r-val{font-size:9.5px;font-weight:600;color:#1a1d36;margin-bottom:3px}
+.r-num{font-size:9px;color:#4f46e5;font-weight:500;margin-bottom:5px}
+.r-perms{display:flex;gap:8px;margin-bottom:4px}
+.r-perm{display:inline-flex;align-items:center;gap:2.5px;font-size:7px;color:#374151}
+.r-chk{
+  width:11px;height:11px;
+  background:#22c55e;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:#fff;font-size:6.5px;font-weight:700;flex-shrink:0;
+}
+.r-actions{display:flex;justify-content:flex-end;gap:8px;padding-top:3px;border-top:1px solid rgba(0,0,0,.05)}
+.r-edit{font-size:7.5px;color:#374151;font-weight:600}
+.r-del{font-size:7.5px;color:#ef4444;font-weight:600}
+
+/* Toggle row */
+.r-togrow{display:flex;align-items:flex-start;justify-content:space-between;gap:5px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.r-togrow:last-of-type{border-bottom:none}
+.r-toglbl{font-size:8.5px;font-weight:600;color:#1a1d36;margin-bottom:1px;line-height:1.2}
+.r-togsub{font-size:7px;color:#9ca3af;line-height:1.3}
+.r-tog{width:26px;height:15px;border-radius:7.5px;flex-shrink:0;position:relative;margin-top:2px}
+.r-tog.on{background:#6366f1}.r-tog.off{background:#d1d5db}
+.r-tog::after{content:'';width:10px;height:10px;background:#fff;border-radius:50%;position:absolute;top:2.5px;box-shadow:0 1px 2px rgba(0,0,0,.25)}
+.r-tog.on::after{right:2.5px}.r-tog.off::after{left:2.5px}
+
+/* Time grid */
+.r-timegrid{display:grid;grid-template-columns:1fr 16px 1fr;align-items:center;gap:3px;margin:5px 0 7px}
+.r-timebox{background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:5px;padding:4px 0;text-align:center;font-size:10.5px;font-weight:700;color:#1a1d36}
+.r-timesep{text-align:center;font-size:7.5px;color:#9ca3af}
+
+/* Fake textarea */
+.r-ta{background:#fff;border:1px solid rgba(0,0,0,.12);border-radius:5px;padding:5px 6px;font-size:7.5px;color:#374151;width:100%;min-height:28px;line-height:1.4;margin:3px 0 6px}
+
+/* Small section label */
+.r-sectlbl{font-size:7.5px;color:#6b7280;margin-bottom:3px;margin-top:6px;line-height:1.3}
+.r-sectttl{font-size:9.5px;font-weight:700;color:#1a1d36;margin-bottom:6px}
+
+/* Tab strip */
+.r-tabstrip{
+  background:#fff;
+  display:flex;
+  border-bottom:1.5px solid rgba(0,0,0,.08);
+  padding:0 10px;
+  flex-shrink:0;
+}
+.r-tab{font-size:7.5px;font-weight:600;padding:5px 6px 4px;color:#9ca3af}
+.r-tab.on{color:#4f46e5;border-bottom:2px solid #4f46e5;margin-bottom:-1.5px}
+
+/* Feature tile grid (device overview) */
+.r-tilegrid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:8px}
+.r-tile{
+  background:#fff;border-radius:7px;
+  border:1px solid rgba(0,0,0,.07);
+  padding:7px 5px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+}
+.r-tileicon{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;margin-bottom:4px}
+.r-tilename{font-size:7.5px;font-weight:700;color:#1a1d36;margin-bottom:1px}
+.r-tilesub{font-size:6.5px;color:#9ca3af}
+
+/* Recent calls */
+.r-recttl{font-size:8.5px;font-weight:700;color:#1a1d36;margin-bottom:5px}
+.r-callrow{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid rgba(0,0,0,.06)}
+.r-callrow:last-of-type{border-bottom:none}
+.r-callav{width:20px;height:20px;background:#f3f4f6;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+.r-callname{font-size:8.5px;font-weight:600;color:#1a1d36}
+.r-callmeta{font-size:7px;color:#9ca3af}
+.r-calltime{font-size:7px;color:#9ca3af;margin-left:auto;white-space:nowrap}
+
+/* Device list cards (dashboard screen) */
+.r-pagerow{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.r-pagettl{font-size:12px;font-weight:700;color:#1a1d36}
+.r-pairbtn{background:#1a1d36;color:#fff;font-size:6.5px;font-weight:700;padding:4px 7px;border-radius:5px;letter-spacing:.3px}
+.r-devcard{background:#fff;border-radius:7px;border:1px solid rgba(0,0,0,.08);padding:8px 9px;margin-bottom:6px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.r-devtop{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px}
+.r-devnm{font-size:9.5px;font-weight:700;color:#1a1d36}
+.r-devstats{display:flex;gap:10px;margin-bottom:6px}
+.r-stat{display:flex;flex-direction:column;align-items:center;gap:1px}
+.r-stat-ico{font-size:11px;color:#9ca3af}
+.r-stat-val{font-size:8px;font-weight:700;color:#1a1d36}
+.r-stat-lbl{font-size:6px;color:#9ca3af;text-align:center}
+.r-managebtn{display:inline-flex;align-items:center;gap:2px;background:#4f46e5;color:#fff;font-size:7.5px;font-weight:700;padding:3px 8px;border-radius:5px}
+
+/* Home bar */
+.home-bar{height:18px;background:#f4f4f6;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.home-bar::after{content:'';display:block;width:44px;height:3px;background:rgba(0,0,0,.12);border-radius:2px}
+
+/* ── FEATURE TEXT ── */
+.feat-text{flex:1;min-width:0}
+.feat-num{
+  font-family:'Poppins',sans-serif;
+  font-size:10px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:rgba(8,17,63,.35);
+  margin-bottom:6px;
+}
+.feat-name{
+  font-family:'Bungee',cursive;
+  font-size:18px;letter-spacing:.5px;
+  color:#08113F;margin-bottom:10px;
+  line-height:1.1;
+}
+.feat-name em{color:#FF6E61;font-style:normal}
+.feat-body{
+  font-size:14px;line-height:1.7;
+  color:rgba(8,17,63,.8);
+  margin-bottom:12px;
+}
+.feat-detail{
+  font-size:12.5px;line-height:1.6;
+  color:rgba(8,17,63,.55);
+}
+.feat-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(8,17,63,.05);
+  border-radius:8px;padding:5px 10px;
+  font-size:11.5px;font-weight:600;color:rgba(8,17,63,.65);
+  margin-top:10px;margin-right:5px;
+}
+.feat-chip::before{content:'✓';color:#2A9D8F;font-size:10px}
+
+/* ── ALPHA NOTE ── */
+.alpha-note{
+  background:#08113F;
+  border-radius:14px;
+  padding:22px 24px;
+  margin:8px 0 0;
+}
+.alpha-note p{
+  font-size:13.5px;line-height:1.7;
+  color:rgba(255,250,240,.75);
+}
+.alpha-note p strong{color:#FF6E61}
+.alpha-note p + p{margin-top:10px}
+
+/* ── DIVIDER ── */
+.divider{
+  height:1px;
+  background:rgba(8,17,63,.08);
+  margin:0 -36px;
+}
+@media(max-width:520px){.divider{margin:0 -20px}}
+
+/* ── FOOTER ── */
+.footer-strip{
+  text-align:center;
+  padding:20px 0 0;
+  font-size:11px;
+  color:rgba(8,17,63,.35);
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="alpha-badge">Alpha — We're Building</div>
+    <h1>Here's what<br>TickeyBox can do<br><em>right now</em></h1>
+    <p>We've been heads down building. <strong>The app works.</strong> It's not pretty yet — a few labels still sound like they were written for engineers. We're fixing that. But the core of what we promised you is here, and we wanted to show you before we go wider.</p>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- FEATURE 1: CONTACTS -->
+    <div class="feature">
+      <div class="phone">
+        <div class="screen">
+          <div class="r-sbar"><span>13:28</span><span class="r-sbar-r">▲▲▲ 5G 🔋</span></div>
+          <div class="r-appbar">
+            <div class="r-appicon">
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+              <span style="background:#FFFAF0"></span><span style="background:#08113F"></span><span style="background:#FFFAF0"></span>
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+            </div>
+            <div class="r-menu">≡</div>
+          </div>
+          <div class="r-phdr">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <span class="r-back">‹ Back to Overview</span>
+                <div class="r-devname">Matt's Phone</div>
+                <div class="r-devnum">Number: 27218793762</div>
+              </div>
+              <span class="r-pill-active">Active</span>
+            </div>
+          </div>
+          <div class="r-body">
+            <div class="r-addbtn">+ ADD CONTACT</div>
+            <div class="r-card">
+              <div class="r-lbl">Name</div>
+              <div class="r-val">Gogo</div>
+              <div class="r-lbl">Number</div>
+              <div class="r-num">0714625507</div>
+              <div class="r-perms">
+                <span class="r-perm"><span class="r-chk">✓</span>&nbsp;Inbound</span>
+                <span class="r-perm"><span class="r-chk">✓</span>&nbsp;Outbound</span>
+              </div>
+              <div class="r-actions"><span class="r-edit">Edit</span><span class="r-del">Delete</span></div>
+            </div>
+            <div class="r-card">
+              <div class="r-lbl">Name</div>
+              <div class="r-val">Liam</div>
+              <div class="r-lbl">Number</div>
+              <div class="r-num">0833836382</div>
+              <div class="r-perms">
+                <span class="r-perm"><span class="r-chk">✓</span>&nbsp;Inbound</span>
+                <span class="r-perm"><span class="r-chk">✓</span>&nbsp;Outbound</span>
+              </div>
+              <div class="r-actions"><span class="r-edit">Edit</span><span class="r-del">Delete</span></div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      </div>
+
+      <div class="feat-text">
+        <div class="feat-num">Feature 01</div>
+        <div class="feat-name">You control<br><em>every number</em></div>
+        <p class="feat-body">Your child's phone can only call — and be called by — people you've approved. Nobody gets through unless you've added them first.</p>
+        <p class="feat-detail">For each contact you set two things: can they call your child, and can your child call them back? Both default to yes. You can restrict either.</p>
+        <span class="feat-chip">Up to 20 contacts</span>
+        <span class="feat-chip">SA numbers only</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- FEATURE 2: QUIET HOURS -->
+    <div class="feature flip">
+      <div class="phone">
+        <div class="screen">
+          <div class="r-sbar"><span>15:53</span><span class="r-sbar-r">▲▲▲ 5G 🔋</span></div>
+          <div class="r-appbar">
+            <div class="r-appicon">
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+              <span style="background:#FFFAF0"></span><span style="background:#08113F"></span><span style="background:#FFFAF0"></span>
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+            </div>
+            <div class="r-menu">≡</div>
+          </div>
+          <div class="r-tabstrip">
+            <div class="r-tab on">Quiet Hours</div>
+            <div class="r-tab">Weekly Schedule</div>
+          </div>
+          <div class="r-body">
+            <span class="r-back" style="margin-bottom:6px;display:block">‹ Back to Overview</span>
+            <div class="r-sectttl">Quiet Hours Settings</div>
+            <div class="r-togrow">
+              <div>
+                <div class="r-toglbl">Enable Quiet Hours</div>
+                <div class="r-togsub">Send calls to voicemail during quiet hours</div>
+              </div>
+              <div class="r-tog on"></div>
+            </div>
+            <div class="r-sectlbl" style="margin-top:8px">Quiet Hours Time Range</div>
+            <div class="r-timegrid">
+              <div class="r-timebox">20:00</div>
+              <div class="r-timesep">to</div>
+              <div class="r-timebox">07:00</div>
+            </div>
+            <div class="r-sectlbl">Offline Message</div>
+            <div class="r-ta">This system is currently offline, goodbye!</div>
+            <div class="r-togrow">
+              <div>
+                <div class="r-toglbl">Allow Emergency Calls</div>
+                <div class="r-togsub">Emergency contacts bypass quiet hours</div>
+              </div>
+              <div class="r-tog off"></div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      </div>
+
+      <div class="feat-text">
+        <div class="feat-num">Feature 02</div>
+        <div class="feat-name">You set<br><em>when it rings</em></div>
+        <p class="feat-body">Quiet Hours lets you define a window when the phone simply doesn't ring. No calls in, no calls out. You set it once; it runs every night.</p>
+        <p class="feat-detail">Set a from/to time. Choose a message for anyone who calls during that window. Emergency contacts always get through — regardless of the time.</p>
+        <span class="feat-chip">Runs every night</span>
+        <span class="feat-chip">Custom schedule per day</span>
+        <span class="feat-chip">Emergency override</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- FEATURE 3: CALL HISTORY -->
+    <div class="feature">
+      <div class="phone">
+        <div class="screen">
+          <div class="r-sbar"><span>15:51</span><span class="r-sbar-r">▲▲▲ 5G 🔋</span></div>
+          <div class="r-appbar">
+            <div class="r-appicon">
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+              <span style="background:#FFFAF0"></span><span style="background:#08113F"></span><span style="background:#FFFAF0"></span>
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+            </div>
+            <div class="r-menu">≡</div>
+          </div>
+          <div class="r-phdr">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div>
+                <span class="r-back">‹ Back to Overview</span>
+                <div class="r-devname">Matt's Phone</div>
+              </div>
+              <span class="r-pill-active">Active</span>
+            </div>
+          </div>
+          <div class="r-body">
+            <div class="r-tilegrid">
+              <div class="r-tile">
+                <div class="r-tileicon" style="background:#ede9fe">👥</div>
+                <div class="r-tilename">Contacts</div>
+                <div class="r-tilesub">Manage contacts</div>
+              </div>
+              <div class="r-tile">
+                <div class="r-tileicon" style="background:#fef9c3">⏱</div>
+                <div class="r-tilename">Hours</div>
+                <div class="r-tilesub">Quiet Hours</div>
+              </div>
+            </div>
+            <div class="r-recttl">Recent</div>
+            <div class="r-callrow">
+              <div class="r-callav">📞</div>
+              <div>
+                <div class="r-callname">Gogo</div>
+                <div class="r-callmeta">Incoming · 0:11</div>
+              </div>
+              <div class="r-calltime">Just now</div>
+            </div>
+            <div class="r-callrow">
+              <div class="r-callav">📞</div>
+              <div>
+                <div class="r-callname">Gogo</div>
+                <div class="r-callmeta">Incoming · 0:08</div>
+              </div>
+              <div class="r-calltime">1 min ago</div>
+            </div>
+            <div class="r-callrow">
+              <div class="r-callav">📞</div>
+              <div>
+                <div class="r-callname">Liam</div>
+                <div class="r-callmeta">Outgoing · 2:34</div>
+              </div>
+              <div class="r-calltime">Yesterday</div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      </div>
+
+      <div class="feat-text">
+        <div class="feat-num">Feature 03</div>
+        <div class="feat-name">You see<br><em>every call</em></div>
+        <p class="feat-body">Every call that comes in or goes out is logged — who it was, which direction, and how long it lasted. Accessible any time from your phone or laptop.</p>
+        <p class="feat-detail">You're not watching in real-time. But if something feels off, the record is there. Tap any entry for the full details.</p>
+        <span class="feat-chip">Inbound + outbound</span>
+        <span class="feat-chip">Contact name shown</span>
+        <span class="feat-chip">Duration logged</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- FEATURE 4: DASHBOARD -->
+    <div class="feature flip no-border">
+      <div class="phone">
+        <div class="screen">
+          <div class="r-sbar"><span>13:24</span><span class="r-sbar-r">▲▲▲ 5G 🔋</span></div>
+          <div class="r-appbar">
+            <div class="r-appicon">
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+              <span style="background:#FFFAF0"></span><span style="background:#08113F"></span><span style="background:#FFFAF0"></span>
+              <span style="background:#08113F"></span><span style="background:#08113F"></span><span style="background:#08113F"></span>
+            </div>
+            <div class="r-menu">≡</div>
+          </div>
+          <div class="r-body">
+            <div class="r-pagerow">
+              <div class="r-pagettl">TickeyBox's</div>
+              <div class="r-pairbtn">DEVICE PAIRING</div>
+            </div>
+            <div class="r-devcard">
+              <div class="r-devtop">
+                <div class="r-devnm">Matt's Phone</div>
+                <span class="r-pill-active">Active</span>
+              </div>
+              <div class="r-devstats">
+                <div class="r-stat">
+                  <div class="r-stat-ico">👥</div>
+                  <div class="r-stat-val">2</div>
+                  <div class="r-stat-lbl">Contacts</div>
+                </div>
+                <div class="r-stat">
+                  <div class="r-stat-ico">📱</div>
+                  <div class="r-stat-val">1</div>
+                  <div class="r-stat-lbl">Devices</div>
+                </div>
+                <div class="r-stat">
+                  <div class="r-stat-ico" style="font-size:9px;color:#9ca3af;font-weight:700">QH</div>
+                  <div class="r-stat-val">Off</div>
+                  <div class="r-stat-lbl">Quiet Mode</div>
+                </div>
+              </div>
+              <div class="r-managebtn">Manage ›</div>
+            </div>
+            <div class="r-devcard" style="opacity:.5">
+              <div class="r-devtop">
+                <div class="r-devnm">Kitchen Phone</div>
+                <span class="r-pill-offline">Offline</span>
+              </div>
+              <div class="r-devstats">
+                <div class="r-stat">
+                  <div class="r-stat-ico">👥</div>
+                  <div class="r-stat-val">0</div>
+                  <div class="r-stat-lbl">Contacts</div>
+                </div>
+                <div class="r-stat">
+                  <div class="r-stat-ico">📱</div>
+                  <div class="r-stat-val">0</div>
+                  <div class="r-stat-lbl">Devices</div>
+                </div>
+                <div class="r-stat">
+                  <div class="r-stat-ico" style="font-size:9px;color:#9ca3af;font-weight:700">QH</div>
+                  <div class="r-stat-val">Off</div>
+                  <div class="r-stat-lbl">Quiet Mode</div>
+                </div>
+              </div>
+              <div class="r-managebtn">Manage ›</div>
+            </div>
+          </div>
+          <div class="home-bar"></div>
+        </div>
+      </div>
+
+      <div class="feat-text">
+        <div class="feat-num">Feature 04</div>
+        <div class="feat-name">One account,<br><em>every phone</em></div>
+        <p class="feat-body">If you have more than one TickeyBox in the house — the kitchen, a bedroom — they're all managed from a single login. See which ones are online at a glance.</p>
+        <p class="feat-detail">Each phone has its own contacts, its own quiet hours, its own call history. Manage them independently or copy settings across.</p>
+        <span class="feat-chip">Multiple phones</span>
+        <span class="feat-chip">One login</span>
+        <span class="feat-chip">Separate settings per phone</span>
+      </div>
+    </div>
+
+    <!-- ALPHA NOTE -->
+    <div class="alpha-note">
+      <p>A few things worth being honest about: <strong>the labels in the app aren't parent-friendly yet.</strong> Some still say things like "Inbound / Outbound" and "Offline Message" — written by engineers, for engineers. We've logged every one of them and they're being fixed before the pilot goes live.</p>
+      <p>What <strong>does</strong> work: every feature you see above is live and functional. We've been calling it from real phones. The flows complete. The contacts block and allow correctly. The quiet hours cut at the right time. We're obsessing over the function first — the polish is coming.</p>
+    </div>
+
+  </div><!-- /body -->
+
+  <div class="footer-strip">
+    TickeyBox · Building in public · SA-made · tickeybox.co.za
+  </div>
+
+</div><!-- /wrap -->
+
+</body>
+</html>
