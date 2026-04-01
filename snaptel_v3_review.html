@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TickeyBox — Developer Feedback v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@400;500;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#FF6E61;--navy:#08113F;--canvas:#FFFAF0;
+  --white:#fff;--border:#E2E0D8;--muted:#6B7280;
+  --danger:#DC2626;--warn:#D97706;--info:#2563EB;--success:#059669;
+  --bg:#F4F2EC;--r:10px;
+  --sh:0 1px 4px rgba(0,0,0,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;font-size:15px;color:var(--navy);background:var(--bg);-webkit-font-smoothing:antialiased}
+
+/* NAV */
+.nav{position:sticky;top:0;z-index:100;background:var(--navy);display:flex;align-items:center;padding:0 24px;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav-logo{font-family:'Bungee',cursive;font-size:11px;color:var(--coral);white-space:nowrap;padding:12px 14px 12px 0;border-right:1px solid rgba(255,255,255,.1);margin-right:6px;flex-shrink:0}
+.nav a{color:rgba(255,255,255,.45);text-decoration:none;font-size:12px;font-weight:500;padding:12px 10px;white-space:nowrap;flex-shrink:0;transition:color .15s}
+.nav a:hover{color:#fff}
+
+/* HEADER */
+.hdr{background:var(--navy);padding:40px 40px 36px}
+.hdr-inner{max-width:860px;margin:0 auto}
+.hdr-eye{font-family:'Poppins',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+.hdr h1{font-family:'Bungee',cursive;font-size:clamp(18px,3vw,26px);color:var(--canvas);margin-bottom:6px}
+.hdr-meta{font-size:13px;color:rgba(255,250,240,.5);margin-bottom:24px}
+.hdr-pills{display:flex;flex-wrap:wrap;gap:8px}
+.hpill{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 11px;font-size:12px;font-weight:500;color:rgba(255,250,240,.55);display:flex;align-items:center;gap:6px}
+.hpill strong{font-weight:700}
+.hpill.hp1 strong{color:#FCA5A5}
+.hpill.hp2 strong{color:#FCD34D}
+.hpill.hpn strong{color:#93C5FD}
+
+/* MAIN */
+.main{max-width:860px;margin:0 auto;padding:36px 24px 80px}
+
+/* SECTION HEADER */
+.sec-hdr{display:flex;align-items:center;gap:12px;margin:44px 0 16px;padding-bottom:12px;border-bottom:2px solid var(--border)}
+.sec-hdr:first-child{margin-top:0}
+.sec-tag{font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:6px;flex-shrink:0}
+.st-p1{background:rgba(220,38,38,.1);color:var(--danger);border:1px solid rgba(220,38,38,.2)}
+.st-p2{background:rgba(217,119,6,.1);color:var(--warn);border:1px solid rgba(217,119,6,.2)}
+.st-n{background:rgba(37,99,235,.08);color:var(--info);border:1px solid rgba(37,99,235,.15)}
+.sec-hdr h2{font-family:'Poppins',sans-serif;font-size:15px;font-weight:700}
+.sec-desc{font-size:12px;color:var(--muted);margin-left:auto;flex-shrink:0}
+
+/* ISSUE */
+.issue{background:var(--white);border:1px solid var(--border);border-radius:var(--r);margin-bottom:10px;box-shadow:var(--sh);overflow:hidden}
+.issue-hdr{padding:16px 20px 0;display:flex;align-items:flex-start;gap:10px}
+.inum{font-family:'Bungee',cursive;font-size:11px;color:rgba(8,17,63,.25);flex-shrink:0;padding-top:3px;min-width:24px}
+.ititle{font-family:'Poppins',sans-serif;font-size:14px;font-weight:700;line-height:1.4;flex:1}
+.scr{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;padding:6px 20px 0 54px}
+.issue-body{padding:10px 20px 16px 54px}
+
+/* PROBLEM */
+.prob{font-size:13px;line-height:1.65;color:rgba(8,17,63,.75);margin-bottom:12px}
+
+/* FIX BLOCK */
+.fix-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--success);margin-bottom:7px}
+.fix-text{font-size:13px;line-height:1.65;color:rgba(8,17,63,.82)}
+
+/* BEFORE / AFTER */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+@media(max-width:520px){.ba{grid-template-columns:1fr}}
+.ba-col{border-radius:8px;padding:10px 13px}
+.ba-col.bef{background:rgba(220,38,38,.05);border:1px solid rgba(220,38,38,.18)}
+.ba-col.aft{background:rgba(5,150,105,.05);border:1px solid rgba(5,150,105,.2)}
+.ba-lbl{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.ba-col.bef .ba-lbl{color:var(--danger)}
+.ba-col.aft .ba-lbl{color:var(--success)}
+.ba-col code{background:none;padding:0;font-size:12px;line-height:1.75;display:block;white-space:pre-wrap;word-break:break-word;font-family:'Inter',monospace}
+.ba-col.bef code{color:rgba(8,17,63,.55)}
+.ba-col.aft code{color:var(--navy);font-weight:500}
+
+/* INLINE CODE */
+code.inline{background:rgba(8,17,63,.07);border-radius:4px;padding:1px 5px;font-size:12px;font-family:'Inter',monospace}
+
+/* SUB-LIST (for grouped issues) */
+.sub-list{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.sub-item{background:rgba(8,17,63,.03);border:1px solid var(--border);border-radius:8px;padding:10px 13px}
+.sub-item-title{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.sub-item-body{font-size:12px;color:rgba(8,17,63,.7);line-height:1.6}
+.sub-item-body .ba{margin-top:8px}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:4px 0 0 54px}
+
+/* OPENING NOTE */
+.opening{background:var(--navy);border-radius:var(--r);padding:24px 28px;margin-bottom:40px;color:var(--canvas)}
+.opening p{font-size:14px;line-height:1.75;opacity:.85}
+
+/* CONTEXT CARDS */
+.ctx-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:600px){.ctx-grid{grid-template-columns:1fr}}
+.ctx-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;box-shadow:var(--sh)}
+.ctx-card.full{grid-column:1/-1}
+.ctx-card-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.ctx-card.decisions .ctx-card-label{color:var(--success)}
+.ctx-card.untested .ctx-card-label{color:var(--warn)}
+.ctx-card.questions .ctx-card-label{color:var(--info)}
+.ctx-list{list-style:none;display:flex;flex-direction:column;gap:7px}
+.ctx-list li{font-size:13px;line-height:1.6;color:rgba(8,17,63,.8);padding-left:16px;position:relative}
+.ctx-list li::before{position:absolute;left:0;top:0}
+.ctx-card.decisions .ctx-list li::before{content:'✓';color:var(--success);font-weight:700;font-size:11px;top:2px}
+.ctx-card.untested .ctx-list li::before{content:'—';color:var(--warn);font-weight:700}
+.ctx-card.questions .ctx-list li::before{content:'?';color:var(--info);font-weight:700;font-size:12px;top:1px}
+.ctx-note{font-size:11px;color:var(--muted);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);line-height:1.5}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">TICKEYBOX</div>
+  <a href="#context">Context</a>
+  <a href="#p1">P1 — Before Pilot</a>
+  <a href="#p2">P2 — Before Rollout</a>
+  <a href="#nice">Nice to Have</a>
+</nav>
+
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="hdr-eye">Developer Feedback</div>
+    <h1>App Review — v3 Outstanding Items</h1>
+    <div class="hdr-meta">TickeyBox · April 2026 · For Snaptel</div>
+    <div class="hdr-pills">
+      <div class="hpill hp1"><strong>4</strong> before pilot</div>
+      <div class="hpill hp2"><strong>6</strong> before rollout</div>
+      <div class="hpill hpn"><strong>1 group</strong> nice to have</div>
+    </div>
+  </div>
+</header>
+
+<main class="main">
+
+<!-- ═══════════════════════════════════════ CONTEXT ═══════════════════════════════════════ -->
+<section id="context">
+
+  <div class="opening">
+    <p>First — thank you. The progress from v1 to v2 has been genuinely impressive. The language across the app is clearer, the navigation is cleaner, and the structural changes to the contact form and dashboard are exactly what we asked for. We're excited about where this is heading and feel like we're building something really worthwhile together. Below is what we need to get across the line before pilot, plus some context on decisions we've made and questions we'd like your input on.</p>
+  </div>
+
+  <div class="sec-hdr" style="margin-top:0">
+    <span class="sec-tag" style="background:rgba(8,17,63,.08);color:var(--navy);border:1px solid rgba(8,17,63,.15)">Context</span>
+    <h2>Decisions, Open Items &amp; Questions</h2>
+  </div>
+
+  <div class="ctx-grid">
+
+    <!-- DECISIONS -->
+    <div class="ctx-card decisions">
+      <div class="ctx-card-label">Decisions Made</div>
+      <ul class="ctx-list">
+        <li>Maximum of 20 contacts per phone</li>
+        <li>Up to 3 emergency contacts, drawn from within the 20 — not additional slots</li>
+        <li>No automatic connection to 10111 or any emergency services — only parent-approved emergency contacts</li>
+        <li>No call transcripts and no access to call recordings for parents</li>
+        <li>Parents must accept Terms &amp; Conditions as part of account creation</li>
+        <li>Once-off call bundles should not expire <span style="font-style:italic;opacity:.65">(to confirm with Snaptel)</span></li>
+      </ul>
+    </div>
+
+    <!-- NOT TESTED -->
+    <div class="ctx-card untested">
+      <div class="ctx-card-label">Not Yet Tested</div>
+      <ul class="ctx-list">
+        <li>Actual functionality of quiet hours and contact whitelisting on a working phone</li>
+        <li>Device auto-provisioning and WiFi setup flows (coming in the next build)</li>
+        <li>Payments with a live payment processor</li>
+        <li>Minutes and bundles functionality end-to-end</li>
+        <li>Invoicing</li>
+        <li>Admin portal (our side)</li>
+      </ul>
+      <div class="ctx-note">These are all on the roadmap — flagging so both sides are aligned on what's been validated and what hasn't.</div>
+    </div>
+
+    <!-- QUESTIONS -->
+    <div class="ctx-card questions full">
+      <div class="ctx-card-label">Open Questions for Snaptel</div>
+      <ul class="ctx-list">
+        <li><strong>Minutes and bundles visibility in app:</strong> How will remaining call value be surfaced to parents? Will each call log entry show a running total and remaining balance, or does this live somewhere else in the app? We need this to be clear and parent-friendly — not a raw data dump.</li>
+        <li><strong>TickeyBox-to-TickeyBox calls:</strong> If a parent adds a contact that is another TickeyBox number, can we detect this automatically and flag those calls as free? This is a meaningful feature for families with more than one device or for children calling friends who also have TickeyBoxes.</li>
+      </ul>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════ P1 ═══════════════════════════════════════ -->
+<section id="p1">
+  <div class="sec-hdr">
+    <span class="sec-tag st-p1">P1</span>
+    <h2>Fix Before Pilot</h2>
+    <span class="sec-desc">4 items</span>
+  </div>
+
+  <!-- 1 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">1</span>
+      <span class="ititle">App homescreen icon is a plain grey square with "L"</span>
+    </div>
+    <div class="scr">iOS / Android homescreen — PWA</div>
+    <div class="issue-body">
+      <p class="prob">When a parent saves the web app to their homescreen, the icon shows as a grey square with the letter "L". This is the first thing a parent sees every day and currently looks like a broken or unfinished app.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">Set a proper PWA manifest icon. Use the TickeyBox coral keypad logo mark: coral background <code class="inline">#FF6E61</code>, white keypad grid. Required sizes: <strong>192×192px</strong> and <strong>512×512px</strong> PNG. This is a <code class="inline">manifest.json</code> and icon asset update — no UI code change.</div>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">2</span>
+      <span class="ititle">Brand name misspelled: "TickyBox" throughout</span>
+    </div>
+    <div class="scr">Global — settings page heading and elsewhere</div>
+    <div class="issue-body">
+      <p class="prob">The Settings page heading renders "TickyBox Settings" — missing the 'e'.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">Update the Settings page heading from <code class="inline">TickyBox Settings</code> to <code class="inline">TickeyBox Settings</code>.</div>
+    </div>
+  </div>
+
+  <!-- 3 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">3</span>
+      <span class="ititle">Danger Zone — destructive delete button needs to be removed</span>
+    </div>
+    <div class="scr">TickeyBox Settings — bottom of page</div>
+    <div class="issue-body">
+      <p class="prob">"Danger Zone" heading with a full-width red "Delete TickeyBox" button is still present. A parent scrolling through routine settings will land directly on a destructive action with no friction.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">Remove the "Danger Zone" section and red button entirely. Replace with a low-visibility grey text link at the very bottom of the settings page:
+        <div class="ba">
+          <div class="ba-col bef"><div class="ba-lbl">Remove</div><code>DANGER ZONE
+[Delete TickeyBox]</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Replace with</div><code>Remove this phone from your account →
+
+(grey text link, bottom of page)
+
+On click: confirmation modal.
+Parent must type the phone name.
+"Type Matt's Phone to confirm."
+Confirm button only enables once typed.</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">4</span>
+      <span class="ititle">Emergency contacts — toggle on contact card, max 3, bypasses quiet hours</span>
+    </div>
+    <div class="scr">Add a Contact form / Contact card</div>
+    <div class="issue-body">
+      <p class="prob">There is currently no way to designate a contact as an emergency contact. The use case: certain contacts (e.g. grandparent, other parent) should be able to call through even during quiet hours and weekly schedule blocks.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">Add an "Emergency contact" toggle to the contact card (add and edit views). Rules:
+        <div class="sub-list" style="margin-top:10px">
+          <div class="sub-item">
+            <div class="sub-item-title">Toggle behaviour</div>
+            <div class="sub-item-body">Defaults OFF. When turned ON, the contact bypasses quiet hours and weekly schedule restrictions — they can always call through.</div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-item-title">Maximum 3 emergency contacts per phone</div>
+            <div class="sub-item-body">Once 3 are set, the toggle on all other contacts is disabled with a note: <code class="inline">"You've set 3 emergency contacts — the maximum. Remove one to add another."</code></div>
+          </div>
+          <div class="sub-item">
+            <div class="sub-item-title">Visual treatment</div>
+            <div class="sub-item-body">Emergency contacts should be visually distinct in the contacts list — e.g. a small badge or coloured indicator — so the parent can see at a glance which contacts have this status.</div>
+          </div>
+        </div>
+        <div class="ba" style="margin-top:12px">
+          <div class="ba-col bef"><div class="ba-lbl">Current contact form</div><code>First name
+Last name
+Phone number
+Can call this phone     [toggle]
+Matt's Phone can call them [toggle]</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Required — add emergency toggle</div><code>First name
+Last name
+Phone number
+Can call this phone       [toggle]
+Matt's Phone can call them [toggle]
+
+Emergency contact           [toggle]
+Can always call through, even
+during quiet hours.</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════ P2 ═══════════════════════════════════════ -->
+<section id="p2">
+  <div class="sec-hdr">
+    <span class="sec-tag st-p2">P2</span>
+    <h2>Fix Before Rollout</h2>
+    <span class="sec-desc">6 items</span>
+  </div>
+
+  <!-- 6 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">6</span>
+      <span class="ititle">Region selector — add province context under each city option</span>
+    </div>
+    <div class="scr">Setup Wizard — Step 1</div>
+    <div class="issue-body">
+      <p class="prob">The two options show city names only (Johannesburg, Cape Town). A parent in Durban, Pretoria, or East London has to guess which applies to them. The "South Africa" sub-label adds nothing.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">Keep the city names as-is (dynamic variable). Replace "South Africa" sub-label with a province list so parents in other areas can self-select.
+        <div class="ba">
+          <div class="ba-col bef"><div class="ba-lbl">Current</div><code>Johannesburg - South Africa
+South Africa
+
+Cape Town - South Africa
+South Africa</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Required</div><code>Johannesburg - South Africa
+Best for: Gauteng, Limpopo,
+North West, Free State &amp;
+Mpumalanga
+
+Cape Town - South Africa
+Best for: Western Cape, Eastern
+Cape, Northern Cape &amp;
+KwaZulu-Natal</code></div>
+        </div>
+        Step heading: <code class="inline">"Where are you based?"</code><br>
+        Sub-heading: <code class="inline">"Choose the closest option for the best call quality."</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">7</span>
+      <span class="ititle">Plan row shows "1SC" — internal code visible to parent</span>
+    </div>
+    <div class="scr">Setup Wizard — Step 3 (Almost done)</div>
+    <div class="issue-body">
+      <p class="prob">The summary screen shows <code class="inline">Plan: 1SC · R99/mo</code>. "1SC" is an internal plan identifier that should never be user-facing. It looks like a technical ID.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">
+        <div class="ba">
+          <div class="ba-col bef"><div class="ba-lbl">Current</div><code>Plan    1SC · R99/mo</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Required</div><code>Plan    Standard · R99/mo</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">8</span>
+      <span class="ititle">Contact limit — 20-contact maximum not visible on contacts page</span>
+    </div>
+    <div class="scr">Contacts list</div>
+    <div class="issue-body">
+      <p class="prob">There is a 20-contact limit but no indication of it on the contacts page. Parents will only discover the limit when they hit it.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">Show a dynamic count in the page subtitle. Disable the "+ Add a contact" button when the limit is reached.
+        <div class="ba">
+          <div class="ba-col bef"><div class="ba-lbl">Current</div><code>Add the people this child should
+be able to reach...</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Required</div><code>Add the people your child can call
+and who can call them.
+3 of 20 contacts added.</code></div>
+        </div>
+        When limit reached, replace button with: <code class="inline">"You've reached the 20-contact limit. Remove a contact to add a new one."</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">9</span>
+      <span class="ititle">Weekly schedule greeting — label and placeholder copy unclear</span>
+    </div>
+    <div class="scr">Weekly Schedule settings</div>
+    <div class="issue-body">
+      <p class="prob">The label "MESSAGE CALLERS HEAR WHEN THE PHONE IS AVAILABLE" is ambiguous. The placeholder "Hello, please hold while we connect your call" sounds like a call centre, not a child's home phone.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">
+        <div class="ba">
+          <div class="ba-col bef"><div class="ba-lbl">Current</div><code>MESSAGE CALLERS HEAR WHEN
+THE PHONE IS AVAILABLE
+
+Hello, please hold while we
+connect your call.</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Required</div><code>Greeting callers hear
+What callers hear when this
+phone is accepting calls.
+
+[Leave blank for no greeting]</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">10</span>
+      <span class="ititle">"Add Another Family Account" — too prominent, purpose not explained</span>
+    </div>
+    <div class="scr">Account Settings</div>
+    <div class="issue-body">
+      <p class="prob">A large dark "Add Another Family Account" button sits at the very top of Account Settings — above the account owner name, family name, and all actual settings. New parents read it as a required step. There is also no explanation of what a second family account is for, so even the parents who need it don't know why.</p>
+      <div class="fix-label">Fix Required</div>
+      <div class="fix-text">Move to the very bottom of Account Settings as a low-weight text link with a one-line purpose explanation above it.
+        <div class="ba">
+          <div class="ba-col bef"><div class="ba-lbl">Current (top of page, large button)</div><code>[Add Another Family Account]</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Required (bottom of page, text link)</div><code>Manage a second home?
+If your child splits time between
+two households, you can set up a
+separate family account for each.
+
+Add another family account →</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+  <!-- 11 -->
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">11</span>
+      <span class="ititle">RICA — preferred location is onboarding, not Account Settings</span>
+    </div>
+    <div class="scr">Account Settings (current) → Onboarding (preferred)</div>
+    <div class="issue-body">
+      <p class="prob">RICA is a legal requirement but currently lives in Account Settings — most parents won't find it there. This is not a launch blocker, but our preference is for it to be surfaced in the onboarding flow so parents encounter it early and naturally. The non-negotiable in either case: it must never block account access. Parents must always be able to skip and come back.</p>
+      <div class="fix-label">Preferred (not a launch blocker)</div>
+      <div class="fix-text">Ideally, add RICA as a step in the onboarding flow immediately after account creation, with a "I'll do this later" option. If deprioritised for pilot, ensure a persistent dashboard banner is shown until complete:
+        <code class="inline">"Action needed: Upload your ID and proof of address to activate your phone service."</code>
+        <div class="ba" style="margin-top:12px">
+          <div class="ba-col bef"><div class="ba-lbl">Current state</div><code>RICA lives in Account Settings.
+No onboarding step exists.</code></div>
+          <div class="ba-col aft"><div class="ba-lbl">Preferred — onboarding step copy</div><code>One quick legal step
+
+South African law requires phone
+providers to verify account holders.
+Once-off. Takes under a minute.
+
+ID document
+SA ID, passport, or driver's licence
+(PDF, JPG, PNG — max 10MB)
+[Upload ID →]
+
+Proof of address
+Utility bill or bank statement,
+last 3 months (PDF, JPG, PNG)
+[Upload proof →]
+
+[Continue →]   [I'll do this later]</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════ NICE TO HAVE ═══════════════════════════════════════ -->
+<section id="nice">
+  <div class="sec-hdr">
+    <span class="sec-tag st-n">Nice to Have</span>
+    <h2>Number Formatting</h2>
+    <span class="sec-desc">3 instances, 1 fix pattern</span>
+  </div>
+
+  <div class="issue">
+    <div class="issue-hdr">
+      <span class="inum">11</span>
+      <span class="ititle">Phone numbers display as raw unformatted digit strings in three places</span>
+    </div>
+    <div class="scr">Device cards · Contacts list · Registration form</div>
+    <div class="issue-body">
+      <p class="prob">Numbers are currently displayed without spaces or consistent formatting across the app. SA convention is <code class="inline">0XX XXX XXXX</code>. These are display-only changes — no data values need to change.</p>
+      <div class="fix-label">Fix When Possible</div>
+      <div class="sub-list">
+        <div class="sub-item">
+          <div class="sub-item-title">Device cards — Your TickeyBoxes list</div>
+          <div class="sub-item-body">
+            <div class="ba">
+              <div class="ba-col bef"><div class="ba-lbl">Current</div><code>Matt's Phone  27218793762</code></div>
+              <div class="ba-col aft"><div class="ba-lbl">Required</div><code>Matt's Phone  021 879 3762</code></div>
+            </div>
+          </div>
+        </div>
+        <div class="sub-item">
+          <div class="sub-item-title">Contacts list</div>
+          <div class="sub-item-body">
+            <div class="ba">
+              <div class="ba-col bef"><div class="ba-lbl">Current</div><code>0714625507</code></div>
+              <div class="ba-col aft"><div class="ba-lbl">Required</div><code>071 462 5507</code></div>
+            </div>
+          </div>
+        </div>
+        <div class="sub-item">
+          <div class="sub-item-title">Registration form — mobile number field</div>
+          <div class="sub-item-body">
+            <div class="ba">
+              <div class="ba-col bef"><div class="ba-lbl">Current</div><code>+27123456789
+Include country code (e.g. +27
+for South Africa)</code></div>
+              <div class="ba-col aft"><div class="ba-lbl">Required</div><code>0821234567
+Your South African mobile number.</code></div>
+            </div>
+            Accept both formats on the backend (0XX and +27XX) — this is a display/placeholder change only.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+</main>
+</body>
+</html>
