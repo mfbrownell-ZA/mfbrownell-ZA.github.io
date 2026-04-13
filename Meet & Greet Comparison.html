@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jem Head of Marketing · Meet & Greet Comparison</title>
+<style>
+  :root {
+    --pink: #E91E8C;
+    --pink-light: #fce4f3;
+    --dark: #1a1a2e;
+    --grey-dark: #2d2d2d;
+    --grey: #6b7280;
+    --grey-light: #f3f4f6;
+    --border: #e5e7eb;
+    --green: #059669;
+    --green-light: #d1fae5;
+    --amber: #d97706;
+    --amber-light: #fef3c7;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --white: #ffffff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8f9fa;
+    color: var(--grey-dark);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    padding: 40px 32px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 240px; height: 240px;
+    background: var(--pink);
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: 30%;
+    width: 180px; height: 180px;
+    background: var(--pink);
+    border-radius: 50%;
+    opacity: 0.06;
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+  .jem-logo {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--pink); margin-bottom: 16px;
+  }
+  .header h1 { font-size: 26px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .header .subtitle { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+  .header-meta { display: flex; gap: 32px; flex-wrap: wrap; }
+  .meta-item { font-size: 12px; color: rgba(255,255,255,0.5); }
+  .meta-item strong { color: rgba(255,255,255,0.8); display: block; font-size: 13px; margin-bottom: 1px; }
+
+  /* SCORING CHANGE NOTICE */
+  .notice-bar {
+    background: var(--purple-light);
+    border-left: 4px solid var(--purple);
+    padding: 12px 20px;
+    font-size: 13px;
+    color: #4c1d95;
+    line-height: 1.5;
+  }
+  .notice-bar strong { font-weight: 700; }
+  .notice-inner { max-width: 1100px; margin: 0 auto; }
+
+  /* MAIN */
+  .main { max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
+
+  /* SUMMARY CARDS */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .summary-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .summary-card.go::before { background: var(--green); }
+  .summary-card.maybe::before { background: var(--amber); }
+  .summary-card.nogo::before { background: var(--red); }
+  .summary-card .candidate-name {
+    font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 4px;
+  }
+  .summary-card .candidate-context {
+    font-size: 11px; color: var(--grey); margin-bottom: 14px; line-height: 1.4;
+  }
+  .rec-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+    text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .rec-badge.go { background: var(--green-light); color: var(--green); }
+  .rec-badge.maybe { background: var(--amber-light); color: var(--amber); }
+  .rec-badge.nogo { background: var(--red-light); color: var(--red); }
+  .rec-badge.in-progress { background: var(--blue-light); color: var(--blue); }
+  .rec-badge.flag { background: #fff3cd; color: #92400e; }
+  .score-dots { display: flex; flex-direction: column; gap: 5px; }
+  .score-dot-row {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 11px; color: var(--grey);
+  }
+  .score-dot-row.b2b-row { font-weight: 700; color: var(--grey-dark); }
+  .dot {
+    width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+  }
+  .dot.strong { background: var(--green); }
+  .dot.adequate { background: var(--amber); }
+  .dot.weak { background: var(--red); }
+  .dot.none { background: var(--border); }
+  .dot.b2b-strong { background: var(--green); box-shadow: 0 0 0 2px var(--green-light), 0 0 0 3px var(--green); }
+  .dot.b2b-adequate { background: var(--amber); box-shadow: 0 0 0 2px var(--amber-light), 0 0 0 3px var(--amber); }
+  .dot.b2b-weak { background: var(--red); box-shadow: 0 0 0 2px var(--red-light), 0 0 0 3px var(--red); }
+
+  /* SECTION HEADER */
+  .section-header { margin-bottom: 16px; }
+  .section-header h2 {
+    font-size: 14px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--dark); margin-bottom: 2px;
+  }
+  .section-header p { font-size: 12px; color: var(--grey); }
+
+  /* COMPARISON TABLE */
+  .comparison-wrap {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 36px;
+  }
+  .comparison-table { width: 100%; border-collapse: collapse; }
+  .comparison-table th, .comparison-table td {
+    padding: 13px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  .comparison-table th {
+    background: var(--dark);
+    color: rgba(255,255,255,0.7);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .comparison-table th:first-child { width: 210px; }
+  .comparison-table th.candidate-col {
+    color: var(--white); font-size: 13px; font-weight: 700;
+    letter-spacing: 0; text-transform: none;
+  }
+  .comparison-table td:first-child {
+    font-size: 13px; font-weight: 600; color: var(--dark);
+    background: var(--grey-light);
+  }
+  .comparison-table tr:last-child td, .comparison-table tr:last-child th {
+    border-bottom: none;
+  }
+  .b2b-row-highlight td { background: #fdf4ff !important; }
+  .b2b-row-highlight td:first-child {
+    background: #ede9fe !important;
+    color: var(--purple) !important;
+    font-weight: 700 !important;
+  }
+  .score-pill {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px;
+  }
+  .score-pill.strong { background: var(--green-light); color: var(--green); }
+  .score-pill.adequate { background: var(--amber-light); color: var(--amber); }
+  .score-pill.weak { background: var(--red-light); color: var(--red); }
+  .score-pill.none { background: var(--grey-light); color: var(--grey); }
+  .score-pill::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+  }
+  .score-pill.strong::before { background: var(--green); }
+  .score-pill.adequate::before { background: var(--amber); }
+  .score-pill.weak::before { background: var(--red); }
+  .score-pill.none::before { background: var(--grey); }
+  .score-pill.b2b { border: 2px solid currentColor; }
+  .table-rec-row td {
+    background: var(--dark) !important;
+    border-top: 2px solid var(--pink) !important;
+  }
+  .table-rec-row td:first-child {
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 12px !important;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+
+  /* CANDIDATE DETAIL CARDS */
+  .candidates-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+  .candidate-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .card-header {
+    background: var(--dark);
+    padding: 20px 24px;
+    position: relative; overflow: hidden;
+  }
+  .card-header::before {
+    content: '';
+    position: absolute; top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    background: var(--pink); border-radius: 50%; opacity: 0.1;
+  }
+  .card-header-inner { position: relative; }
+  .card-name { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+  .card-context { font-size: 12px; color: rgba(255,255,255,0.5); margin-bottom: 12px; line-height: 1.4; }
+  .card-badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .card-body { padding: 20px 24px; }
+
+  /* DIMENSION ROWS */
+  .dimension-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; }
+  .dim-row {
+    border: 1px solid var(--border);
+    border-radius: 8px; overflow: hidden;
+  }
+  .dim-row.b2b-dim { border-color: var(--purple); border-width: 2px; }
+  .dim-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 14px; background: var(--grey-light);
+  }
+  .dim-row.b2b-dim .dim-header { background: var(--purple-light); }
+  .dim-name { font-size: 12px; font-weight: 700; color: var(--dark); text-transform: uppercase; letter-spacing: 0.04em; }
+  .dim-row.b2b-dim .dim-name { color: var(--purple); }
+  .b2b-star { font-size: 10px; margin-left: 4px; color: var(--purple); }
+  .dim-quote {
+    padding: 10px 14px;
+    font-size: 12px; color: var(--grey); line-height: 1.5;
+    border-top: 1px solid var(--border); font-style: italic;
+  }
+  .dim-quote::before { content: '"'; color: var(--pink); font-size: 16px; font-style: normal; }
+  .dim-quote::after { content: '"'; color: var(--pink); font-size: 16px; font-style: normal; }
+
+  /* FLAG BLOCKS */
+  .flag-block {
+    border-radius: 8px; padding: 12px 14px;
+    font-size: 12px; line-height: 1.5; margin-bottom: 14px;
+  }
+  .flag-block.alignment { background: var(--amber-light); border-left: 3px solid var(--amber); color: #92400e; }
+  .flag-block.incomplete { background: var(--blue-light); border-left: 3px solid var(--blue); color: #1e40af; }
+  .flag-block.withdrawal { background: var(--red-light); border-left: 3px solid var(--red); color: #991b1b; }
+  .flag-block.b2b-gap { background: var(--red-light); border-left: 3px solid var(--red); color: #991b1b; }
+  .flag-block strong { display: block; margin-bottom: 3px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* RATIONALE */
+  .rationale {
+    background: var(--grey-light); border-radius: 8px;
+    padding: 12px 14px; font-size: 12px; color: var(--grey-dark); line-height: 1.6;
+  }
+  .rationale-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--grey); margin-bottom: 5px;
+  }
+  .next-steps { font-size: 12px; color: var(--grey-dark); line-height: 1.6; margin-top: 12px; }
+  .next-steps strong { color: var(--dark); }
+
+  /* NO SCORE */
+  .no-score-body { padding: 16px 0 8px; text-align: center; }
+  .no-score-title { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+  .no-score-text { font-size: 13px; color: var(--grey); line-height: 1.6; max-width: 320px; margin: 0 auto; }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 32px; background: var(--white); margin-top: 8px;
+  }
+  .footer-inner {
+    max-width: 1100px; margin: 0 auto;
+    font-size: 12px; color: var(--grey); line-height: 1.6;
+  }
+  .footer-inner strong { color: var(--grey-dark); }
+
+  @media (max-width: 900px) {
+    .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    .candidates-grid { grid-template-columns: 1fr; }
+    .comparison-table { display: block; overflow-x: auto; }
+  }
+  @media (max-width: 600px) {
+    .summary-grid { grid-template-columns: 1fr; }
+    .header { padding: 28px 20px; }
+    .main { padding: 24px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="jem-logo">Jem · Head of Marketing</div>
+    <h1>Meet &amp; Greet Comparison</h1>
+    <div class="subtitle">Stage 1 Screen · 30-minute sessions · April 2026</div>
+    <div class="header-meta">
+      <div class="meta-item"><strong>4 candidates</strong>Screened</div>
+      <div class="meta-item"><strong>1 GO</strong>Proceed to workshop</div>
+      <div class="meta-item"><strong>2 MAYBE</strong>1 alignment concern, 1 B2B gap</div>
+      <div class="meta-item"><strong>1 NO-GO</strong>Mutual withdrawal</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- SUMMARY CARDS -->
+  <div class="section-header">
+    <h2>Candidate Overview</h2>
+    <p>At-a-glance recommendation and dimension snapshot · ★ B2B Experience Depth is upweighted</p>
+  </div>
+
+  <div class="summary-grid">
+
+    <!-- Giran Adams -->
+    <div class="summary-card maybe">
+      <div class="candidate-name">Giran Adams</div>
+      <div class="candidate-context">D2C specialist · startup operator · independent consultant</div>
+      <div class="rec-badge maybe">MAYBE</div>
+      <div class="score-dots">
+        <div class="score-dot-row"><span class="dot strong"></span>Builder Mentality</div>
+        <div class="score-dot-row"><span class="dot adequate"></span>AI Fluency</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Commercial Literacy</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Narrative Quality</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Intellectual Presence</div>
+        <div class="score-dot-row b2b-row"><span class="dot b2b-weak"></span>★ B2B Experience Depth</div>
+      </div>
+    </div>
+
+    <!-- Anna Vaulina -->
+    <div class="summary-card maybe">
+      <div class="candidate-name">Anna Vaulina</div>
+      <div class="candidate-context">Showmax brand build · Growth Ink agency · Jem fractional CMO</div>
+      <div><span class="rec-badge maybe">MAYBE</span> <span class="rec-badge flag">⚠ Alignment</span></div>
+      <div class="score-dots" style="margin-top:8px;">
+        <div class="score-dot-row"><span class="dot strong"></span>Builder Mentality</div>
+        <div class="score-dot-row"><span class="dot strong"></span>AI Fluency</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Commercial Literacy</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Narrative Quality</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Intellectual Presence</div>
+        <div class="score-dot-row b2b-row"><span class="dot b2b-adequate"></span>★ B2B Experience Depth</div>
+      </div>
+    </div>
+
+    <!-- Juliet May -->
+    <div class="summary-card go">
+      <div class="candidate-name">Juliet May</div>
+      <div class="candidate-context">B2B fintech · ReliComply CMO · Acceleration · SBEndi consulting</div>
+      <div class="rec-badge go">GO</div>
+      <div class="score-dots" style="margin-top:8px;">
+        <div class="score-dot-row"><span class="dot adequate"></span>Builder Mentality</div>
+        <div class="score-dot-row"><span class="dot adequate"></span>AI Fluency</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Commercial Literacy</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Narrative Quality</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Intellectual Presence</div>
+        <div class="score-dot-row b2b-row"><span class="dot b2b-strong"></span>★ B2B Experience Depth</div>
+      </div>
+    </div>
+
+    <!-- Ceejay Ndlovu -->
+    <div class="summary-card nogo">
+      <div class="candidate-name">Sijabuliso "Ceejay" Ndlovu</div>
+      <div class="candidate-context">Luxury e-com · Pernod Ricard · What Three Words</div>
+      <div class="rec-badge nogo">NO-GO</div>
+      <div style="margin-top:12px;">
+        <div class="score-dot-row" style="margin-bottom:5px;"><span class="dot none"></span>Not scored</div>
+        <div style="font-size:11px;color:var(--grey);margin-top:6px;line-height:1.5;">Mutual withdrawal — session concluded by agreement before assessment was possible.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="section-header">
+    <h2>Dimension Comparison</h2>
+    <p>6 dimensions · ★ B2B Experience Depth is upweighted</p>
+  </div>
+
+  <div class="comparison-wrap">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th class="candidate-col">Giran Adams</th>
+          <th class="candidate-col">Anna Vaulina</th>
+          <th class="candidate-col">Juliet May</th>
+          <th class="candidate-col">Ceejay Ndlovu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Builder Mentality</td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill adequate">Adequate</span></td>
+          <td><span class="score-pill none">—</span></td>
+        </tr>
+        <tr>
+          <td>AI Fluency</td>
+          <td><span class="score-pill adequate">Adequate</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill adequate">Adequate</span></td>
+          <td><span class="score-pill none">—</span></td>
+        </tr>
+        <tr>
+          <td>Commercial Literacy</td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill none">—</span></td>
+        </tr>
+        <tr>
+          <td>Narrative Quality</td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill none">—</span></td>
+        </tr>
+        <tr>
+          <td>Intellectual Presence</td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill none">—</span></td>
+        </tr>
+        <tr class="b2b-row-highlight">
+          <td>★ B2B Experience Depth</td>
+          <td><span class="score-pill weak">Weak</span></td>
+          <td><span class="score-pill adequate">Adequate</span></td>
+          <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill none">—</span></td>
+        </tr>
+        <tr class="table-rec-row">
+          <td>Recommendation</td>
+          <td><span class="rec-badge maybe" style="font-size:12px;">MAYBE</span></td>
+          <td><span class="rec-badge maybe" style="font-size:12px;">MAYBE</span></td>
+          <td><span class="rec-badge go" style="font-size:12px;">GO</span></td>
+          <td><span class="rec-badge nogo" style="font-size:12px;">NO-GO</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CANDIDATE DETAIL CARDS -->
+  <div class="section-header">
+    <h2>Candidate Detail</h2>
+    <p>Evidence, flags, and rationale per candidate</p>
+  </div>
+
+  <div class="candidates-grid">
+
+    <!-- ============ GIRAN ADAMS ============ -->
+    <div class="candidate-card">
+      <div class="card-header">
+        <div class="card-header-inner">
+          <div class="card-name">Giran Adams</div>
+          <div class="card-context">D2C specialist · startup operator · independent consultant · 4 Strong, 1 Adequate, 1 Weak</div>
+          <div class="card-badge-row">
+            <span class="rec-badge maybe">MAYBE — B2B depth required before GO</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="flag-block b2b-gap">
+          <strong>B2B Gap</strong>
+          Nearly entire career is D2C. Without a strong B2B anchor in the team, this is a structural gap — not just an individual one. Testable in workshop if you proceed, but a real risk.
+        </div>
+
+        <div class="dimension-list">
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Builder Mentality</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Employee #6 at Indie — built the marketing function from scratch, delivered nearly a quarter of Sun Life's new life insurance business by value. Early employee at Turco: built 5–6k users and 150-merchant base in 8 months.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">AI Fluency</span>
+              <span class="score-pill adequate">Adequate</span>
+            </div>
+            <div class="dim-quote">ChatGPT as foundational layer. Uses 11 Labs, Google AI Studio, Bulk, Apollo automations for lead enrichment, ClickUp automations. No-code building for personal projects. Active and thoughtful — not yet at agent-building level.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Commercial Literacy</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">At Indie: nearly a quarter of Sun Life's new life insurance business by value. At Switch: 10% MoM lift → 150%+ over the year from lifecycle improvements. Mentions CAC, LTV, payback periods naturally.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Narrative Quality</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">10 years as copywriter then Creative Director (Red Bull, data brands, alcohol). Navigated complex brand transition from indie challenger to SunLam Indie — a category identity problem, not a campaign problem.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Intellectual Presence</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Mapped competitor landscape before the call. Asked about WhatsApp dependency risk, Next 176 relationship, funding runway, geographic expansion. The WhatsApp existential risk question was genuinely incisive.</div>
+          </div>
+          <div class="dim-row b2b-dim">
+            <div class="dim-header">
+              <span class="dim-name">B2B Experience Depth <span class="b2b-star">★ Upweighted</span></span>
+              <span class="score-pill weak b2b">Weak</span>
+            </div>
+            <div class="dim-quote">Almost entire career is D2C (Indie, Switch, Turco, Tyme). B2B exposure limited to white-label client work at Indie touching Sun Life and early consulting at Emerge. No sustained enterprise sales environment, no ABM, no long-cycle B2B demand-gen. Acknowledged the gap honestly when asked.</div>
+          </div>
+        </div>
+
+        <div class="rationale">
+          <div class="rationale-label">Recommendation Rationale</div>
+          Strong core capability across all other dimensions. The B2B gap is the single blocker — the team needs a B2B anchor and Giran cannot provide it. Workshop is justified only if you are comfortable with that gap, or plan to cover it with another hire.
+        </div>
+        <div class="next-steps" style="margin-top:12px;">
+          <strong>Key question before proceeding:</strong> Is Giran's D2C/commercial strength enough alongside Amy, or does the team need at least one B2B-native hire?
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ ANNA VAULINA ============ -->
+    <div class="candidate-card">
+      <div class="card-header">
+        <div class="card-header-inner">
+          <div class="card-name">Anna Vaulina</div>
+          <div class="card-context">Showmax brand build · Growth Ink R12m agency · Jem fractional CMO · 5 Strong, 1 Adequate</div>
+          <div class="card-badge-row">
+            <span class="rec-badge maybe">MAYBE — Alignment Conversation Required</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="flag-block alignment">
+          <strong>⚠ Alignment Flag — Not a Capability Gap</strong>
+          Anna explicitly stated B2B marketing is not where she wants to be long-term. "My brain gets more joy out of e-com FMCG DTC style marketing." She also doesn't want to go full-time. Before a workshop invitation, one direct conversation is required: is there a version of this role she commits to for 3+ years?
+        </div>
+
+        <div class="dimension-list">
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Builder Mentality</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Built Showmax brand from zero with one other person. Started Growth Ink — 6 years, R12m peak revenue, international clients. Built SA synthetic persona engine: scraped open data, ML clustering model, WhatsApp bot interface.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">AI Fluency</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Uses Claude daily. Built SA synthetic persona ML model with a colleague — system-level AI thinking, not tool use. Recognises AI will make knowledge work and consulting redundant in 2–3 years and is acting on that now.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Commercial Literacy</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Growth Ink = R12m revenue at peak. Showmax signup content engine still driving 10% of signups years later. Full marketing attribution for Capitec. Grasped the Jem commercial model (EWA monetisation, HR as wedge) rapidly without briefing.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Narrative Quality</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Built one of SA's most recognised streaming brands. Repositioned Tunes (Singapore fintech) from feature-led to pain-point-led per ICP. Understands brand-as-trust-signal for B2B enterprise sales.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Intellectual Presence</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">First question: "What's the mission, ceiling, and exit intent of the founders?" Then immediately connected exit strategy to narrative: "it shapes the story you tell in the market." Challenged the scope of the role throughout.</div>
+          </div>
+          <div class="dim-row b2b-dim">
+            <div class="dim-header">
+              <span class="dim-name">B2B Experience Depth <span class="b2b-star">★ Upweighted</span></span>
+              <span class="score-pill adequate b2b">Adequate</span>
+            </div>
+            <div class="dim-quote">Growth Ink served B2B clients including Capitec (full marketing attribution, B2B ICP segmentation work). Fractional CMO at Jem for 2 years gives direct context. But primary domain and stated preference is DTC/FMCG/e-com. B2B exposure is client-side, not operator-side.</div>
+          </div>
+        </div>
+
+        <div class="rationale">
+          <div class="rationale-label">Recommendation Rationale</div>
+          Exceptional capability across all 6 dimensions. B2B depth is adequate — better than Giran, but not career-deep. The live blocker is motivation: she has said explicitly B2B full-time is not what she wants. If that resolves, this is a strong GO. If it doesn't, do not proceed regardless of scorecard.
+        </div>
+        <div class="next-steps" style="margin-top:12px;">
+          <strong>Required next step:</strong> Direct follow-up before workshop invitation. One question: is there a version of this role she commits to for 3+ years?
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ JULIET MAY ============ -->
+    <div class="candidate-card">
+      <div class="card-header">
+        <div class="card-header-inner">
+          <div class="card-name">Juliet May</div>
+          <div class="card-context">11 yrs Acceleration · ReliComply CMO · SBEndi consulting · 4 Strong, 2 Adequate</div>
+          <div class="card-badge-row">
+            <span class="rec-badge go">GO — Proceed to Workshop</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+
+
+        <div class="dimension-list">
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Builder Mentality</span>
+              <span class="score-pill adequate">Adequate</span>
+            </div>
+            <div class="dim-quote">Started and closed an agency (recession, partner left). Built SBEndi consulting solo under significant personal constraint. Her builds are mostly inside structured organisations — resourceful, but service/freelance rather than product-from-zero.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">AI Fluency</span>
+              <span class="score-pill adequate">Adequate</span>
+            </div>
+            <div class="dim-quote">Active daily user: Claude, Perplexity, ChatGPT, DeepSeek, Lovable. Put customer call data into Claude for pattern recognition. Tools used intelligently but workflow is tool-by-tool rather than systemic. "I don't have a cool AI tool for research."</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Commercial Literacy</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">CAC and LTV as the two primary management metrics — not campaign metrics, commercial ones. MQL defined as warm, not cold: marketing-touched before the SDR call. Attribution model included salaries, event costs, everything all-in. Sat on the management team and owned marketing's contribution to both scores.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Narrative Quality</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">ReliComply rebrand: repositioned 'KYC and AML' — deeply unsexy compliance category — with a clear value proposition that "landed incredibly well in market." Messaging hierarchy (thought leadership → education → product) is sophisticated B2B brand thinking.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Intellectual Presence</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Session 2 was structured and sharp. Questions covered: long-range strategy, quarterly operational cadence, CEO involvement in messaging, board dynamics, and CS/marketing communication gap — the last identified independently and unprompted. A real structural insight about the business.</div>
+          </div>
+          <div class="dim-row b2b-dim">
+            <div class="dim-header">
+              <span class="dim-name">B2B Experience Depth <span class="b2b-star">★ Upweighted</span></span>
+              <span class="score-pill strong b2b">Strong</span>
+            </div>
+            <div class="dim-quote">Career is overwhelmingly B2B enterprise: 11 years at Acceleration (B2B tech/media/consulting, WPP acquisition). ReliComply — owned full marketing function for B2B fintech SaaS with enterprise buyers and long sales cycles. Telenexus and North — both B2B. ABM instinct came naturally and unprompted.</div>
+          </div>
+        </div>
+
+        <div class="rationale">
+          <div class="rationale-label">Recommendation Rationale</div>
+          Session 2 resolved the open questions. Commercial Literacy upgraded to Strong — CAC and LTV owned on the management team with a full all-in attribution model. Intellectual Presence upgraded to Strong — structured, well-researched, and perceptive. Result: 4 Strong (Commercial, Narrative, IP, B2B), 2 Adequate (Builder, AI). No hard disqualifiers. AI adequacy is the one flag — she self-identified it honestly, which is a good sign. Proceed to workshop.
+        </div>
+        <div class="next-steps" style="margin-top:12px;">
+          <strong>Workshop note:</strong> AI depth is the one area to probe further. Builder mentality is adequate — builds inside structures rather than from zero. Neither is a blocker at this stage; both are worth testing in the workshop exercises.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ CEEJAY NDLOVU ============ -->
+    <div class="candidate-card">
+      <div class="card-header">
+        <div class="card-header-inner">
+          <div class="card-name">Sijabuliso "Ceejay" Ndlovu</div>
+          <div class="card-context">Luxury African e-com · Pernod Ricard · What Three Words · Mutual withdrawal</div>
+          <div class="card-badge-row">
+            <span class="rec-badge nogo">NO-GO — Mutual Withdrawal</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="flag-block withdrawal">
+          <strong>Mutual Withdrawal — Session Concluded by Agreement</strong>
+          Both parties concluded during the session that the role was not right for Ceejay's motivations. Matt clarified the role is fundamentally sales support and demand-gen, not brand storytelling. Ceejay confirmed: "I can 90% say the answer is probably no." Matt: "I would agree."
+        </div>
+
+        <div class="no-score-body">
+          <div class="no-score-title">No Dimension Scores</div>
+          <div class="no-score-text">Assessment was not reached. This is a motivational misalignment identified early — not a capability rejection. Ceejay's brand storytelling background (Pernod Ricard, luxury e-com) is strong but misaligned with Jem's commercial demand-gen need.</div>
+        </div>
+
+        <div class="rationale" style="margin-top:16px;">
+          <div class="rationale-label">Why the session ended</div>
+          The role requires someone who finds energy in building a B2B pipeline — content that feeds sales, ABM, measurable demand-gen. Ceejay's strength and passion is expressive brand storytelling and consumer narrative. Neither the role nor the candidate would have been well served by proceeding.
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /candidates-grid -->
+
+</div><!-- /main -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-inner">
+    <strong>Scoring logic:</strong>&nbsp;
+    6 dimensions · ★ B2B Experience Depth is upweighted — Weak is a near-disqualifier.
+    GO = 4–5 Strongs incl. B2B adequate or above, no hard disqualifiers ·
+    MAYBE = B2B gap, alignment question, or incomplete session ·
+    NO-GO = hard disqualifier or mutual withdrawal.
+    &nbsp;·&nbsp; Jem Head of Marketing · April 2026
+  </div>
+</div>
+
+</body>
+</html>
