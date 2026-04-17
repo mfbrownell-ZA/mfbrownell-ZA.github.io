@@ -88,7 +88,7 @@
   /* SUMMARY CARDS */
   .summary-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 16px;
     margin-bottom: 36px;
   }
@@ -308,6 +308,9 @@
   }
   .footer-inner strong { color: var(--grey-dark); }
 
+  @media (max-width: 1100px) {
+    .summary-grid { grid-template-columns: repeat(3, 1fr); }
+  }
   @media (max-width: 900px) {
     .summary-grid { grid-template-columns: repeat(2, 1fr); }
     .candidates-grid { grid-template-columns: 1fr; }
@@ -331,7 +334,7 @@
     <div class="header-meta">
       <div class="meta-item"><strong>4 candidates</strong>Screened</div>
       <div class="meta-item"><strong>1 GO</strong>Proceed to workshop</div>
-      <div class="meta-item"><strong>2 MAYBE</strong>1 alignment concern, 1 B2B gap</div>
+      <div class="meta-item"><strong>3 MAYBE</strong>1 alignment, 1 B2B gap, 1 AI gap</div>
       <div class="meta-item"><strong>1 NO-GO</strong>Mutual withdrawal</div>
     </div>
   </div>
@@ -393,6 +396,21 @@
       </div>
     </div>
 
+    <!-- Leigh-Anne Acquisito -->
+    <div class="summary-card maybe">
+      <div class="candidate-name">Leigh-Anne Acquisito</div>
+      <div class="candidate-context">Global brand (IG, 18 markets) · B2B channel (Planet World) · Agency founder</div>
+      <div class="rec-badge maybe">MAYBE</div>
+      <div class="score-dots">
+        <div class="score-dot-row"><span class="dot adequate"></span>Builder Mentality</div>
+        <div class="score-dot-row"><span class="dot weak"></span>AI Fluency</div>
+        <div class="score-dot-row"><span class="dot adequate"></span>Commercial Literacy</div>
+        <div class="score-dot-row"><span class="dot strong"></span>Narrative Quality</div>
+        <div class="score-dot-row"><span class="dot adequate"></span>Intellectual Presence</div>
+        <div class="score-dot-row b2b-row"><span class="dot b2b-adequate"></span>★ B2B Experience Depth</div>
+      </div>
+    </div>
+
     <!-- Ceejay Ndlovu -->
     <div class="summary-card nogo">
       <div class="candidate-name">Sijabuliso "Ceejay" Ndlovu</div>
@@ -420,6 +438,7 @@
           <th class="candidate-col">Giran Adams</th>
           <th class="candidate-col">Anna Vaulina</th>
           <th class="candidate-col">Juliet May</th>
+          <th class="candidate-col">Leigh-Anne Acquisito</th>
           <th class="candidate-col">Ceejay Ndlovu</th>
         </tr>
       </thead>
@@ -429,6 +448,7 @@
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill adequate">Adequate</span></td>
+          <td><span class="score-pill adequate">Adequate</span></td>
           <td><span class="score-pill none">—</span></td>
         </tr>
         <tr>
@@ -436,6 +456,7 @@
           <td><span class="score-pill adequate">Adequate</span></td>
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill adequate">Adequate</span></td>
+          <td><span class="score-pill weak">Weak</span></td>
           <td><span class="score-pill none">—</span></td>
         </tr>
         <tr>
@@ -443,10 +464,12 @@
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill adequate">Adequate</span></td>
           <td><span class="score-pill none">—</span></td>
         </tr>
         <tr>
           <td>Narrative Quality</td>
+          <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
@@ -457,6 +480,7 @@
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
           <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill adequate">Adequate</span></td>
           <td><span class="score-pill none">—</span></td>
         </tr>
         <tr class="b2b-row-highlight">
@@ -464,6 +488,7 @@
           <td><span class="score-pill weak">Weak</span></td>
           <td><span class="score-pill adequate">Adequate</span></td>
           <td><span class="score-pill strong">Strong</span></td>
+          <td><span class="score-pill adequate">Adequate</span></td>
           <td><span class="score-pill none">—</span></td>
         </tr>
         <tr class="table-rec-row">
@@ -471,6 +496,7 @@
           <td><span class="rec-badge maybe" style="font-size:12px;">MAYBE</span></td>
           <td><span class="rec-badge maybe" style="font-size:12px;">MAYBE</span></td>
           <td><span class="rec-badge go" style="font-size:12px;">GO</span></td>
+          <td><span class="rec-badge maybe" style="font-size:12px;">MAYBE</span></td>
           <td><span class="rec-badge nogo" style="font-size:12px;">NO-GO</span></td>
         </tr>
       </tbody>
@@ -698,6 +724,80 @@
         </div>
         <div class="next-steps" style="margin-top:12px;">
           <strong>Workshop note:</strong> AI depth is the one area to probe further. Builder mentality is adequate — builds inside structures rather than from zero. Neither is a blocker at this stage; both are worth testing in the workshop exercises.
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ LEIGH-ANNE ACQUISITO ============ -->
+    <div class="candidate-card">
+      <div class="card-header">
+        <div class="card-header-inner">
+          <div class="card-name">Leigh-Anne Acquisito</div>
+          <div class="card-context">Global brand (IG, 18 markets) · B2B channel (Planet World) · Agency founder · 1 Strong, 4 Adequate, 1 Weak</div>
+          <div class="card-badge-row">
+            <span class="rec-badge maybe">MAYBE — AI fluency requires significant uplift</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+
+        <div class="flag-block b2b-gap" style="background:var(--red-light);border-left:3px solid var(--red);color:#991b1b;">
+          <strong>AI Fluency — Weak (Self-Confirmed)</strong>
+          Explicitly stated: "Can I come in and build a marketing AI system on my own? No." Built brand bots at Planet World with the support of AI specialists — not independently. Current usage is administrative (email, comms) rather than systemic or workflow-level. For an AI-first team, this is the primary concern.
+        </div>
+
+        <div class="dimension-list">
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Builder Mentality</span>
+              <span class="score-pill adequate">Adequate</span>
+            </div>
+            <div class="dim-quote">Built licorice Inc. agency; restructured Planet World's team from 5 to 8+; launched Planet's first D2C e-commerce site. Has started and closed multiple businesses (hustle to muscle, others). Entrepreneurial by instinct but builds are inside agency or corporate structures rather than from zero under personal risk.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">AI Fluency</span>
+              <span class="score-pill weak">Weak</span>
+            </div>
+            <div class="dim-quote">Built brand bots at Planet World (with AI specialists' support) trained on brand guidelines. Uses Claude for administrative tasks and email. "Can I come in and build a marketing AI system on my own? No." Relies on AI people for builds. Usage is assistive, not systemic.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Commercial Literacy</span>
+              <span class="score-pill adequate">Adequate</span>
+            </div>
+            <div class="dim-quote">At IG: primary metrics were sign-ons and account activation — reasonable. At Planet: "just move boxes" — held to a sales target she could only partially influence via e-commerce channels. Brand-led by instinct: "a lot of brands have over-corrected to the performance marketing side." Doesn't naturally anchor on owned commercial numbers.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Narrative Quality</span>
+              <span class="score-pill strong">Strong</span>
+            </div>
+            <div class="dim-quote">Brand storytelling is her self-confirmed core: "that's the work that I absolutely love." Global Head of Brand at IG across 18 markets. Built brand governance framework for 54 brands. After pitching hustle to muscle to Rob Hersov: "My advice to you is TED talk — go talk." Deeply articulate about brand philosophy and the why behind it.</div>
+          </div>
+          <div class="dim-row">
+            <div class="dim-header">
+              <span class="dim-name">Intellectual Presence</span>
+              <span class="score-pill adequate">Adequate</span>
+            </div>
+            <div class="dim-quote">Researched Jem via podcasts and made notes. Asked structured due diligence questions: revenue trajectory vs ambition, strategy culture (patience vs pivot), product velocity, data ownership, culture, Joburg location. Thorough and well-prepared but questions were standard — no incisive probe of the B2B demand-gen model or Jem's commercial challenge.</div>
+          </div>
+          <div class="dim-row b2b-dim">
+            <div class="dim-header">
+              <span class="dim-name">B2B Experience Depth <span class="b2b-star">★ Upweighted</span></span>
+              <span class="score-pill adequate">Adequate</span>
+            </div>
+            <div class="dim-quote">Planet World B2B channel marketing: systems integrators, retailers, in-store field marketers. Launched Planet Academy training programme for channel partners. IG had some B2B institutional elements. But B2B work is distribution-channel and retail-focused, not enterprise SaaS demand-gen. Primary career orientation is consumer brand and big-budget advertising.</div>
+          </div>
+        </div>
+
+        <div class="rationale">
+          <div class="rationale-label">Recommendation Rationale</div>
+          Narrative strength is genuine — brand storytelling at scale across 18 global markets is real capability. B2B channel experience at Planet World is adequate. The primary blocker is AI Fluency: explicitly Weak and self-confirmed. Commercial outcome ownership skews brand-led. For a role that is AI-first and sales-support oriented, significant AI upskilling would be required before this candidate could operate at Jem's level.
+        </div>
+        <div class="next-steps" style="margin-top:12px;">
+          <strong>Key question before proceeding:</strong> Is the AI gap closable quickly, or is this candidate fundamentally not wired for AI-first workflow? The brand narrative capability is real — the question is whether it comes with the commercial and AI horsepower the role requires. Also note: based in Johannesburg (planning Cape Town move, 12–18 months).
         </div>
 
       </div>
