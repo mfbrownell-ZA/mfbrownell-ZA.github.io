@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flamingo Challenge — Jem · Week 8</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink:#FF697F; --navy:#062133; --cream:#FFF7EC;
+  --candy:#FFBEC8; --ice:#B6E9F9; --mint:#DAFFDA;
+  --lemon:#FBF7B9; --violet:#573CFF; --purple:#AB53BF;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Manrope',sans-serif;background:var(--cream);color:var(--navy);min-height:100vh;}
+
+.header{background:var(--navy);background-image:radial-gradient(ellipse at 75% 110%,rgba(255,105,127,0.5) 0%,transparent 55%),radial-gradient(ellipse at 20% -10%,rgba(87,60,255,0.2) 0%,transparent 40%);padding:2.75rem 2rem 2.25rem;text-align:center;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='20' cy='20' r='0.8' fill='%23ffffff' fill-opacity='0.04'/%3E%3C/svg%3E");}
+.hi{position:relative;z-index:1;}
+.prog-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,105,127,0.18);border:1px solid rgba(255,105,127,0.35);border-radius:20px;padding:5px 16px;font-size:11px;font-family:'Inter',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:2px;color:var(--candy);margin-bottom:1.1rem;}
+.header h1{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(2.2rem,6vw,3.6rem);color:white;line-height:1.05;margin-bottom:0.5rem;}
+.header h1 em{color:var(--pink);font-style:normal;}
+.header-sub{color:rgba(255,255,255,0.5);font-size:14px;font-family:'Inter',sans-serif;}
+.week-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:1.5rem;flex-wrap:wrap;}
+.week-pill{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:20px;padding:6px 20px;font-size:13px;color:white;font-family:'Inter',sans-serif;}
+.alert-pill{display:inline-flex;align-items:center;gap:6px;border-radius:20px;padding:6px 16px;font-size:12px;font-family:'Inter',sans-serif;font-weight:600;}
+.alert-green{background:rgba(218,255,218,0.2);border:1px solid rgba(218,255,218,0.4);color:var(--mint);}
+.alert-amber{background:rgba(255,190,40,0.2);border:1px solid rgba(255,190,40,0.4);color:#FFE082;}
+
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;padding:1.5rem 2rem;max-width:1060px;margin:0 auto;}
+.stat-card{background:white;border-radius:16px;padding:1rem 1.1rem;border:1px solid rgba(6,33,51,0.07);}
+.stat-icon{font-size:20px;margin-bottom:6px;}
+.stat-val{font-family:'Inter',sans-serif;font-size:20px;font-weight:700;color:var(--navy);}
+.stat-label{font-size:10px;color:rgba(6,33,51,0.45);margin-top:2px;font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:1px;}
+.stat-note{font-size:11px;margin-top:4px;color:rgba(6,33,51,0.4);}
+.stat-note.warn{color:#d4700a;font-weight:600;}
+
+.lb-wrap{max-width:1060px;margin:0 auto;padding:0 2rem 3rem;}
+.lb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;}
+.lb-title{font-family:'Inter',sans-serif;font-size:17px;font-weight:700;}
+.export-btn{background:var(--navy);color:white;border:none;cursor:pointer;border-radius:10px;padding:8px 18px;font-size:12px;font-family:'Inter',sans-serif;font-weight:600;display:flex;align-items:center;gap:6px;transition:background 0.2s;}
+.export-btn:hover{background:var(--pink);}
+
+.score-key{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem;padding:10px 14px;background:white;border-radius:12px;border:1px solid rgba(6,33,51,0.07);align-items:center;}
+.score-key-label{font-size:11px;font-family:'Inter',sans-serif;font-weight:600;color:rgba(6,33,51,0.4);text-transform:uppercase;letter-spacing:1.5px;margin-right:4px;}
+.key-pill{padding:3px 10px;border-radius:10px;font-size:11px;font-family:'Inter',sans-serif;font-weight:600;white-space:nowrap;}
+
+/* ROLE INSIGHT BANNER */
+.role-banner{background:var(--navy);border-radius:16px;padding:1rem 1.5rem;margin-bottom:1.25rem;display:flex;align-items:flex-start;gap:14px;}
+.role-banner-icon{font-size:26px;flex-shrink:0;margin-top:2px;}
+.role-banner-text{font-size:13px;color:rgba(255,255,255,0.75);line-height:1.7;}
+.role-banner-text strong{color:white;}
+.role-banner-stat{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;color:var(--pink);margin-left:auto;flex-shrink:0;text-align:right;line-height:1.3;padding-left:1rem;}
+
+.player-card{background:white;border-radius:20px;padding:1.4rem 1.5rem;border:1.5px solid rgba(6,33,51,0.07);margin-bottom:10px;transition:transform 0.15s,box-shadow 0.15s;}
+.player-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(6,33,51,0.08);}
+.player-card.p1{border-color:#F6C744;background:linear-gradient(135deg,#fffdf0 0%,white 50%);}
+.player-card.p2{border-color:#C8D0DA;}
+.player-card.p3{border-color:#D9956C;background:linear-gradient(135deg,#fff9f5 0%,white 50%);}
+.player-card.d200hit{position:relative;}
+.player-card.d200hit::before{content:'🎯';position:absolute;top:14px;right:14px;font-size:18px;opacity:0.6;}
+
+.player-top{display:flex;align-items:center;gap:12px;margin-bottom:1rem;}
+.rank-badge{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:800;font-size:13px;flex-shrink:0;}
+.rb-1{background:#F6C744;color:#6b4f00;}.rb-2{background:#C8D0DA;color:#3a4450;}.rb-3{background:#D9956C;color:#5a2800;}.rb-n{background:rgba(6,33,51,0.08);color:var(--navy);}
+.avatar{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-weight:700;font-size:15px;color:white;}
+.player-info{flex:1;min-width:0;}
+.player-name{font-family:'Inter',sans-serif;font-weight:700;font-size:15px;}
+.player-meta{font-size:11px;color:rgba(6,33,51,0.4);margin-top:2px;}
+.d200-tag{display:inline-flex;align-items:center;gap:4px;margin-top:4px;background:#DAFFDA;border-radius:8px;padding:2px 8px;font-size:10px;font-weight:600;color:#0d6632;font-family:'Inter',sans-serif;}
+.player-score{text-align:right;flex-shrink:0;}
+.score-num{font-family:'Inter',sans-serif;font-weight:800;font-size:30px;color:var(--pink);line-height:1;}
+.score-sub{font-size:10px;color:rgba(6,33,51,0.35);margin-top:2px;font-family:'Inter',sans-serif;}
+.grade-badge{display:inline-block;margin-top:4px;padding:2px 9px;border-radius:9px;font-family:'Inter',sans-serif;font-size:11px;font-weight:600;}
+.gb-A{background:var(--ice);color:#064a6b;}.gb-B{background:var(--lemon);color:#6b5500;}.gb-C{background:var(--candy);color:#7a1a2a;}
+
+/* PILLARS */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem;}
+.pillar-wrap{border-radius:8px;padding:6px 8px;background:rgba(6,33,51,0.02);border:0.5px solid rgba(6,33,51,0.07);}
+.pillar-wrap.hit{background:rgba(29,158,117,0.06);border-color:rgba(29,158,117,0.2);}
+.pillar-wrap.full{background:rgba(255,105,127,0.05);border-color:rgba(255,105,127,0.2);}
+.pillar-label{font-size:10px;font-family:'Inter',sans-serif;color:rgba(6,33,51,0.45);margin-bottom:4px;display:flex;justify-content:space-between;}
+.pillar-label strong{color:var(--navy);font-weight:600;}
+.pillar-label strong.green{color:#0d6632;}
+.pillar-label strong.amber{color:#9a5a00;}
+.pbar-bg{height:5px;background:rgba(6,33,51,0.07);border-radius:3px;overflow:hidden;}
+.pbar-fill{height:100%;border-radius:3px;transition:width 1.2s cubic-bezier(.4,0,.2,1);}
+.pillar-note{font-size:9px;font-family:'Inter',sans-serif;margin-top:3px;color:rgba(6,33,51,0.35);}
+.pillar-note.good{color:#0d6632;}
+
+.commentary{background:var(--cream);border-radius:11px;padding:0.85rem 1rem;margin-bottom:1rem;border-left:3px solid var(--pink);font-size:12.5px;line-height:1.65;color:rgba(6,33,51,0.72);}
+.commentary strong{color:var(--navy);}
+
+.post-stats{display:flex;gap:14px;flex-wrap:wrap;padding-top:0.875rem;border-top:1px solid rgba(6,33,51,0.06);}
+.ps{font-size:12px;color:rgba(6,33,51,0.5);}
+.ps strong{color:var(--navy);}
+.ps.hl strong{color:var(--pink);}
+.wow-tag{margin-left:auto;font-size:12px;font-weight:600;}
+.wow-up{color:#22a06b;}.wow-dn{color:var(--pink);}.wow-eq{color:rgba(6,33,51,0.35);}
+
+.toggle-btn{background:none;border:1px solid rgba(6,33,51,0.1);border-radius:8px;padding:4px 12px;font-size:11px;cursor:pointer;color:rgba(6,33,51,0.45);font-family:'Inter',sans-serif;display:block;margin:8px 0 0 auto;transition:all 0.15s;}
+.toggle-btn:hover{border-color:var(--pink);color:var(--pink);}
+.detail-panel{display:none;padding-top:1rem;border-top:1px solid rgba(6,33,51,0.06);margin-top:0.75rem;}
+.detail-panel.open{display:block;}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.detail-box{background:var(--cream);border-radius:10px;padding:0.85rem;}
+.detail-box-title{font-size:10px;font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:1.5px;color:rgba(6,33,51,0.4);font-weight:600;margin-bottom:8px;}
+.dr{display:flex;justify-content:space-between;font-size:12px;padding:3px 0;color:rgba(6,33,51,0.65);border-bottom:0.5px solid rgba(6,33,51,0.06);}
+.dr:last-child{border-bottom:none;}
+.dr strong{color:var(--navy);font-weight:600;}
+.dr.match{background:rgba(29,158,117,0.06);border-radius:4px;padding:3px 6px;}
+.dr.match strong{color:#0d6632;}
+.insight-note{margin-top:10px;padding:10px 12px;border-radius:10px;font-size:12px;line-height:1.6;}
+
+.footer{max-width:1060px;margin:0 auto;padding:0 2rem 3rem;text-align:center;}
+.footer p{font-size:12px;color:rgba(6,33,51,0.3);line-height:2;}
+.footer strong{color:rgba(6,33,51,0.5);}
+
+@media print{.export-btn,.toggle-btn{display:none!important;}.detail-panel{display:block!important;}.player-card{break-inside:avoid;box-shadow:none!important;transform:none!important;}.header,.role-banner{-webkit-print-color-adjust:exact;print-color-adjust:exact;}}
+@media(max-width:680px){.stats-row{grid-template-columns:repeat(2,1fr);padding:1rem;}.pillars{grid-template-columns:repeat(2,1fr);}.detail-grid{grid-template-columns:1fr;}.lb-wrap,.footer{padding-left:1rem;padding-right:1rem;}.role-banner-stat{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="hi">
+    <div class="prog-pill">🦩 Project Flamingo · Jem</div>
+    <h1>Flamingo <em>Challenge</em></h1>
+    <p class="header-sub">LinkedIn posts scored against the Dream 200 pipeline</p>
+    <div class="week-row">
+      <div class="week-pill">📅 Week 8 · Apr 10–20, 2026</div>
+      <div class="alert-pill alert-green">🎯 Chris hit Rohloff Group + KFC this week</div>
+      <div class="alert-pill alert-amber">👔 HR Services top engagement industry — Danielle</div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-val">183k</div><div class="stat-label">Total impressions</div><div class="stat-note">9 posts scored</div></div>
+  <div class="stat-card"><div class="stat-icon">👥</div><div class="stat-val">123k</div><div class="stat-label">Members reached</div><div class="stat-note">unique people</div></div>
+  <div class="stat-card"><div class="stat-icon">💬</div><div class="stat-val">249</div><div class="stat-label">Total comments</div><div class="stat-note">highest signal</div></div>
+  <div class="stat-card"><div class="stat-icon">🎯</div><div class="stat-val">2</div><div class="stat-label">D200 companies hit</div><div class="stat-note" style="color:#22a06b;font-weight:600;">Rohloff + KFC (Chris)</div></div>
+  <div class="stat-card"><div class="stat-icon">🦩</div><div class="stat-val">9</div><div class="stat-label">Flamingos posting</div><div class="stat-note">Chris · Rob · Danielle · Matt · Daniel · Alexandra · Dawie · Simon · Thamsanqa</div></div>
+</div>
+
+<div class="lb-wrap">
+  <div class="lb-header">
+    <div class="lb-title">🏆 Dream 200 Leaderboard — Apr 10–20</div>
+    <button class="export-btn" onclick="exportPDF()">↓ Export PDF</button>
+  </div>
+
+  <div class="score-key">
+    <span class="score-key-label">Scoring</span>
+    <span class="key-pill" style="background:rgba(255,105,127,0.12);color:#c0314a;">Engagement 30pts — rate per person</span>
+    <span class="key-pill" style="background:rgba(87,60,255,0.1);color:#3a2baa;">Sector 25pts — weighted by % share</span>
+    <span class="key-pill" style="background:rgba(171,83,191,0.1);color:#7a2a8a;">Role 30pts — HR title=30, Ops=20, CEO/MD=10</span>
+    <span class="key-pill" style="background:rgba(29,158,117,0.15);color:#0d6632;">🎯 D200 company 15pts</span>
+  </div>
+
+  <div class="role-banner">
+    <div class="role-banner-icon">👔</div>
+    <div class="role-banner-text">
+      <strong>HR titles in the demographics top 5 remain elusive.</strong> Every post had CEO or MD as the dominant title in the demographics tab — that scores 10/30 for role. The remaining 20 points go to posts that surface HR Directors, HR Managers, Heads of HR, or CPOs in their top five. Danielle came closest: HR Services was the #1 industry for both her reactions and comments highlights, suggesting the right people engaged even if they didn't crack the top titles.
+    </div>
+    <div class="role-banner-stat">30pts<br><span style="font-size:10px;color:rgba(255,255,255,0.4);font-weight:400;">available per post<br>unclaimed all week</span></div>
+  </div>
+
+  <!-- #1 CHRIS -->
+  <div class="player-card p1 d200hit">
+    <div class="player-top">
+      <div class="rank-badge rb-1">1</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#1D9E75,#062133);">CH</div>
+      <div class="player-info">
+        <div class="player-name">🧳 Christopher Hellmann</div>
+        <div class="player-meta">Post · Apr 15 · 2,942 impressions · 📹 Video</div>
+        <div class="d200-tag">🎯 Rohloff Group (customer) + KFC (pipeline)</div>
+      </div>
+      <div class="player-score"><div class="score-num">64</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-B">B — Building</div></div>
+    </div>
+    <div class="commentary"><strong>First place with the smallest audience.</strong> Chris posted from a KFC conference and the audience followed the topic. Rohloff Group appeared (a Dream 200 customer, 15pts), KFC appeared (pipeline), with Retail at 4%, Food &amp; Beverage at 3%, and HR Services at 3% all contributing to the sector score. Authentic, context-specific content pulls the right room — context-specific posting pulls a context-specific audience.</div>
+    <div class="pillars">
+      <div class="pillar-wrap full"><div class="pillar-label"><span>Engagement</span><strong>21/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:70%;background:#FF697F;"></div></div><div class="pillar-note">6.0% rate</div></div>
+      <div class="pillar-wrap full"><div class="pillar-label"><span>Sector</span><strong class="amber">18/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:72%;background:#573CFF;"></div></div><div class="pillar-note">Retail 4% + F&amp;B 3% + HR Svcs 3%</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap hit"><div class="pillar-label"><span>🎯 D200</span><strong class="green">15/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:100%;background:#1D9E75;"></div></div><div class="pillar-note good">Rohloff (cust) + KFC (pipe)</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>2,942</strong> impressions</div>
+      <div class="ps">👥 <strong>2,038</strong> reached</div>
+      <div class="ps">💬 <strong>7</strong> comments</div>
+      <div class="ps">❤️ <strong>57</strong> reactions</div>
+      <div class="ps">📹 <strong>1,088</strong> video views</div>
+      <div class="wow-tag wow-up">↑ 1st place · only D200 hit</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('chris')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-chris">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Seniority (no job title tab)</div><div class="dr"><span>Senior</span><strong>33%</strong></div><div class="dr"><span>Director</span><strong>13%</strong></div><div class="dr"><span>Manager</span><strong>9%</strong></div><div class="dr"><span>CXO</span><strong>8%</strong></div><div class="dr"><span>Entry</span><strong>15%</strong></div><div class="dr"><span>VP</span><strong>4%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>Financial Services</span><strong>13%</strong></div><div class="dr"><span>IT Services</span><strong>8%</strong></div><div class="dr"><span>Retail 🌟</span><strong>4%</strong></div><div class="dr"><span>Food &amp; Beverage 🌟</span><strong>3%</strong></div><div class="dr"><span>HR Services 🌟</span><strong>3%</strong></div><div class="dr"><span>Tech &amp; Internet</span><strong>5%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Top companies — D200 highlighted</div><div class="dr match"><span>Rohloff Group 🎯 Customer</span><strong>2% · +15pts</strong></div><div class="dr match"><span>KFC 🎯 Pipeline</span><strong>&lt;1% · (capped)</strong></div><div class="dr"><span>Jem</span><strong>3%</strong></div><div class="dr"><span>Deloitte</span><strong>2%</strong></div><div class="dr"><span>Investec</span><strong>&lt;1%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Company size split</div><div class="dr"><span>11–50 employees</span><strong>18%</strong></div><div class="dr"><span>1,001–5,000 employees</span><strong>13%</strong></div><div class="dr"><span>10,001+ employees</span><strong>11%</strong></div><div class="dr"><span>51–200 employees</span><strong>12%</strong></div><div class="dr"><span>201–500 employees</span><strong>7%</strong></div></div>
+      </div>
+      <div class="insight-note" style="background:#DAFFDA;color:#0d6632;"><strong>Retail, Food &amp; Beverage and HR Services all appeared in industry demographics.</strong> Three Dream 200-relevant sectors in a single post — driven entirely by the topic. Posting about client work pulls the audience that lives in that world.</div>
+    </div>
+  </div>
+
+  <!-- #2 ROB -->
+  <div class="player-card p2">
+    <div class="player-top">
+      <div class="rank-badge rb-2">2</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#062133,#1a4a6b);">RG</div>
+      <div class="player-info">
+        <div class="player-name">💪 Rob Gardner</div>
+        <div class="player-meta">Post · Apr 11 · 3,251 impressions</div>
+      </div>
+      <div class="player-score"><div class="score-num">45</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-B">B — Building</div></div>
+    </div>
+    <div class="commentary"><strong>Best engagement rate on the board, by a mile.</strong> Rob's 8.2% engagement rate means one in every 12 people who saw this post left a comment, saved it, or shared it. 18 comments from 2,220 reached signals genuine resonance. HR Services and Retail both appeared in the industry demographics, and Finance Manager + CFO in top titles shows financial decision-makers engaged. Without an HR title in the top five and no D200 company visible, the score sits at 45.</div>
+    <div class="pillars">
+      <div class="pillar-wrap full"><div class="pillar-label"><span>Engagement</span><strong class="amber">29/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:97%;background:#FF697F;"></div></div><div class="pillar-note">8.2% rate — best this week</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>6/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:24%;background:#573CFF;"></div></div><div class="pillar-note">HR Svcs 2% + Retail 2%</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>🎯 D200</span><strong>0/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#1D9E75;"></div></div><div class="pillar-note">No D200 in top 5 companies</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>3,251</strong> impressions</div>
+      <div class="ps">👥 <strong>2,220</strong> reached</div>
+      <div class="ps hl">💬 <strong>18</strong> comments</div>
+      <div class="ps">❤️ <strong>23</strong> reactions</div>
+      <div class="ps hl">💾 <strong>4</strong> saves</div>
+      <div class="wow-tag wow-up">↑ New · 2nd place</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('rob')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-rob">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Founder</span><strong>4%</strong></div><div class="dr"><span>Co-Founder</span><strong>4%</strong></div><div class="dr"><span>CEO</span><strong>2%</strong></div><div class="dr"><span>Managing Director</span><strong>1%</strong></div><div class="dr"><span>Finance Manager</span><strong>1%</strong></div><div class="dr"><span>CFO</span><strong>&lt;1%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>Financial Services</span><strong>14%</strong></div><div class="dr"><span>IT Services</span><strong>10%</strong></div><div class="dr"><span>Human Resources Services</span><strong>2%</strong></div><div class="dr"><span>Retail</span><strong>2%</strong></div><div class="dr"><span>Business Consulting</span><strong>6%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>32%</strong></div><div class="dr"><span>Director</span><strong>18%</strong></div><div class="dr"><span>Entry</span><strong>16%</strong></div><div class="dr"><span>CXO</span><strong>7%</strong></div><div class="dr"><span>VP</span><strong>5%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Top companies in audience</div><div class="dr"><span>Jem</span><strong>2%</strong></div><div class="dr"><span>Deloitte</span><strong>1%</strong></div><div class="dr"><span>Ringier South Africa</span><strong>1%</strong></div><div class="dr"><span>Yoco</span><strong>&lt;1%</strong></div><div class="dr"><span>Absa Group</span><strong>&lt;1%</strong></div></div>
+      </div>
+      <div class="insight-note" style="background:var(--mint);color:#1a5c2a;"><strong>Director seniority at 18% is the highest of the week.</strong> HR Services + Retail both appearing in industries shows the right sectors are present in the audience.</div>
+    </div>
+  </div>
+
+  <!-- #3 DANIELLE -->
+  <div class="player-card p3">
+    <div class="player-top">
+      <div class="rank-badge rb-3">3</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#AB53BF,#573CFF);">DL</div>
+      <div class="player-info">
+        <div class="player-name">💚 Danielle Lifschitz</div>
+        <div class="player-meta">Post · Apr 13 · 2,391 impressions</div>
+      </div>
+      <div class="player-score"><div class="score-num">43</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-B">B — Building</div></div>
+    </div>
+    <div class="commentary"><strong>HR Services as the top industry for both reactions and comments — the best audience signal of the week.</strong> Danielle's post attracted HR professionals more than any other this week: HR Services was the #1 industry in both the reactions and comments highlights. Customer Success Manager was the top reaction title. The demographics tab shows Founder/CEO in the top five, but the highlights tell a different story about who actually engaged. 6.5% engagement rate is second only to Rob. No D200 company appeared in the top five.</div>
+    <div class="pillars">
+      <div class="pillar-wrap"><div class="pillar-label"><span>Engagement</span><strong>23/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:77%;background:#FF697F;"></div></div><div class="pillar-note">6.5% rate — 2nd this week</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>10/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:40%;background:#573CFF;"></div></div><div class="pillar-note">HR Services 7.7% share</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title in top 5</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>🎯 D200</span><strong>0/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#1D9E75;"></div></div><div class="pillar-note">No D200 in top 5 companies</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>2,391</strong> impressions</div>
+      <div class="ps">👥 <strong>1,654</strong> reached</div>
+      <div class="ps hl">💬 <strong>8</strong> comments</div>
+      <div class="ps">❤️ <strong>39</strong> reactions</div>
+      <div class="ps">💾 <strong>1</strong> save</div>
+      <div class="wow-tag wow-up">↑ New · 3rd place</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('danielle')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-danielle">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Founder</span><strong>3.9%</strong></div><div class="dr"><span>Co-Founder</span><strong>2.9%</strong></div><div class="dr"><span>CEO</span><strong>1.3%</strong></div><div class="dr"><span>Owner</span><strong>&lt;1%</strong></div><div class="dr"><span>Product Manager</span><strong>&lt;1%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>Financial Services</span><strong>13.2%</strong></div><div class="dr"><span>Human Resources Services 🌟</span><strong>7.7%</strong></div><div class="dr"><span>IT Services</span><strong>6.7%</strong></div><div class="dr"><span>Business Consulting</span><strong>6.3%</strong></div><div class="dr"><span>Tech &amp; Internet</span><strong>5.0%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Highlights — who actually engaged</div><div class="dr"><span>Top reaction title</span><strong>Customer Success Mgr</strong></div><div class="dr"><span>Top reaction industry</span><strong>HR Services 🌟</strong></div><div class="dr"><span>Top comment industry</span><strong>HR Services 🌟</strong></div><div class="dr"><span>Top comment title</span><strong>Product Owner</strong></div><div class="dr"><span>Top locations</span><strong>Cape Town, Joburg</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>34.7%</strong></div><div class="dr"><span>Entry</span><strong>19.3%</strong></div><div class="dr"><span>Director</span><strong>12.5%</strong></div><div class="dr"><span>Manager</span><strong>8.8%</strong></div><div class="dr"><span>Owner</span><strong>6.0%</strong></div></div>
+      </div>
+      <div class="insight-note" style="background:rgba(171,83,191,0.08);color:#5a1a6a;"><strong>HR Services was the top industry for both reactions and comments.</strong> This is the strongest HR audience signal of any post this week — the people who engaged work in HR. The demographics tab top titles don't reflect this because it shows the full audience, not just those who interacted.</div>
+    </div>
+  </div>
+
+  <!-- #4 MATT -->
+  <div class="player-card">
+    <div class="player-top">
+      <div class="rank-badge rb-n">4</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#FF697F,#FFBEC8);color:#7a1a2a;">MB</div>
+      <div class="player-info">
+        <div class="player-name">🌴 Matt Brownell</div>
+        <div class="player-meta">Post · Apr 14 · 3,750 impressions</div>
+        <div class="d200-tag">🎯 Capitec in top companies (pipeline)</div>
+      </div>
+      <div class="player-score"><div class="score-num">34</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-C">C — Noise</div></div>
+    </div>
+    <div class="commentary"><strong>Strong reach ratio, limited sector signal.</strong> 10pts from the D200 bonus (Capitec is a pipeline company) pushes Matt to third. 67% reach ratio — the highest on the board — means fresh eyes every time. 50 reactions shows the content lands. No Dream 200 sector appeared in the industry breakdown at any meaningful %, and no HR title showed in the top five.</div>
+    <div class="pillars">
+      <div class="pillar-wrap"><div class="pillar-label"><span>Engagement</span><strong>14/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:47%;background:#FF697F;"></div></div><div class="pillar-note">4.1% rate</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>0/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#573CFF;"></div></div><div class="pillar-note">No D200 sector in breakdown</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap hit"><div class="pillar-label"><span>🎯 D200</span><strong class="green">10/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:67%;background:#1D9E75;"></div></div><div class="pillar-note good">Capitec (pipeline)</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>3,750</strong> impressions</div>
+      <div class="ps">👥 <strong>2,524</strong> reached</div>
+      <div class="ps">💬 <strong>6</strong> comments</div>
+      <div class="ps">❤️ <strong>50</strong> reactions</div>
+      <div class="ps">💾 <strong>0</strong> saves</div>
+      <div class="wow-tag wow-eq">→ 4th place</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('matt')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-matt">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Founder</span><strong>6.2%</strong></div><div class="dr"><span>Co-Founder</span><strong>5.3%</strong></div><div class="dr"><span>CEO</span><strong>2.6%</strong></div><div class="dr"><span>Managing Director</span><strong>2.1%</strong></div><div class="dr"><span>Software Engineer</span><strong>1.9%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>Financial Services</span><strong>15.1%</strong></div><div class="dr"><span>IT Services</span><strong>10.0%</strong></div><div class="dr"><span>Tech &amp; Internet</span><strong>7.6%</strong></div><div class="dr"><span>Software Development</span><strong>5.3%</strong></div><div class="dr"><span>Business Consulting</span><strong>5.2%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>29.8%</strong></div><div class="dr"><span>Director</span><strong>15.3%</strong></div><div class="dr"><span>Entry</span><strong>15.1%</strong></div><div class="dr"><span>CXO</span><strong>8.6%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Top companies — D200 highlighted</div><div class="dr match"><span>Capitec 🎯 Pipeline</span><strong>&lt;1% · +10pts</strong></div><div class="dr"><span>Yoco</span><strong>&lt;1%</strong></div><div class="dr"><span>Jem</span><strong>&lt;1%</strong></div><div class="dr"><span>Deloitte</span><strong>&lt;1%</strong></div><div class="dr"><span>Absa Group</span><strong>&lt;1%</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- #5 DANIEL -->
+  <div class="player-card">
+    <div class="player-top">
+      <div class="rank-badge rb-n">4</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#573CFF,#062133);">DF</div>
+      <div class="player-info">
+        <div class="player-name">🎩 Daniel Fabre</div>
+        <div class="player-meta">Post · Apr 17 · 5,621 impressions</div>
+        <div class="d200-tag">🎯 Capitec in top companies (pipeline)</div>
+      </div>
+      <div class="player-score"><div class="score-num">32</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-C">C — Noise</div></div>
+    </div>
+    <div class="commentary"><strong>11 comments, solid engagement — no sector signal.</strong> Daniel's 3.4% engagement rate is solid and 11 comments show real conversation. Capitec in the top companies earns the D200 bonus. No Dream 200 priority sector appeared in the industry breakdown, and no HR title in the top five. Fourth place, two points behind Matt.</div>
+    <div class="pillars">
+      <div class="pillar-wrap"><div class="pillar-label"><span>Engagement</span><strong>12/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:40%;background:#FF697F;"></div></div><div class="pillar-note">3.4% rate</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>0/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#573CFF;"></div></div><div class="pillar-note">No D200 sector in breakdown</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap hit"><div class="pillar-label"><span>🎯 D200</span><strong class="green">10/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:67%;background:#1D9E75;"></div></div><div class="pillar-note good">Capitec (pipeline)</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>5,621</strong> impressions</div>
+      <div class="ps">👥 <strong>3,941</strong> reached</div>
+      <div class="ps">💬 <strong>11</strong> comments</div>
+      <div class="ps">❤️ <strong>41</strong> reactions</div>
+      <div class="ps">💾 <strong>1</strong> save</div>
+      <div class="wow-tag wow-eq">→ 4th place</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('daniel')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-daniel">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Founder</span><strong>4.8%</strong></div><div class="dr"><span>Co-Founder</span><strong>3.2%</strong></div><div class="dr"><span>CEO</span><strong>2.3%</strong></div><div class="dr"><span>Software Engineer</span><strong>2.2%</strong></div><div class="dr"><span>Managing Director</span><strong>1.8%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>Financial Services</span><strong>14%</strong></div><div class="dr"><span>IT Services</span><strong>8.6%</strong></div><div class="dr"><span>Software Development</span><strong>5.5%</strong></div><div class="dr"><span>Tech &amp; Internet</span><strong>5.2%</strong></div><div class="dr"><span>Business Consulting</span><strong>4.7%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>31.8%</strong></div><div class="dr"><span>Director</span><strong>14.5%</strong></div><div class="dr"><span>Entry</span><strong>18.1%</strong></div><div class="dr"><span>CXO</span><strong>7.0%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Top companies — D200 highlighted</div><div class="dr match"><span>Capitec 🎯 Pipeline</span><strong>&lt;1% · +10pts</strong></div><div class="dr"><span>Yoco</span><strong>&lt;1%</strong></div><div class="dr"><span>Jem</span><strong>&lt;1%</strong></div><div class="dr"><span>Deloitte</span><strong>&lt;1%</strong></div><div class="dr"><span>Investec</span><strong>&lt;1%</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- #6 ALEXANDRA -->
+  <div class="player-card">
+    <div class="player-top">
+      <div class="rank-badge rb-n">5</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#573CFF,#AB53BF);">AB</div>
+      <div class="player-info">
+        <div class="player-name">✨ Alexandra Böhmer</div>
+        <div class="player-meta">Post · Apr 10 · 19,330 impressions</div>
+        <div class="d200-tag">🎯 Capitec in top companies (pipeline)</div>
+      </div>
+      <div class="player-score"><div class="score-num">32</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-C">C — Noise</div></div>
+    </div>
+    <div class="commentary"><strong>14 saves and Retail in demographics — engagement rate holds the score back.</strong> 14 saves is the joint-highest of the week. Retail at 3% contributes sector points, and Capitec earns a D200 bonus. The engagement rate of 1.8% — lowest on the board — limits the engagement pillar. Tied with Daniel at 32 despite reaching 3.5× more people.</div>
+    <div class="pillars">
+      <div class="pillar-wrap"><div class="pillar-label"><span>Engagement</span><strong>6/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:20%;background:#FF697F;"></div></div><div class="pillar-note">1.8% rate</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>6/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:24%;background:#573CFF;"></div></div><div class="pillar-note">Retail 3% share</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap hit"><div class="pillar-label"><span>🎯 D200</span><strong class="green">10/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:67%;background:#1D9E75;"></div></div><div class="pillar-note good">Capitec (pipeline)</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>19,330</strong> impressions</div>
+      <div class="ps">👥 <strong>13,836</strong> reached</div>
+      <div class="ps">💬 <strong>7</strong> comments</div>
+      <div class="ps">❤️ <strong>129</strong> reactions</div>
+      <div class="ps hl">💾 <strong>14</strong> saves</div>
+      <div class="wow-tag wow-up">↑ New · 5th place</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('alex')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-alex">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Software Engineer</span><strong>2%</strong></div><div class="dr"><span>Founder</span><strong>2%</strong></div><div class="dr"><span>Co-Founder</span><strong>1%</strong></div><div class="dr"><span>Business Analyst</span><strong>1%</strong></div><div class="dr"><span>CEO</span><strong>&lt;1%</strong></div><div class="dr"><span>Managing Director</span><strong>&lt;1%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>Financial Services</span><strong>12%</strong></div><div class="dr"><span>IT Services</span><strong>8%</strong></div><div class="dr"><span>Retail 🌟</span><strong>3%</strong></div><div class="dr"><span>Software Development</span><strong>5%</strong></div><div class="dr"><span>Business Consulting</span><strong>5%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>33%</strong></div><div class="dr"><span>Entry</span><strong>28%</strong></div><div class="dr"><span>Director</span><strong>7%</strong></div><div class="dr"><span>Manager</span><strong>6%</strong></div><div class="dr"><span>CXO</span><strong>3%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Top companies — D200 highlighted</div><div class="dr match"><span>Capitec 🎯 Pipeline</span><strong>&lt;1% · +10pts</strong></div><div class="dr"><span>FNB South Africa</span><strong>2%</strong></div><div class="dr"><span>Absa Group</span><strong>1%</strong></div><div class="dr"><span>Standard Bank Group</span><strong>1%</strong></div><div class="dr"><span>Nedbank</span><strong>1%</strong></div></div>
+      </div>
+      <div class="insight-note" style="background:var(--lemon);color:#6b5500;"><strong>14 saves is the joint-highest of the week.</strong> People are bookmarking this content to return to it. Retail appeared at 3% in the industry breakdown — a meaningful slice of the 13,836 reached are in a Dream 200 priority sector.</div>
+    </div>
+  </div>
+
+  <!-- #7 DAWIE -->
+  <div class="player-card">
+    <div class="player-top">
+      <div class="rank-badge rb-n">6</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#FF697F,#AB53BF);">DW</div>
+      <div class="player-info">
+        <div class="player-name">🔥 Dawie van der Westhuizen</div>
+        <div class="player-meta">Post · Mar 20 · 13,074 impressions</div>
+        <div class="d200-tag">🎯 Capitec in top companies (pipeline)</div>
+      </div>
+      <div class="player-score"><div class="score-num">26</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-C">C — Noise</div></div>
+    </div>
+    <div class="commentary"><strong>AI topic pulled a tech audience.</strong> IT Services at 18% and Software Development at 11% tell the story — the topic determined the room. HR Services appeared at 2%, contributing a small sector score, and Capitec adds the D200 bonus. Two comments on 9,236 reached gives a 1.1% engagement rate, the lowest of the week.</div>
+    <div class="pillars">
+      <div class="pillar-wrap"><div class="pillar-label"><span>Engagement</span><strong>4/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:13%;background:#FF697F;"></div></div><div class="pillar-note">1.1% rate</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>2/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:8%;background:#573CFF;"></div></div><div class="pillar-note">HR Svcs 2% share only</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap hit"><div class="pillar-label"><span>🎯 D200</span><strong class="green">10/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:67%;background:#1D9E75;"></div></div><div class="pillar-note good">Capitec (pipeline)</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>13,074</strong> impressions</div>
+      <div class="ps">👥 <strong>9,236</strong> reached</div>
+      <div class="ps">💬 <strong>2</strong> comments</div>
+      <div class="ps">❤️ <strong>75</strong> reactions</div>
+      <div class="ps">💾 <strong>2</strong> saves</div>
+      <div class="wow-tag wow-up">↑ New · 6th place</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('dawie')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-dawie">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Software Engineer</span><strong>6%</strong></div><div class="dr"><span>Founder</span><strong>3%</strong></div><div class="dr"><span>Co-Founder</span><strong>2%</strong></div><div class="dr"><span>Data Scientist</span><strong>1%</strong></div><div class="dr"><span>Managing Director</span><strong>&lt;1%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>IT Services &amp; Consulting</span><strong>18%</strong></div><div class="dr"><span>Software Development</span><strong>11%</strong></div><div class="dr"><span>Financial Services</span><strong>10%</strong></div><div class="dr"><span>Tech &amp; Internet</span><strong>7%</strong></div><div class="dr"><span>Human Resources Services</span><strong>2%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>31%</strong></div><div class="dr"><span>Entry</span><strong>28%</strong></div><div class="dr"><span>Director</span><strong>8%</strong></div><div class="dr"><span>Manager</span><strong>7%</strong></div><div class="dr"><span>CXO</span><strong>4%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Top companies — D200 highlighted</div><div class="dr match"><span>Capitec 🎯 Pipeline</span><strong>1% · +10pts</strong></div><div class="dr"><span>FNB South Africa</span><strong>&lt;1%</strong></div><div class="dr"><span>Absa Group</span><strong>&lt;1%</strong></div><div class="dr"><span>Standard Bank Group</span><strong>&lt;1%</strong></div><div class="dr"><span>Deloitte</span><strong>&lt;1%</strong></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- #8 SIMON -->
+  <div class="player-card">
+    <div class="player-top">
+      <div class="rank-badge rb-n">7</div>
+      <div class="avatar" style="background:var(--navy);">SE</div>
+      <div class="player-info">
+        <div class="player-name">🦩 Simon Ellis</div>
+        <div class="player-meta">Post · Apr 13 · 127,056 impressions</div>
+      </div>
+      <div class="player-score"><div class="score-num">20</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-C">C — Noise</div></div>
+    </div>
+    <div class="commentary"><strong>127k impressions, last place.</strong> Simon's post reached more people than the other six combined — 186 comments, 673 reactions, 14 saves. On Flamingo scoring: no Dream 200 sector appeared, no D200 company showed in the top five, and the 2.8% engagement rate sits below four others on the board. 28.5% of the 83k reach landed at large employers (1,001–10,001+ employees) — Jem's exact target company size.</div>
+    <div class="pillars">
+      <div class="pillar-wrap"><div class="pillar-label"><span>Engagement</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#FF697F;"></div></div><div class="pillar-note">2.8% rate</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>0/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#573CFF;"></div></div><div class="pillar-note">No D200 sector in breakdown</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>🎯 D200</span><strong>0/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#1D9E75;"></div></div><div class="pillar-note">No D200 in top 5 companies</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>127,056</strong> impressions</div>
+      <div class="ps">👥 <strong>83,178</strong> reached</div>
+      <div class="ps hl">💬 <strong>186</strong> comments</div>
+      <div class="ps">❤️ <strong>673</strong> reactions</div>
+      <div class="ps">💾 <strong>14</strong> saves</div>
+      <div class="wow-tag wow-dn">↓ #1 impressions · #8 Flamingo score</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('simon')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-simon">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Founder</span><strong>3.0%</strong></div><div class="dr"><span>Managing Director</span><strong>2.0%</strong></div><div class="dr"><span>Co-Founder</span><strong>1.8%</strong></div><div class="dr"><span>CEO</span><strong>1.7%</strong></div><div class="dr"><span>Software Engineer</span><strong>1.7%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>Financial Services</span><strong>11.4%</strong></div><div class="dr"><span>IT Services</span><strong>8.0%</strong></div><div class="dr"><span>Business Consulting</span><strong>4.3%</strong></div><div class="dr"><span>Accounting</span><strong>4.2%</strong></div><div class="dr"><span>Software Development</span><strong>3.8%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>33.8%</strong></div><div class="dr"><span>Entry</span><strong>19.9%</strong></div><div class="dr"><span>Director</span><strong>12.7%</strong></div><div class="dr"><span>Manager</span><strong>8.9%</strong></div><div class="dr"><span>CXO</span><strong>5.0%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Company size split</div><div class="dr"><span>10,001+ employees</span><strong>16.6%</strong></div><div class="dr"><span>1,001–5,000 employees</span><strong>11.9%</strong></div><div class="dr"><span>51–200 employees</span><strong>13.5%</strong></div><div class="dr"><span>11–50 employees</span><strong>13.8%</strong></div></div>
+      </div>
+      <div class="insight-note" style="background:rgba(6,33,51,0.05);color:rgba(6,33,51,0.65);"><strong>28.5% of 83k reach is at large employers.</strong> 10,001+ and 1,001–5,000 employee bands together account for ~23,700 people at exactly Jem's target company size.</div>
+    </div>
+  </div>
+
+  <!-- #9 THAMSANQA -->
+  <div class="player-card">
+    <div class="player-top">
+      <div class="rank-badge rb-n">9</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#062133,#573CFF);">TM</div>
+      <div class="player-info">
+        <div class="player-name">🌴 Thamsanqa Moyo</div>
+        <div class="player-meta">Post · Apr 15 · 6,352 impressions</div>
+      </div>
+      <div class="player-score"><div class="score-num">15</div><div class="score-sub">Flamingo score</div><div class="grade-badge gb-C">C — Noise</div></div>
+    </div>
+    <div class="commentary"><strong>Tech-heavy audience, low engagement rate.</strong> IT Services at 15.7% and Software Development at 14.1% dominate the industry breakdown — no Dream 200 priority sector appeared. The comments highlight shows a Talent Acquisition Manager engaged and HR Services was the top comment industry. 1.5% engagement rate on 4,241 reached.</div>
+    <div class="pillars">
+      <div class="pillar-wrap"><div class="pillar-label"><span>Engagement</span><strong>5/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:17%;background:#FF697F;"></div></div><div class="pillar-note">1.5% rate</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Sector</span><strong>0/25</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#573CFF;"></div></div><div class="pillar-note">No D200 sector in breakdown</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>Role</span><strong>10/30</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:33%;background:#AB53BF;"></div></div><div class="pillar-note">CEO/MD only — no HR title</div></div>
+      <div class="pillar-wrap"><div class="pillar-label"><span>🎯 D200</span><strong>0/15</strong></div><div class="pbar-bg"><div class="pbar-fill" style="width:0%;background:#1D9E75;"></div></div><div class="pillar-note">No D200 in top 5 companies</div></div>
+    </div>
+    <div class="post-stats">
+      <div class="ps">📊 <strong>6,352</strong> impressions</div>
+      <div class="ps">👥 <strong>4,241</strong> reached</div>
+      <div class="ps">💬 <strong>2</strong> comments</div>
+      <div class="ps">❤️ <strong>32</strong> reactions</div>
+      <div class="ps">💾 <strong>4</strong> saves</div>
+      <div class="wow-tag wow-up">↑ New · 9th place</div>
+    </div>
+    <button class="toggle-btn" onclick="toggleDetail('thamsanqa')">Show full breakdown ↓</button>
+    <div class="detail-panel" id="detail-thamsanqa">
+      <div class="detail-grid">
+        <div class="detail-box"><div class="detail-box-title">Top job titles reached</div><div class="dr"><span>Software Engineer</span><strong>9.0%</strong></div><div class="dr"><span>Founder</span><strong>4.9%</strong></div><div class="dr"><span>Co-Founder</span><strong>4.0%</strong></div><div class="dr"><span>CEO</span><strong>1.9%</strong></div><div class="dr"><span>Managing Director</span><strong>1.2%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Industries reached</div><div class="dr"><span>IT Services &amp; Consulting</span><strong>15.7%</strong></div><div class="dr"><span>Software Development</span><strong>14.1%</strong></div><div class="dr"><span>Financial Services</span><strong>13.6%</strong></div><div class="dr"><span>Tech &amp; Internet</span><strong>6.6%</strong></div><div class="dr"><span>Business Consulting</span><strong>3.8%</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Highlights — who actually engaged</div><div class="dr"><span>Top reaction title</span><strong>Software Engineer</strong></div><div class="dr"><span>Top reaction industry</span><strong>IT Services</strong></div><div class="dr"><span>Top comment title</span><strong>Talent Acquisition Mgr</strong></div><div class="dr"><span>Top comment industry</span><strong>HR Services 🌟</strong></div></div>
+        <div class="detail-box"><div class="detail-box-title">Seniority breakdown</div><div class="dr"><span>Senior</span><strong>33.3%</strong></div><div class="dr"><span>Entry</span><strong>19.7%</strong></div><div class="dr"><span>Director</span><strong>11.6%</strong></div><div class="dr"><span>Manager</span><strong>7.3%</strong></div><div class="dr"><span>CXO</span><strong>7.1%</strong></div></div>
+      </div>
+      <div class="insight-note" style="background:rgba(6,33,51,0.05);color:rgba(6,33,51,0.65);"><strong>A Talent Acquisition Manager left a comment</strong> and HR Services was the top comment industry — meaningful signals from the right world, despite the broader tech-heavy audience profile.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>
+    <strong>Engagement 30pts</strong> (rate per person reached × 3.5, capped) ·
+    <strong>Sector 25pts</strong> (industry % × tier weight, scaled) ·
+    <strong>Role 30pts</strong> (HR title = 30 · Ops DM = 20 · CEO/MD only = 10) ·
+    <strong>D200 company 15pts</strong> (customer = 15 · pipeline = 10)<br>
+    Submit your weekly .xlsx export to be scored. 🦩 <strong>What gets measured, gets posted.</strong>
+  </p>
+</div>
+
+<script>
+function toggleDetail(id){
+  const el=document.getElementById('detail-'+id);
+  const btn=el.previousElementSibling;
+  el.classList.toggle('open');
+  btn.textContent=el.classList.contains('open')?'Hide breakdown ↑':'Show full breakdown ↓';
+}
+function exportPDF(){
+  document.querySelectorAll('.detail-panel').forEach(p=>p.classList.add('open'));
+  document.querySelectorAll('.toggle-btn').forEach(b=>b.style.display='none');
+  window.print();
+  setTimeout(()=>{document.querySelectorAll('.toggle-btn').forEach(b=>b.style.display='');},1500);
+}
+window.addEventListener('load',()=>{
+  document.querySelectorAll('.pbar-fill').forEach(bar=>{
+    const w=bar.style.width;bar.style.width='0';
+    setTimeout(()=>{bar.style.width=w;},400);
+  });
+});
+</script>
+</body>
+</html>
