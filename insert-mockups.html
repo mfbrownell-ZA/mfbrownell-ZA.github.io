@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TickeyBox Insert — Design Mockups</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+
+    :root {
+      --navy: #1B2251;
+      --coral: #E8634A;
+      --cream: #F5EDD8;
+      --cream-alt: #EDE4CC;
+      --white: #FFFFFF;
+      --grey: #8A8FA8;
+      --light-grey: #F0EDE6;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: #F0EDE6;
+      color: var(--navy);
+      padding: 40px 20px 60px;
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .page-header .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    .page-header .brand .icon {
+      width: 32px; height: 32px;
+      background: var(--coral);
+      border-radius: 8px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 3px;
+      padding: 5px;
+    }
+    .page-header .brand .icon span {
+      background: white;
+      border-radius: 2px;
+    }
+    .page-header .brand h1 {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+    .page-header p {
+      font-size: 15px;
+      color: #555;
+      max-width: 540px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    .page-header h2 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--coral);
+      margin-bottom: 8px;
+    }
+
+    /* LAYOUT */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .option-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* OPTION LABEL */
+    .option-label {
+      text-align: center;
+    }
+    .option-label .badge {
+      display: inline-block;
+      background: var(--navy);
+      color: white;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 6px;
+    }
+    .option-label .badge.recommended {
+      background: var(--coral);
+    }
+    .option-label h3 {
+      font-size: 17px;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .option-label .tagline {
+      font-size: 12px;
+      color: var(--grey);
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    /* INSERT CARD */
+    .insert-card {
+      width: 100%;
+      max-width: 220px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(27,34,81,0.18), 0 2px 8px rgba(0,0,0,0.08);
+      border: 2px solid rgba(27,34,81,0.12);
+    }
+
+    .card-header {
+      background: var(--navy);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-header .logo-icon {
+      width: 26px; height: 26px;
+      background: var(--coral);
+      border-radius: 6px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 2px;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    .card-header .logo-icon span {
+      background: white;
+      border-radius: 1px;
+    }
+    .card-header h2 {
+      color: white;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.5px;
+    }
+
+    .card-footer {
+      background: var(--navy);
+      padding: 10px 14px;
+      text-align: center;
+    }
+    .card-footer p {
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* ===== OPTION A ===== */
+    .card-body-a {
+      background: var(--cream);
+      padding: 0;
+    }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(27,34,81,0.07);
+    }
+    .contact-row:nth-child(even) {
+      background: var(--cream-alt);
+    }
+    .num-circle {
+      width: 24px; height: 24px;
+      background: var(--coral);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 11px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .avatar-icon {
+      width: 22px; height: 22px;
+      border: 2px dashed var(--coral);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .avatar-icon svg {
+      width: 12px; height: 12px;
+      opacity: 0.4;
+    }
+    .write-lines {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .write-line {
+      border-bottom: 1px solid rgba(27,34,81,0.25);
+      height: 10px;
+      width: 100%;
+    }
+    .write-line.small {
+      width: 70%;
+      opacity: 0.5;
+    }
+
+    /* ===== OPTION B ===== */
+    .card-body-b {
+      background: var(--cream);
+      padding: 0;
+    }
+    .feature-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(27,34,81,0.07);
+    }
+    .feature-row:nth-child(even) {
+      background: var(--cream-alt);
+    }
+    .feature-icon {
+      width: 26px; height: 26px;
+      background: var(--navy);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .feature-icon svg {
+      width: 14px; height: 14px;
+    }
+    .feature-label {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.3;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    /* ===== OPTION C ===== */
+    .card-body-c {
+      background: var(--cream);
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .mascot {
+      width: 90px; height: 90px;
+      position: relative;
+    }
+    .mascot-face {
+      width: 90px; height: 90px;
+      background: var(--coral);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: visible;
+    }
+    .mascot-face::before,
+    .mascot-face::after {
+      content: '';
+      position: absolute;
+      background: var(--coral);
+      border-radius: 50%;
+      width: 22px; height: 22px;
+      top: 8px;
+    }
+    .mascot-face::before { left: -6px; }
+    .mascot-face::after { right: -6px; }
+    .mascot-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 1;
+    }
+    .mascot-eyes {
+      display: flex;
+      gap: 14px;
+    }
+    .mascot-eye {
+      width: 14px; height: 14px;
+      background: var(--navy);
+      border-radius: 50%;
+      position: relative;
+    }
+    .mascot-eye::after {
+      content: '';
+      position: absolute;
+      width: 5px; height: 5px;
+      background: white;
+      border-radius: 50%;
+      top: 2px; left: 2px;
+    }
+    .mascot-smile {
+      width: 30px; height: 15px;
+      border: 4px solid var(--navy);
+      border-top: none;
+      border-radius: 0 0 30px 30px;
+    }
+    .name-band {
+      background: var(--navy);
+      width: 100%;
+      border-radius: 8px;
+      padding: 10px 12px;
+      text-align: center;
+    }
+    .name-band p {
+      color: rgba(255,255,255,0.7);
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .name-line {
+      border-bottom: 2px solid rgba(255,255,255,0.6);
+      height: 18px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding-bottom: 2px;
+    }
+    .pencil-hint {
+      font-size: 12px;
+      opacity: 0.5;
+    }
+    .room-band {
+      width: 100%;
+      border: 1.5px dashed rgba(27,34,81,0.3);
+      border-radius: 6px;
+      padding: 6px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .room-band span {
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--grey);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .room-line {
+      border-bottom: 1px solid var(--grey);
+      width: 60px;
+      height: 12px;
+    }
+
+    /* EXPLAINER */
+    .explainer {
+      background: white;
+      border-radius: 12px;
+      padding: 18px;
+      border-left: 4px solid var(--coral);
+    }
+    .explainer h4 {
+      font-size: 13px;
+      font-weight: 900;
+      color: var(--navy);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .explainer ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .explainer ul li {
+      font-size: 12px;
+      line-height: 1.5;
+      color: #444;
+      padding-left: 16px;
+      position: relative;
+    }
+    .explainer ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--coral);
+      font-weight: 900;
+    }
+    .explainer .verdict {
+      margin-top: 12px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .verdict.good { background: #E8F5E9; color: #2E7D32; }
+    .verdict.caution { background: #FFF3E0; color: #E65100; }
+    .verdict.recommended { background: #E3F2FD; color: #1565C0; }
+
+    /* FOOTER NOTE */
+    .page-footer {
+      text-align: center;
+      margin-top: 48px;
+      font-size: 12px;
+      color: #999;
+    }
+
+    @media (max-width: 800px) {
+      .options-grid { grid-template-columns: 1fr; max-width: 340px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="brand">
+      <div class="icon">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+      <h1>TICKEYBOX</h1>
+    </div>
+    <h2>Handset Insert — Design Proposals</h2>
+    <p>Speed dial functionality removed. Three redesign directions for a 6–12 year old user. Pick one to take to final artwork.</p>
+  </div>
+
+  <!-- OPTIONS GRID -->
+  <div class="options-grid">
+
+    <!-- ===== OPTION A ===== -->
+    <div class="option-wrap">
+      <div class="option-label">
+        <div class="badge">Option A</div>
+        <h3>"My People"</h3>
+        <p class="tagline">Writable contact reference card</p>
+      </div>
+
+      <div class="insert-card">
+        <div class="card-header">
+          <div class="logo-icon">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+          <h2>MY PEOPLE</h2>
+        </div>
+        <div class="card-body-a">
+          <!-- Rows 1–9 -->
+          <div class="contact-row">
+            <div class="num-circle">1</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="num-circle">2</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="num-circle">3</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="num-circle">4</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="num-circle">5</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="num-circle">6</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="num-circle">7</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="num-circle">8</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+          <div class="contact-row" style="border-bottom:none;">
+            <div class="num-circle">9</div>
+            <div class="avatar-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#E8634A" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+              </svg>
+            </div>
+            <div class="write-lines">
+              <div class="write-line"></div>
+              <div class="write-line small"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <p>Your phone. Your people.</p>
+        </div>
+      </div>
+
+      <div class="explainer">
+        <h4>What it is</h4>
+        <ul>
+          <li>Numbered rows match the keypad — child writes names + numbers in manually</li>
+          <li>Turns the insert into a personalised contacts cheat sheet</li>
+          <li>Closest to original FA structure — minimal redesign effort</li>
+          <li>Works for parents who want control over who the child can call</li>
+        </ul>
+        <div class="verdict good">Good for: home + school settings where contacts are fixed and parents fill it in.</div>
+      </div>
+    </div>
+
+    <!-- ===== OPTION B ===== -->
+    <div class="option-wrap">
+      <div class="option-label">
+        <div class="badge">Option B</div>
+        <h3>"How to Use"</h3>
+        <p class="tagline">Illustrated feature guide</p>
+      </div>
+
+      <div class="insert-card">
+        <div class="card-header">
+          <div class="logo-icon">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+          <h2>YOUR PHONE</h2>
+        </div>
+        <div class="card-body-b">
+          <div class="feature-row">
+            <div class="num-circle">1</div>
+            <div class="feature-icon">
+              <!-- Green phone / answer -->
+              <svg viewBox="0 0 24 24" fill="#4CAF50"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>
+            </div>
+            <div class="feature-label">Answer call</div>
+          </div>
+          <div class="feature-row">
+            <div class="num-circle">2</div>
+            <div class="feature-icon">
+              <!-- Red phone / hang up -->
+              <svg viewBox="0 0 24 24" fill="#E53935"><path d="M12 9c-1.6 0-3.15.25-4.6.72v3.1c0 .39-.23.74-.56.9-.98.49-1.87 1.12-2.66 1.85-.18.18-.43.28-.7.28-.28 0-.53-.11-.71-.29L.29 13.08c-.18-.17-.29-.42-.29-.7 0-.28.11-.53.29-.71C3.34 8.78 7.46 7 12 7s8.66 1.78 11.71 4.67c.18.18.29.43.29.71 0 .28-.11.53-.29.71l-2.48 2.48c-.18.18-.43.29-.71.29-.27 0-.52-.1-.7-.28-.79-.73-1.68-1.36-2.66-1.85-.33-.16-.56-.5-.56-.9v-3.1C15.15 9.25 13.6 9 12 9z"/></svg>
+            </div>
+            <div class="feature-label">End call</div>
+          </div>
+          <div class="feature-row">
+            <div class="num-circle">3</div>
+            <div class="feature-icon">
+              <!-- Volume up -->
+              <svg viewBox="0 0 24 24" fill="white"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+            </div>
+            <div class="feature-label">Volume up</div>
+          </div>
+          <div class="feature-row">
+            <div class="num-circle">4</div>
+            <div class="feature-icon">
+              <!-- Volume down -->
+              <svg viewBox="0 0 24 24" fill="white"><path d="M18.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM5 9v6h4l5 5V4L9 9H5z"/></svg>
+            </div>
+            <div class="feature-label">Volume down</div>
+          </div>
+          <div class="feature-row">
+            <div class="num-circle">5</div>
+            <div class="feature-icon">
+              <!-- Speaker -->
+              <svg viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+            </div>
+            <div class="feature-label">Speakerphone</div>
+          </div>
+          <div class="feature-row">
+            <div class="num-circle">6</div>
+            <div class="feature-icon">
+              <!-- Moon / DND -->
+              <svg viewBox="0 0 24 24" fill="white"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+            </div>
+            <div class="feature-label">Do not disturb</div>
+          </div>
+          <div class="feature-row">
+            <div class="num-circle">7</div>
+            <div class="feature-icon">
+              <!-- Voicemail / envelope -->
+              <svg viewBox="0 0 24 24" fill="white"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+            </div>
+            <div class="feature-label">Voicemail</div>
+          </div>
+          <div class="feature-row">
+            <div class="num-circle">8</div>
+            <div class="feature-icon">
+              <!-- Star -->
+              <svg viewBox="0 0 24 24" fill="#FFD700"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            </div>
+            <div class="feature-label">Favourites</div>
+          </div>
+          <div class="feature-row" style="border-bottom:none;">
+            <div class="num-circle">9</div>
+            <div class="feature-icon">
+              <!-- Help / ? -->
+              <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z"/></svg>
+            </div>
+            <div class="feature-label">Help</div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <p>Your phone, made simple.</p>
+        </div>
+      </div>
+
+      <div class="explainer">
+        <h4>What it is</h4>
+        <ul>
+          <li>Each row maps a key number to a phone feature with an icon</li>
+          <li>Visual at a glance — no reading required for younger kids</li>
+          <li>Only works if the phone's features actually map to these numbers</li>
+          <li>Best for hospitality / school settings with fixed configurations</li>
+        </ul>
+        <div class="verdict caution">Caution: Feature list must match actual phone setup — requires configuration consistency across all units.</div>
+      </div>
+    </div>
+
+    <!-- ===== OPTION C ===== -->
+    <div class="option-wrap">
+      <div class="option-label">
+        <div class="badge recommended">Option C — Recommended</div>
+        <h3>"This Phone is Mine"</h3>
+        <p class="tagline">Identity badge with mascot</p>
+      </div>
+
+      <div class="insert-card">
+        <div class="card-header">
+          <div class="logo-icon">
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+          </div>
+          <h2>TICKEYBOX</h2>
+        </div>
+        <div class="card-body-c">
+
+          <!-- Mascot -->
+          <div class="mascot">
+            <div class="mascot-face">
+              <div class="mascot-inner">
+                <div class="mascot-eyes">
+                  <div class="mascot-eye"></div>
+                  <div class="mascot-eye"></div>
+                </div>
+                <div class="mascot-smile"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Name band -->
+          <div class="name-band">
+            <p>This phone belongs to:</p>
+            <div class="name-line">
+              <span class="pencil-hint">✏️</span>
+            </div>
+          </div>
+
+          <!-- Room number slot -->
+          <div class="room-band">
+            <span>Room No.</span>
+            <div class="room-line"></div>
+          </div>
+
+        </div>
+        <div class="card-footer">
+          <p>Stay connected. Stay safe.</p>
+        </div>
+      </div>
+
+      <div class="explainer">
+        <h4>What it is</h4>
+        <ul>
+          <li>Removes all dead UI — no numbered rows, no implied functionality</li>
+          <li>Ownership mechanic: kid writes their name = their phone</li>
+          <li>Mascot is a brand asset — can extend to packaging, app, merch</li>
+          <li>"Room No." mirrors the existing physical label slot on the handset</li>
+          <li>Works in any context: home, school, hospital, hotel</li>
+        </ul>
+        <div class="verdict recommended">Recommended: Turns a functional gap into a brand asset. Strongest emotional resonance for 6–12 year olds. Lowest risk of confusing dead features.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    TickeyBox — Handset Insert Design Review &nbsp;·&nbsp; March 2026
+  </div>
+
+</body>
+</html>
